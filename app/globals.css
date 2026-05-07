@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", ui-serif, Georgia, serif;
+
+  /* Light: cool-tinted canvas so sections feel less flat */
+  --color-canvas: #f6f7f9;
+  --color-surface: #eceef3;
+  --color-elevated: #ffffff;
+  --color-border: #c5c9d3;
+  --color-ink: #1d1d1f;
+  --color-muted: #6e6e73;
+  --color-accent: #0071e3;
+  --color-warn: #ff9500;
+  --color-success: #30b0c7;
+
+  --hero-glow: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  --hero-glow-warm: color-mix(in srgb, var(--color-warn) 12%, transparent);
+  --shadow-panel:
+    0 1px 0 color-mix(in srgb, var(--color-ink) 5%, transparent),
+    0 10px 40px color-mix(in srgb, var(--color-ink) 6%, transparent);
+  --shadow-lift:
+    0 20px 55px color-mix(in srgb, var(--color-ink) 10%, transparent),
+    0 1px 0 color-mix(in srgb, var(--color-ink) 4%, transparent);
+  --shadow-glow: 0 0 80px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  --ring-inset: color-mix(in srgb, var(--color-ink) 7%, transparent);
+}
+
+.dark {
+  --color-canvas: #000000;
+  --color-surface: #1c1c1e;
+  --color-elevated: #2c2c2e;
+  --color-border: color-mix(in srgb, #ffffff 12%, transparent);
+  --color-ink: #ffffff;
+  --color-muted: #a1a1a6;
+  --color-accent: #0a84ff;
+  --color-warn: #ff9f0a;
+  --color-success: #30d158;
+
+  --hero-glow: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  --hero-glow-warm: color-mix(in srgb, var(--color-warn) 14%, transparent);
+  --shadow-panel: 0 1px 0 color-mix(in srgb, #ffffff 8%, transparent),
+    0 32px 120px #000000;
+  --shadow-lift: 0 28px 90px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 100px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  --ring-inset: color-mix(in srgb, #ffffff 10%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-ink antialiased;
+  font-feature-settings: "ss01" on, "cv01" on;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 35%, transparent);
+  color: var(--color-ink);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-hero-mesh {
+    background-color: var(--color-canvas);
+    background-image:
+      radial-gradient(
+        ellipse 100% 70% at 50% -30%,
+        var(--hero-glow),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 100% 0%,
+        var(--hero-glow-warm),
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 0% 20%,
+        color-mix(in srgb, var(--color-accent) 8%, transparent),
+        transparent 55%
+      );
+  }
+
+  .dark .bg-hero-mesh {
+    background-color: var(--color-canvas);
+    background-image:
+      radial-gradient(
+        ellipse 90% 65% at 50% -25%,
+        var(--hero-glow),
+        transparent 58%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 100% 0%,
+        var(--hero-glow-warm),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 20% 35%,
+        color-mix(in srgb, var(--color-accent) 12%, transparent),
+        transparent 42%
+      );
+  }
+
+  .bg-section-fade {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-surface) 65%, transparent) 0%,
+      transparent 28%,
+      transparent 72%,
+      color-mix(in srgb, var(--color-surface) 55%, transparent) 100%
+    );
+  }
+
+  .border-hairline {
+    border-color: color-mix(in srgb, var(--color-border) 85%, transparent);
+  }
+}
