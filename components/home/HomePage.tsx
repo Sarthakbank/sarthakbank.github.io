@@ -12,8 +12,11 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Card } from "@/components/ui/Card";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { ParallaxFloat } from "@/components/motion/ParallaxFloat";
+import { TiltCard } from "@/components/motion/TiltCard";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { SectionDivider } from "@/components/layout/SectionDivider";
 import { ProfilePortrait } from "@/components/media/ProfilePortrait";
 import { TempSceneImage } from "@/components/media/TempSceneImage";
 import { ToolIcon } from "@/components/icons/ToolIcon";
@@ -26,10 +29,9 @@ import {
   homeHighlights,
 } from "@/content/home";
 import { homeHeroChips } from "@/content/homeHeroChips";
-import { profileTools } from "@/content/profile";
+import { profileSkills, profileTools } from "@/content/profile";
 import { contactChannels } from "@/content/contact";
 import { tempImagery } from "@/content/tempImagery";
-
 export function HomePage() {
   return (
     <>
@@ -43,17 +45,16 @@ export function HomePage() {
             <FadeIn>
               <div className="flex flex-wrap gap-2">
                 {homeHeroChips.map((chip, i) => (
-                  <span
-                    key={chip.text}
-                    className="inline-flex items-center gap-2 rounded-full border border-hairline bg-elevated/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md"
-                  >
-                    {i === 0 ? (
-                      <MapPin className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                    ) : (
-                      <Sparkles className="h-3.5 w-3.5 shrink-0 text-accent/80" aria-hidden />
-                    )}
-                    {chip.text}
-                  </span>
+                  <TiltCard key={chip.text} maxTilt={4} className="inline-block">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-elevated/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md">
+                      {i === 0 ? (
+                        <MapPin className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+                      ) : (
+                        <Sparkles className="h-3.5 w-3.5 shrink-0 text-accent/80" aria-hidden />
+                      )}
+                      {chip.text}
+                    </span>
+                  </TiltCard>
                 ))}
               </div>
 
@@ -106,12 +107,11 @@ export function HomePage() {
                 </p>
                 <div className="mt-4 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
                   {homeHighlights.map((h) => (
-                    <span
-                      key={h}
-                      className="snap-start rounded-xl border border-hairline bg-surface/60 px-4 py-2.5 text-[13px] font-semibold leading-snug text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md dark:bg-surface/40"
-                    >
-                      {h}
-                    </span>
+                    <TiltCard key={h} maxTilt={5} className="snap-start">
+                      <span className="inline-block rounded-xl border border-hairline bg-surface/60 px-4 py-2.5 text-[13px] font-semibold leading-snug text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition hover:border-accent/30 dark:bg-surface/40">
+                        {h}
+                      </span>
+                    </TiltCard>
                   ))}
                 </div>
               </div>
@@ -119,14 +119,16 @@ export function HomePage() {
 
             <FadeIn delay={0.08}>
               <div className="relative mx-auto w-full max-w-lg lg:mx-0 lg:max-w-none">
-                <TempSceneImage
-                  src={tempImagery.homeHeroAmbient}
-                  alt="Atmospheric environment reference (temporary)"
-                  className="aspect-[16/11] min-h-[220px] w-full sm:min-h-[260px]"
-                  sizes="(min-width: 1024px) 480px, 100vw"
-                  priority
-                  caption="Temporary mood panel — replace with project plate"
-                />
+                <ParallaxFloat yRange={22}>
+                  <TempSceneImage
+                    src={tempImagery.homeHeroAmbient}
+                    alt="Atmospheric environment reference (temporary)"
+                    className="aspect-[16/11] min-h-[220px] w-full sm:min-h-[260px]"
+                    sizes="(min-width: 1024px) 480px, 100vw"
+                    priority
+                    caption="TEMP: Replace — home mood panel (Unsplash)"
+                  />
+                </ParallaxFloat>
                 <div className="relative z-10 -mt-[28%] flex justify-center px-4 sm:-mt-[26%] lg:px-6">
                   <ProfilePortrait className="w-[min(100%,320px)] shadow-lift sm:w-[min(100%,360px)]" priority />
                 </div>
@@ -146,7 +148,7 @@ export function HomePage() {
                   <h2 className="max-w-xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-[1.08]">
                     Spatial clarity under pressure
                   </h2>
-                  <Card className="mt-8 border-hairline">
+                  <Card interactive className="mt-8 border-hairline">
                     <div className="space-y-5 text-pretty text-base leading-relaxed text-muted sm:text-lg">
                       {homeAboutPreview.paragraphs.map((p) => (
                         <p key={p}>{p}</p>
@@ -161,9 +163,11 @@ export function HomePage() {
                 </div>
                 <div className="relative">
                   <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-accent/5 blur-3xl dark:bg-accent/10" />
-                  <Card className="relative overflow-hidden border-hairline p-2 sm:p-3">
-                    <ProfilePortrait embedded />
-                  </Card>
+                  <TiltCard maxTilt={6} className="relative">
+                    <Card className="overflow-hidden border-hairline p-2 sm:p-3">
+                      <ProfilePortrait embedded />
+                    </Card>
+                  </TiltCard>
                 </div>
               </div>
             </FadeIn>
@@ -171,7 +175,11 @@ export function HomePage() {
         </Section>
       </div>
 
-      <Section className="relative border-y border-hairline bg-surface/40 dark:bg-surface/25">
+      <Container>
+        <SectionDivider label="Featured" />
+      </Container>
+
+      <Section className="relative border-y border-hairline bg-surface/40 pb-16 pt-4 dark:bg-surface/25">
         <div className="pointer-events-none absolute inset-0 bg-section-fade opacity-80" />
         <Container className="relative">
           <FadeIn>
@@ -185,8 +193,8 @@ export function HomePage() {
               </p>
             </div>
 
-            <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:gap-10 lg:items-stretch">
-              <Card className="flex flex-col border-accent/25 lg:justify-between">
+            <div className="mt-10 grid gap-8 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+              <Card interactive className="flex flex-col border-accent/25 lg:justify-between">
                 <div>
                   <p className="text-lg leading-relaxed text-muted">
                     {homeFeaturedPreview.description}
@@ -205,19 +213,46 @@ export function HomePage() {
                   </ButtonLink>
                 </div>
               </Card>
-              <TempSceneImage
-                src={tempImagery.featuredCaseHero}
-                alt="Architectural environment reference for featured project (temporary)"
-                className="aspect-[16/10] w-full lg:max-h-[min(100%,480px)]"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                caption="Temporary key visual — swap for Black Tidemark art"
-              />
+              <ParallaxFloat yRange={14} className="min-h-0">
+                <TempSceneImage
+                  src={tempImagery.featuredCaseHero}
+                  alt="Architectural environment reference for featured project (temporary)"
+                  className="aspect-[16/10] w-full lg:aspect-[5/3]"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  caption="TEMP: Replace — Black Tidemark key art"
+                />
+              </ParallaxFloat>
             </div>
           </FadeIn>
         </Container>
       </Section>
 
-      <Section>
+      <Section className="py-14 sm:py-16">
+        <Container>
+          <FadeIn>
+            <SectionLabel>Skills</SectionLabel>
+            <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+              How I think in space
+            </h2>
+            <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
+              Demo presentation layer — copy stays aligned with your real profile; swap emphasis anytime in{" "}
+              <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">content/profile.ts</code>.
+            </p>
+            <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
+              {profileSkills.map((skill) => (
+                <TiltCard key={skill} maxTilt={5}>
+                  <Card interactive className="h-full border-hairline py-5 sm:p-6">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">Focus</p>
+                    <p className="mt-2 font-display text-lg font-semibold tracking-tight text-ink">{skill}</p>
+                  </Card>
+                </TiltCard>
+              ))}
+            </div>
+          </FadeIn>
+        </Container>
+      </Section>
+
+      <Section className="border-t border-hairline bg-surface/30 dark:bg-surface/20">
         <Container>
           <FadeIn>
             <SectionLabel>Tool stack</SectionLabel>
@@ -225,24 +260,22 @@ export function HomePage() {
               Tools I work with
             </h2>
             <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
-              Icons reflect the approved tool list — update assets or labels in
-              content when your toolchain changes.
+              Icons reflect the approved tool list — update assets or labels in content when your toolchain changes.
             </p>
 
             <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:gap-4">
               {profileTools.map((tool) => (
-                <div
-                  key={tool}
-                  className="group flex min-h-[5.25rem] flex-col items-center justify-center gap-2 rounded-2xl border border-hairline bg-elevated/95 px-2 py-4 text-center shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-accent/40"
-                >
-                  <ToolIcon
-                    tool={tool}
-                    className="h-7 w-7 text-accent transition group-hover:scale-105"
-                  />
-                  <span className="text-xs font-semibold leading-tight tracking-tight text-ink sm:text-sm">
-                    {tool}
-                  </span>
-                </div>
+                <TiltCard key={tool} maxTilt={6}>
+                  <div className="group flex min-h-[5.25rem] flex-col items-center justify-center gap-2 rounded-2xl border border-hairline bg-gradient-to-b from-elevated/98 to-surface/45 px-2 py-4 text-center shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-accent/40 dark:from-elevated/90 dark:to-canvas/35">
+                    <ToolIcon
+                      tool={tool}
+                      className="h-7 w-7 text-accent transition group-hover:scale-105"
+                    />
+                    <span className="text-xs font-semibold leading-tight tracking-tight text-ink sm:text-sm">
+                      {tool}
+                    </span>
+                  </div>
+                </TiltCard>
               ))}
             </div>
           </FadeIn>
@@ -252,7 +285,7 @@ export function HomePage() {
       <Section className="border-t border-hairline bg-surface/35 pb-6 dark:bg-surface/20">
         <Container>
           <FadeIn>
-            <Card className="overflow-hidden border-accent/30 bg-gradient-to-br from-accent/[0.14] via-elevated/50 to-success/[0.1] dark:via-elevated/20">
+            <Card interactive className="overflow-hidden border-accent/30 bg-gradient-to-br from-accent/[0.14] via-elevated/50 to-success/[0.1] dark:via-elevated/20">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div className="max-w-2xl">
                   <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent">

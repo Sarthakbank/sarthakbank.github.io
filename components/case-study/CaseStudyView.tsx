@@ -6,14 +6,24 @@ import { Card } from "@/components/ui/Card";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { MediaPlaceholder } from "@/components/media/MediaPlaceholder";
 import { TempSceneImage } from "@/components/media/TempSceneImage";
+import { YouTubeEmbed } from "@/components/media/YouTubeEmbed";
 import { tempImagery } from "@/content/tempImagery";
+import { demoYouTube } from "@/content/demoMedia";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { ParallaxFloat } from "@/components/motion/ParallaxFloat";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { SectionDivider } from "@/components/layout/SectionDivider";
 import {
+  caseStudyBeatImageKeys,
   caseStudyBeats,
   caseStudyChallenges,
   caseStudyDemoLabel,
+  caseStudyEnvironmentFlow,
+  caseStudyExperienceGoals,
+  caseStudyGallery,
+  caseStudyGameBrief,
+  caseStudyGameplayLoop,
   caseStudyGoal,
   caseStudyIterations,
   caseStudyLessons,
@@ -22,10 +32,13 @@ import {
   caseStudyNav,
   caseStudyOutcome,
   caseStudyPillars,
+  caseStudyPlayerObjective,
   caseStudyProcess,
+  caseStudyProjectContext,
   caseStudySummary,
   caseStudyTargetExperience,
   caseStudyTechniques,
+  caseStudyWorldSetting,
 } from "@/content/caseStudy";
 import { homeContactCta } from "@/content/home";
 import { contactChannels } from "@/content/contact";
@@ -46,7 +59,7 @@ function FactGrid() {
       {rows.map((r, i) => (
         <div
           key={r.label}
-          className="group relative overflow-hidden rounded-2xl border border-hairline bg-gradient-to-b from-elevated/95 to-surface/50 p-5 shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md dark:from-elevated/90 dark:to-canvas/30"
+          className="group relative overflow-hidden rounded-2xl border border-hairline bg-gradient-to-b from-elevated/95 to-surface/50 p-5 shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:border-accent/30 dark:from-elevated/90 dark:to-canvas/30"
         >
           <span className="text-[10px] font-bold tabular-nums text-accent/80">
             {String(i + 1).padStart(2, "0")}
@@ -105,29 +118,65 @@ export function CaseStudyView() {
                     </span>
                   </div>
                 </div>
-                <TempSceneImage
-                  src={tempImagery.featuredCaseHero}
-                  alt="Temporary atmospheric environment for case-study hero"
-                  className="aspect-[16/10] w-full lg:aspect-[5/3]"
-                  sizes="(min-width: 1024px) 520px, 100vw"
-                  priority
-                  caption="Temporary hero — replace with Black Tidemark shot"
-                />
+                <ParallaxFloat yRange={18} className="lg:justify-self-end">
+                  <TempSceneImage
+                    src={tempImagery.featuredCaseHero}
+                    alt="Temporary atmospheric environment for case-study hero"
+                    className="aspect-[16/10] w-full lg:aspect-[5/3]"
+                    sizes="(min-width: 1024px) 520px, 100vw"
+                    priority
+                    caption="TEMP: Replace — hero plate (Unsplash)"
+                  />
+                </ParallaxFloat>
               </div>
 
               <div className="mt-10 sm:mt-12">
-                <MediaPlaceholder
-                  title="Case study — annotated hero / keyframe strip"
-                  ratio="wide"
-                  tone="accent"
-                  spec="Optional second layer · storyboard or callout sheet"
+                <YouTubeEmbed
+                  videoId={demoYouTube.overviewReel.videoId}
+                  title={demoYouTube.overviewReel.title}
+                  caption="TEMP: Replace — overview / reel slot (YouTube)"
                 />
               </div>
             </FadeIn>
           </Container>
         </Section>
 
-        <Section id="facts" className="relative border-y border-hairline bg-surface/35 py-14 dark:bg-surface/25">
+        <Container>
+          <SectionDivider label="Brief" />
+        </Container>
+
+        <Section id="brief" className="relative pb-4 pt-2 sm:pb-6">
+          <Container>
+            <FadeIn>
+              <SectionLabel>Game brief</SectionLabel>
+              <div className="mt-6 grid gap-6 lg:grid-cols-2 lg:gap-8">
+                <Card interactive className="border-hairline">
+                  <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+                    {caseStudyGameBrief.title}
+                  </h2>
+                  <div className="mt-5 space-y-4 text-pretty text-base leading-relaxed text-muted sm:text-lg">
+                    {caseStudyGameBrief.paragraphs.map((p) => (
+                      <p key={p}>{p}</p>
+                    ))}
+                  </div>
+                </Card>
+                <Card interactive className="border-accent/20 bg-gradient-to-br from-accent/[0.06] via-transparent to-transparent">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
+                    Project context
+                  </p>
+                  <p className="mt-4 text-pretty text-base leading-relaxed text-muted sm:text-lg">
+                    {caseStudyProjectContext}
+                  </p>
+                </Card>
+              </div>
+            </FadeIn>
+          </Container>
+        </Section>
+
+        <Section
+          id="facts"
+          className="relative border-y border-hairline bg-surface/35 py-14 dark:bg-surface/25"
+        >
           <div className="pointer-events-none absolute inset-0 bg-section-fade opacity-60" />
           <Container className="relative">
             <FadeIn>
@@ -146,14 +195,93 @@ export function CaseStudyView() {
           </Container>
         </Section>
 
-        <Section id="goal" className="py-14 sm:py-16">
+        <Container>
+          <SectionDivider label="World" />
+        </Container>
+
+        <Section id="world" className="py-6 sm:py-10">
+          <Container>
+            <FadeIn>
+              <SectionLabel>Setting</SectionLabel>
+              <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                {caseStudyWorldSetting.title}
+              </h2>
+              <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] lg:items-start">
+                <div className="space-y-5 text-pretty text-base leading-relaxed text-muted sm:text-lg">
+                  {caseStudyWorldSetting.paragraphs.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </div>
+                <TempSceneImage
+                  src={tempImagery.galleryStormCoast}
+                  alt="Temporary storm coast mood"
+                  className="aspect-[16/10] w-full"
+                  sizes="(min-width: 1024px) 42vw, 100vw"
+                  caption="TEMP: Replace — world mood plate"
+                />
+              </div>
+            </FadeIn>
+          </Container>
+        </Section>
+
+        <Section
+          id="loop"
+          className="border-y border-hairline bg-surface/30 py-14 dark:bg-surface/20"
+        >
+          <Container>
+            <FadeIn>
+              <SectionLabel>Gameplay loop</SectionLabel>
+              <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                Loop & cadence
+              </h2>
+              <Card className="mt-8 max-w-3xl border-hairline">
+                <p className="text-pretty text-lg leading-relaxed text-ink sm:text-xl sm:leading-relaxed">
+                  {caseStudyGameplayLoop}
+                </p>
+              </Card>
+              <div className="mt-10">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
+                  Experience goals (timeboxed)
+                </p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {caseStudyExperienceGoals.map((g) => (
+                    <li key={g}>
+                      <Card interactive className="border-hairline py-5 sm:p-6">
+                        <p className="text-sm leading-relaxed text-muted sm:text-[15px]">
+                          {g}
+                        </p>
+                      </Card>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
+                  Core mechanics
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {caseStudyMechanics.map((m) => (
+                    <li
+                      key={m}
+                      className="rounded-full border border-hairline bg-elevated/90 px-4 py-2 text-sm font-semibold text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur transition hover:border-accent/35"
+                    >
+                      {m}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </FadeIn>
+          </Container>
+        </Section>
+
+        <Section id="intent" className="py-14 sm:py-16">
           <Container>
             <FadeIn>
               <SectionLabel>Design intent</SectionLabel>
               <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                 Goal
               </h2>
-              <Card className="mt-8 max-w-3xl border-accent/25 bg-gradient-to-br from-accent/[0.08] via-transparent to-transparent">
+              <Card interactive className="mt-8 max-w-3xl border-accent/25 bg-gradient-to-br from-accent/[0.08] via-transparent to-transparent">
                 <p className="text-pretty text-lg leading-relaxed text-ink sm:text-xl sm:leading-relaxed">
                   {caseStudyGoal}
                 </p>
@@ -170,24 +298,50 @@ export function CaseStudyView() {
             <FadeIn>
               <SectionLabel>Player read</SectionLabel>
               <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-                Project overview
+                Objective & flow
               </h2>
-              <Card className="mt-8 max-w-3xl">
-                <p className="text-pretty text-lg leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
-                  {caseStudyTargetExperience}
-                </p>
-              </Card>
+              <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:gap-8">
+                <Card interactive className="border-hairline">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
+                    Player objective
+                  </p>
+                  <p className="mt-4 text-pretty text-base leading-relaxed text-ink sm:text-lg">
+                    {caseStudyPlayerObjective}
+                  </p>
+                </Card>
+                <Card interactive className="border-hairline">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-muted">
+                    Target experience
+                  </p>
+                  <p className="mt-4 text-pretty text-base leading-relaxed text-muted sm:text-lg">
+                    {caseStudyTargetExperience}
+                  </p>
+                </Card>
+              </div>
+              <div className="mt-10">
+                <h3 className="font-display text-xl font-semibold text-ink sm:text-2xl">
+                  {caseStudyEnvironmentFlow.title}
+                </h3>
+                <div className="mt-4 max-w-3xl space-y-4 text-pretty text-base leading-relaxed text-muted sm:text-lg">
+                  {caseStudyEnvironmentFlow.paragraphs.map((p) => (
+                    <p key={p}>{p}</p>
+                  ))}
+                </div>
+              </div>
               <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">
-                <MediaPlaceholder
-                  title="Level flow — map / diagram"
-                  ratio="video"
-                  tone="neutral"
-                  spec="16:9 · topology or flow"
+                <TempSceneImage
+                  src={tempImagery.galleryBrutalist}
+                  alt="Temporary architectural readability reference"
+                  className="aspect-video w-full"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  caption="TEMP: Replace — topology / readability mood"
                 />
-                <MediaPlaceholder
-                  title="Annotated top-down"
-                  ratio="video"
-                  spec="16:9 · callouts & routes"
+                <TempSceneImage
+                  src={tempImagery.galleryUrbanDepth}
+                  alt="Temporary urban depth mood"
+                  className="aspect-video w-full"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  caption="TEMP: Replace — routing / verticality mood"
                 />
               </div>
             </FadeIn>
@@ -204,7 +358,10 @@ export function CaseStudyView() {
               <ol className="mt-10 grid gap-5 md:grid-cols-3 md:gap-6">
                 {caseStudyPillars.map((pillar, i) => (
                   <li key={pillar}>
-                    <Card className="h-full overflow-hidden border-border/80 pt-2">
+                    <Card
+                      interactive
+                      className="h-full overflow-hidden border-border/80 pt-2"
+                    >
                       <div className="flex items-start gap-4">
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-accent/25 to-accent/5 text-sm font-bold text-accent ring-1 ring-inset ring-accent/25">
                           {i + 1}
@@ -226,73 +383,63 @@ export function CaseStudyView() {
           </Container>
         </Section>
 
-        <div className="border-y border-hairline bg-surface/35 py-14 dark:bg-surface/25">
-          <Container>
-            <FadeIn>
-              <SectionLabel>Mechanics</SectionLabel>
-              <h2 className="mt-4 font-display text-2xl font-semibold sm:text-3xl">
-                Core interactions
-              </h2>
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {caseStudyMechanics.map((m) => (
-                  <li
-                    key={m}
-                    className="rounded-full border border-hairline bg-elevated/90 px-4 py-2 text-sm font-semibold text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur"
-                  >
-                    {m}
-                  </li>
-                ))}
-              </ul>
-            </FadeIn>
-          </Container>
-        </div>
+        <Container>
+          <SectionDivider label="Walkthrough" />
+        </Container>
 
-        <Section id="walkthrough">
+        <Section id="walkthrough" className="pb-4 pt-2">
           <Container>
             <FadeIn>
               <SectionLabel>Gameplay walkthrough</SectionLabel>
               <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-                Beats
+                Beats & atmosphere
               </h2>
               <p className="mt-4 max-w-2xl text-pretty text-muted">
-                Each beat pairs intent with a future capture — structure is ready
-                for shot-for-shot replacement.
+                Demo footage below sets UE5 tone only — swap IDs in{" "}
+                <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">
+                  content/demoMedia.ts
+                </code>{" "}
+                when Black Tidemark captures ship.
               </p>
-              <div className="mt-10 space-y-8">
-                {caseStudyBeats.map((beat, idx) => (
-                  <Card
-                    key={beat}
-                    className="overflow-hidden border-hairline p-0 sm:p-0"
-                  >
-                    <div className="flex flex-col lg:flex-row">
-                      <div className="relative border-b border-hairline bg-surface/40 px-6 py-6 sm:px-8 lg:w-[34%] lg:border-b-0 lg:border-r lg:py-8">
-                        <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
-                          <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-glow" />
-                          Beat {idx + 1}
-                        </span>
-                        <p className="mt-4 font-display text-xl font-semibold leading-snug tracking-tight text-ink sm:text-2xl">
-                          {beat}
-                        </p>
-                      </div>
-                      <div className="flex-1 p-4 sm:p-6 lg:p-8">
-                        <MediaPlaceholder
-                          title={`Beat ${idx + 1} — gameplay still`}
-                          ratio="video"
-                          tone="accent"
-                          spec="16:9 · in-engine capture"
-                        />
-                      </div>
-                    </div>
-                  </Card>
-                ))}
-              </div>
               <div className="mt-10">
-                <MediaPlaceholder
-                  title="Gameplay clip — vertical slice"
-                  ratio="video"
-                  tone="warn"
-                  spec="16:9 · 30–90s clip"
+                <YouTubeEmbed
+                  videoId={demoYouTube.gameplayAtmosphere.videoId}
+                  title={demoYouTube.gameplayAtmosphere.title}
+                  caption="TEMP: Replace — gameplay / breakdown slot (YouTube)"
                 />
+              </div>
+              <div className="mt-12 space-y-8">
+                {caseStudyBeats.map((beat, idx) => {
+                  const key = caseStudyBeatImageKeys[idx % caseStudyBeatImageKeys.length];
+                  return (
+                    <Card
+                      key={beat}
+                      interactive
+                      className="overflow-hidden border-hairline p-0 sm:p-0"
+                    >
+                      <div className="flex flex-col lg:flex-row">
+                        <div className="relative border-b border-hairline bg-surface/40 px-6 py-6 sm:px-8 lg:w-[34%] lg:border-b-0 lg:border-r lg:py-8">
+                          <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
+                            <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-glow" />
+                            Beat {idx + 1}
+                          </span>
+                          <p className="mt-4 font-display text-xl font-semibold leading-snug tracking-tight text-ink sm:text-2xl">
+                            {beat}
+                          </p>
+                        </div>
+                        <div className="flex-1 p-4 sm:p-6 lg:p-8">
+                          <TempSceneImage
+                            src={tempImagery[key]}
+                            alt={`Temporary mood for beat ${idx + 1}`}
+                            className="aspect-video w-full"
+                            sizes="(min-width: 1024px) 56vw, 100vw"
+                            caption={`TEMP: Replace — beat ${idx + 1} still`}
+                          />
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })}
               </div>
             </FadeIn>
           </Container>
@@ -312,7 +459,8 @@ export function CaseStudyView() {
                 {caseStudyTechniques.map((t, i) => (
                   <Card
                     key={t.title}
-                    className="border-hairline transition duration-300 hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-lift"
+                    interactive
+                    className="border-hairline transition duration-300 hover:border-accent/35"
                   >
                     <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-muted">
                       {String(i + 1).padStart(2, "0")}
@@ -339,7 +487,7 @@ export function CaseStudyView() {
               </h2>
               <div className="mt-10 grid gap-6 lg:grid-cols-3">
                 {caseStudyProcess.map((step, i) => (
-                  <Card key={step.title} className="border-hairline">
+                  <Card key={step.title} interactive className="border-hairline">
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
                       Phase {i + 1}
                     </p>
@@ -352,17 +500,19 @@ export function CaseStudyView() {
                   </Card>
                 ))}
               </div>
-              <div className="mt-12 space-y-6">
+              <div className="mt-12 grid gap-6 lg:grid-cols-2">
                 <MediaPlaceholder
                   title="Process diagram — milestones"
                   ratio="wide"
                   tone="neutral"
-                  spec="21:9 · Figma / Miro export"
+                  spec="TEMP: Replace — Figma / Miro export → /public/media/..."
                 />
-                <MediaPlaceholder
-                  title="Greybox → set-dress progression"
-                  ratio="video"
-                  spec="16:9 · blockout vs near-final"
+                <TempSceneImage
+                  src={tempImagery.galleryInteriorRhythm}
+                  alt="Temporary interior rhythm for process"
+                  className="aspect-[21/9] min-h-[200px] w-full"
+                  sizes="(min-width: 1024px) 40vw, 100vw"
+                  caption="TEMP: Replace — greybox → dress progression plate"
                 />
               </div>
             </FadeIn>
@@ -370,9 +520,43 @@ export function CaseStudyView() {
         </Section>
 
         <Section
-          id="iterations"
+          id="gallery"
           className="border-y border-hairline bg-surface/35 py-14 dark:bg-surface/25"
         >
+          <Container>
+            <FadeIn>
+              <SectionLabel>Visual gallery</SectionLabel>
+              <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+                Mood & reference plates
+              </h2>
+              <p className="mt-4 max-w-2xl text-pretty text-sm leading-relaxed text-muted sm:text-base">
+                TEMP gallery — swap URLs in{" "}
+                <code className="rounded-md bg-elevated px-1.5 py-0.5 text-xs text-ink">
+                  content/tempImagery.ts
+                </code>{" "}
+                or drop files under{" "}
+                <code className="rounded-md bg-elevated px-1.5 py-0.5 text-xs text-ink">
+                  public/media/
+                </code>
+                .
+              </p>
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+                {caseStudyGallery.map((item) => (
+                  <TempSceneImage
+                    key={item.key}
+                    src={tempImagery[item.key]}
+                    alt={item.caption}
+                    className="aspect-[4/3] w-full sm:aspect-[3/2]"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    caption={item.caption}
+                  />
+                ))}
+              </div>
+            </FadeIn>
+          </Container>
+        </Section>
+
+        <Section id="iterations" className="py-14 sm:py-16">
           <Container>
             <FadeIn>
               <SectionLabel>Iterations</SectionLabel>
@@ -383,6 +567,7 @@ export function CaseStudyView() {
                 {caseStudyIterations.map((it) => (
                   <Card
                     key={it.title}
+                    interactive
                     className="border-warn/30 bg-gradient-to-br from-warn/[0.08] via-transparent to-transparent"
                   >
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-warn">
@@ -402,20 +587,24 @@ export function CaseStudyView() {
                   <p className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-warn">
                     Before
                   </p>
-                  <MediaPlaceholder
-                    title="Courtyard scale — earlier pass"
-                    ratio="video"
-                    tone="warn"
+                  <TempSceneImage
+                    src={tempImagery.galleryFogPath}
+                    alt="Temporary before-state mood"
+                    className="aspect-video w-full"
+                    sizes="50vw"
+                    caption="TEMP: Replace — before pass still"
                   />
                 </div>
                 <div className="space-y-2">
                   <p className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-success">
                     After
                   </p>
-                  <MediaPlaceholder
-                    title="Courtyard scale — tightened pass"
-                    ratio="video"
-                    tone="success"
+                  <TempSceneImage
+                    src={tempImagery.galleryPeaks}
+                    alt="Temporary after-state mood"
+                    className="aspect-video w-full"
+                    sizes="50vw"
+                    caption="TEMP: Replace — after pass still"
                   />
                 </div>
               </div>
@@ -423,7 +612,10 @@ export function CaseStudyView() {
           </Container>
         </Section>
 
-        <Section id="challenges">
+        <Section
+          id="challenges"
+          className="border-y border-hairline bg-surface/35 py-14 dark:bg-surface/25"
+        >
           <Container>
             <FadeIn>
               <SectionLabel>Challenges & solutions</SectionLabel>
@@ -435,6 +627,7 @@ export function CaseStudyView() {
                   {caseStudyChallenges.map((c) => (
                     <Card
                       key={c.title}
+                      interactive
                       className="border-warn/35 bg-gradient-to-br from-warn/[0.09] via-transparent to-transparent"
                     >
                       <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-warn">
@@ -449,7 +642,10 @@ export function CaseStudyView() {
                     </Card>
                   ))}
                 </div>
-                <Card className="flex flex-col justify-between border-success/35 bg-gradient-to-br from-success/[0.1] via-transparent to-accent/[0.06] lg:min-h-full">
+                <Card
+                  interactive
+                  className="flex flex-col justify-between border-success/35 bg-gradient-to-br from-success/[0.1] via-transparent to-accent/[0.06] lg:min-h-full"
+                >
                   <div>
                     <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-success">
                       Design response
@@ -477,7 +673,7 @@ export function CaseStudyView() {
                   title="Playtest notes / annotation overlay"
                   ratio="wide"
                   tone="warn"
-                  spec="21:9 · heat sketch or markup"
+                  spec="TEMP: Replace — heat sketch or markup export"
                 />
               </div>
             </FadeIn>
@@ -495,18 +691,17 @@ export function CaseStudyView() {
               <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
                 Ship-ready slice
               </h2>
-              <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-stretch">
-                <Card className="border-success/35 bg-gradient-to-br from-success/[0.12] via-transparent to-transparent">
+              <div className="mt-8 grid gap-8 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-stretch xl:gap-10">
+                <YouTubeEmbed
+                  videoId={demoYouTube.finaleShowcase.videoId}
+                  title={demoYouTube.finaleShowcase.title}
+                  caption="TEMP: Replace — finale / showcase slot (YouTube)"
+                />
+                <Card interactive className="border-success/35 bg-gradient-to-br from-success/[0.12] via-transparent to-transparent">
                   <p className="text-pretty text-xl font-medium leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
                     {caseStudyOutcome}
                   </p>
                 </Card>
-                <MediaPlaceholder
-                  title="Final beauty shot — vertical slice"
-                  ratio="cinematic"
-                  tone="success"
-                  spec="2.35:1 · graded hero"
-                />
               </div>
             </FadeIn>
           </Container>
@@ -531,7 +726,10 @@ export function CaseStudyView() {
         <Section id="contact" className="pb-24 lg:pb-20">
           <Container>
             <FadeIn>
-              <Card className="overflow-hidden border-accent/30 bg-gradient-to-br from-accent/[0.12] via-elevated/40 to-success/[0.1] dark:via-elevated/20">
+              <Card
+                interactive
+                className="overflow-hidden border-accent/30 bg-gradient-to-br from-accent/[0.12] via-elevated/40 to-success/[0.1] dark:via-elevated/20"
+              >
                 <SectionLabel>Next step</SectionLabel>
                 <h2 className="mt-4 max-w-3xl text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-[2rem] lg:leading-snug">
                   {homeContactCta.body}

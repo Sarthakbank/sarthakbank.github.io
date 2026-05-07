@@ -1,26 +1,32 @@
 /**
  * Black Tidemark — demo case study only (docs/portfolio-concept.md).
+ * Extended Phase 2 DEMO copy / structure — replace with real materials when ready.
  * Label as demo throughout the UI.
  */
 
 import type { CaseStudyNavItem } from "./types";
+import type { TempImageryKey } from "./tempImagery";
 
 export const caseStudyDemoLabel = "Demo case study";
 
 export const caseStudyNav: CaseStudyNavItem[] = [
   { id: "hero", label: "Hero" },
+  { id: "brief", label: "Brief" },
   { id: "facts", label: "Facts" },
-  { id: "goal", label: "Goal" },
-  { id: "overview", label: "Overview" },
+  { id: "world", label: "World" },
+  { id: "loop", label: "Loop" },
+  { id: "intent", label: "Intent" },
+  { id: "overview", label: "Player" },
   { id: "pillars", label: "Pillars" },
   { id: "walkthrough", label: "Beats" },
-  { id: "techniques", label: "Techniques" },
+  { id: "techniques", label: "Craft" },
   { id: "process", label: "Process" },
-  { id: "iterations", label: "Iterations" },
-  { id: "challenges", label: "Challenges" },
-  { id: "outcome", label: "Outcome" },
-  { id: "lessons", label: "Lessons" },
-  { id: "contact", label: "Contact" },
+  { id: "gallery", label: "Gallery" },
+  { id: "iterations", label: "Iterate" },
+  { id: "challenges", label: "Tests" },
+  { id: "outcome", label: "Ship" },
+  { id: "lessons", label: "Learn" },
+  { id: "contact", label: "Hi" },
 ];
 
 export const caseStudyMeta = {
@@ -34,6 +40,69 @@ export const caseStudyMeta = {
 
 export const caseStudySummary =
   "A storm-battered coastal relay station where the player must infiltrate the fortress, restore the signal beacon, and escape before the lower docks are flooded.";
+
+/** DEMO — high-level pitch; refine with real GDD text later. */
+export const caseStudyGameBrief = {
+  title: "Game brief",
+  paragraphs: [
+    "Black Tidemark is a vertical-slice stealth-action level set around a failing relay station on a hostile coast. The player is under-equipped, outnumbered, and racing the tide—so every route choice, cover pocket, and sightline matters.",
+    "The slice is scoped as a recruiter-readable proof of spatial craft: one cohesive location, one primary objective chain, and four authored beats that escalate tension without sacrificing readability.",
+  ],
+};
+
+/** DEMO — situates the slice in a fictional ops context (not a shipped product claim). */
+export const caseStudyProjectContext =
+  "Presented as a solo academic / portfolio slice, the level treats the relay as a single ‘mission space’: perimeter approach, interior infiltration, central risk space, and vertical escape. Temp visuals and embeds below stand in for final captures.";
+
+export const caseStudyWorldSetting = {
+  title: "World & setting",
+  paragraphs: [
+    "The station sits on black rock shelves lashed by spray. Salt eats metal; fog eats distance. Interior volumes alternate between cramped service corridors and sudden, wind-cut courtyards where the beacon reads as the only honest landmark.",
+    "Weather is not cosmetic—it compresses visibility, justifies tighter patrol loops, and sells the finale’s time pressure when the lower docks begin to flood.",
+  ],
+};
+
+export const caseStudyPlayerObjective =
+  "Infiltrate, reroute power to the beacon, climb, and escape before the lower ring is submerged—without forcing a fail state on first-time players.";
+
+export const caseStudyGameplayLoop =
+  "Read patrols → choose a stealth or traversal route → complete a light interactable (power reroute) → reposition for the next sightline contract → escalate vertically toward the beacon and exfil.";
+
+export const caseStudyExperienceGoals = [
+  "Minute 0–3: cautious, low information; teach patrol vocabulary.",
+  "Minute 3–8: multiple viable routes; reward landmark checks.",
+  "Minute 8–12: compressed risk in the courtyard; force commitment.",
+  "Minute 12+: vertical clarity; beacon as promise and clock.",
+] as const;
+
+export const caseStudyEnvironmentFlow = {
+  title: "Environment & flow",
+  paragraphs: [
+    "Flow is staged as a spiral: the player skirts the facility’s edge, slips inward through maintenance, trades horizontal safety for vertical leverage, then rides the beacon structure back outward above the flood line.",
+    "Each transition is gated by a readable change in materials and audio cues (metal → concrete → open air) so navigation reinforces narrative without UI hand-holding.",
+  ],
+};
+
+/** TEMP: maps to `tempImagery` keys — swap keys or replace with local paths later. */
+export const caseStudyGallery: readonly {
+  key: TempImageryKey;
+  caption: string;
+}[] = [
+  { key: "galleryStormCoast", caption: "TEMP: Replace — coastal storm mood plate" },
+  { key: "galleryBrutalist", caption: "TEMP: Replace — brutalist readability" },
+  { key: "galleryUrbanDepth", caption: "TEMP: Replace — urban depth / traversal" },
+  { key: "galleryFogPath", caption: "TEMP: Replace — fog exploration pacing" },
+  { key: "galleryInteriorRhythm", caption: "TEMP: Replace — interior rhythm" },
+  { key: "galleryPeaks", caption: "TEMP: Replace — vertical scale / finale tone" },
+];
+
+/** Per-beat TEMP image keys (cycle) — replace with in-engine shots. */
+export const caseStudyBeatImageKeys: readonly TempImageryKey[] = [
+  "galleryFogPath",
+  "galleryInteriorRhythm",
+  "galleryUrbanDepth",
+  "galleryPeaks",
+];
 
 export const caseStudyGoal =
   "To create a tense but readable level that showcases landmark-based navigation, layered stealth routes, and a strong vertical finale.";
