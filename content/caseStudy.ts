@@ -83,25 +83,17 @@ export const caseStudyEnvironmentFlow = {
   ],
 };
 
-/** TEMP: maps to `tempImagery` keys — swap keys or replace with local paths later. */
+/** Maps to `tempImagery` / `demoMediaManifest` keys — swap files under `public/media/demo/gallery/`. */
 export const caseStudyGallery: readonly {
   key: TempImageryKey;
   caption: string;
 }[] = [
-  { key: "galleryStormCoast", caption: "TEMP: Replace — coastal storm mood plate" },
-  { key: "galleryBrutalist", caption: "TEMP: Replace — brutalist readability" },
-  { key: "galleryUrbanDepth", caption: "TEMP: Replace — urban depth / traversal" },
-  { key: "galleryFogPath", caption: "TEMP: Replace — fog exploration pacing" },
-  { key: "galleryInteriorRhythm", caption: "TEMP: Replace — interior rhythm" },
-  { key: "galleryPeaks", caption: "TEMP: Replace — vertical scale / finale tone" },
-];
-
-/** Per-beat TEMP image keys (cycle) — replace with in-engine shots. */
-export const caseStudyBeatImageKeys: readonly TempImageryKey[] = [
-  "galleryFogPath",
-  "galleryInteriorRhythm",
-  "galleryUrbanDepth",
-  "galleryPeaks",
+  { key: "galleryStormCoast", caption: "Demo gallery — coastal pressure" },
+  { key: "galleryBrutalist", caption: "Demo gallery — vista / legibility" },
+  { key: "galleryUrbanDepth", caption: "Demo gallery — urban depth" },
+  { key: "galleryFogPath", caption: "Demo gallery — fog exploration" },
+  { key: "galleryInteriorRhythm", caption: "Demo gallery — interior rhythm" },
+  { key: "galleryPeaks", caption: "Demo gallery — vertical scale" },
 ];
 
 export const caseStudyGoal =

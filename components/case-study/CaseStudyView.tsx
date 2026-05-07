@@ -8,14 +8,14 @@ import { MediaPlaceholder } from "@/components/media/MediaPlaceholder";
 import { TempSceneImage } from "@/components/media/TempSceneImage";
 import { YouTubeEmbed } from "@/components/media/YouTubeEmbed";
 import { tempImagery } from "@/content/tempImagery";
-import { demoYouTube } from "@/content/demoMedia";
+import { demoReferenceVideos } from "@/content/demoMedia";
+import { demoBeatImages } from "@/content/demoMediaManifest";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { ParallaxFloat } from "@/components/motion/ParallaxFloat";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { SectionDivider } from "@/components/layout/SectionDivider";
 import {
-  caseStudyBeatImageKeys,
   caseStudyBeats,
   caseStudyChallenges,
   caseStudyDemoLabel,
@@ -125,17 +125,13 @@ export function CaseStudyView() {
                     className="aspect-[16/10] w-full lg:aspect-[5/3]"
                     sizes="(min-width: 1024px) 520px, 100vw"
                     priority
-                    caption="TEMP: Replace — hero plate (Unsplash)"
+                    caption="Demo plate — replace in public/media/demo/case-study/"
                   />
                 </ParallaxFloat>
               </div>
 
               <div className="mt-10 sm:mt-12">
-                <YouTubeEmbed
-                  videoId={demoYouTube.overviewReel.videoId}
-                  title={demoYouTube.overviewReel.title}
-                  caption="TEMP: Replace — overview / reel slot (YouTube)"
-                />
+                <YouTubeEmbed {...demoReferenceVideos.overviewReel} />
               </div>
             </FadeIn>
           </Container>
@@ -213,11 +209,11 @@ export function CaseStudyView() {
                   ))}
                 </div>
                 <TempSceneImage
-                  src={tempImagery.galleryStormCoast}
-                  alt="Temporary storm coast mood"
+                  src={tempImagery.worldSetting}
+                  alt="Demo coastal atmosphere plate"
                   className="aspect-[16/10] w-full"
                   sizes="(min-width: 1024px) 42vw, 100vw"
-                  caption="TEMP: Replace — world mood plate"
+                  caption="Demo plate — world / setting (replace)"
                 />
               </div>
             </FadeIn>
@@ -334,14 +330,14 @@ export function CaseStudyView() {
                   alt="Temporary architectural readability reference"
                   className="aspect-video w-full"
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  caption="TEMP: Replace — topology / readability mood"
+                  caption="Demo plate — topology / readability (replace)"
                 />
                 <TempSceneImage
                   src={tempImagery.galleryUrbanDepth}
                   alt="Temporary urban depth mood"
                   className="aspect-video w-full"
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  caption="TEMP: Replace — routing / verticality mood"
+                  caption="Demo plate — routing / verticality (replace)"
                 />
               </div>
             </FadeIn>
@@ -395,22 +391,22 @@ export function CaseStudyView() {
                 Beats & atmosphere
               </h2>
               <p className="mt-4 max-w-2xl text-pretty text-muted">
-                Demo footage below sets UE5 tone only — swap IDs in{" "}
+                Reference clips set UE5 tone only — swap IDs and posters in{" "}
                 <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">
                   content/demoMedia.ts
+                </code>{" "}
+                and{" "}
+                <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">
+                  public/media/demo/video-posters/
                 </code>{" "}
                 when Black Tidemark captures ship.
               </p>
               <div className="mt-10">
-                <YouTubeEmbed
-                  videoId={demoYouTube.gameplayAtmosphere.videoId}
-                  title={demoYouTube.gameplayAtmosphere.title}
-                  caption="TEMP: Replace — gameplay / breakdown slot (YouTube)"
-                />
+                <YouTubeEmbed {...demoReferenceVideos.gameplayAtmosphere} />
               </div>
               <div className="mt-12 space-y-8">
                 {caseStudyBeats.map((beat, idx) => {
-                  const key = caseStudyBeatImageKeys[idx % caseStudyBeatImageKeys.length];
+                  const src = demoBeatImages[idx % demoBeatImages.length];
                   return (
                     <Card
                       key={beat}
@@ -429,11 +425,11 @@ export function CaseStudyView() {
                         </div>
                         <div className="flex-1 p-4 sm:p-6 lg:p-8">
                           <TempSceneImage
-                            src={tempImagery[key]}
-                            alt={`Temporary mood for beat ${idx + 1}`}
+                            src={src}
+                            alt={`Demo beat ${idx + 1} plate`}
                             className="aspect-video w-full"
                             sizes="(min-width: 1024px) 56vw, 100vw"
-                            caption={`TEMP: Replace — beat ${idx + 1} still`}
+                            caption={`Demo beat ${idx + 1} — replace in public/media/demo/beats/`}
                           />
                         </div>
                       </div>
@@ -508,11 +504,11 @@ export function CaseStudyView() {
                   spec="TEMP: Replace — Figma / Miro export → /public/media/..."
                 />
                 <TempSceneImage
-                  src={tempImagery.galleryInteriorRhythm}
-                  alt="Temporary interior rhythm for process"
+                  src={tempImagery.processPlate}
+                  alt="Demo process atmosphere plate"
                   className="aspect-[21/9] min-h-[200px] w-full"
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  caption="TEMP: Replace — greybox → dress progression plate"
+                  caption="Demo process plate — replace in public/media/demo/process/"
                 />
               </div>
             </FadeIn>
@@ -530,13 +526,13 @@ export function CaseStudyView() {
                 Mood & reference plates
               </h2>
               <p className="mt-4 max-w-2xl text-pretty text-sm leading-relaxed text-muted sm:text-base">
-                TEMP gallery — swap URLs in{" "}
+                Local demo gallery — replace files under{" "}
                 <code className="rounded-md bg-elevated px-1.5 py-0.5 text-xs text-ink">
-                  content/tempImagery.ts
+                  public/media/demo/gallery/
                 </code>{" "}
-                or drop files under{" "}
+                or update paths in{" "}
                 <code className="rounded-md bg-elevated px-1.5 py-0.5 text-xs text-ink">
-                  public/media/
+                  content/demoMediaManifest.ts
                 </code>
                 .
               </p>
@@ -588,11 +584,11 @@ export function CaseStudyView() {
                     Before
                   </p>
                   <TempSceneImage
-                    src={tempImagery.galleryFogPath}
-                    alt="Temporary before-state mood"
+                    src={tempImagery.iterationBefore}
+                    alt="Demo iteration before plate"
                     className="aspect-video w-full"
                     sizes="50vw"
-                    caption="TEMP: Replace — before pass still"
+                    caption="Demo — iteration before (replace)"
                   />
                 </div>
                 <div className="space-y-2">
@@ -600,11 +596,11 @@ export function CaseStudyView() {
                     After
                   </p>
                   <TempSceneImage
-                    src={tempImagery.galleryPeaks}
-                    alt="Temporary after-state mood"
+                    src={tempImagery.iterationAfter}
+                    alt="Demo iteration after plate"
                     className="aspect-video w-full"
                     sizes="50vw"
-                    caption="TEMP: Replace — after pass still"
+                    caption="Demo — iteration after (replace)"
                   />
                 </div>
               </div>
@@ -692,11 +688,7 @@ export function CaseStudyView() {
                 Ship-ready slice
               </h2>
               <div className="mt-8 grid gap-8 lg:grid-cols-1 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-stretch xl:gap-10">
-                <YouTubeEmbed
-                  videoId={demoYouTube.finaleShowcase.videoId}
-                  title={demoYouTube.finaleShowcase.title}
-                  caption="TEMP: Replace — finale / showcase slot (YouTube)"
-                />
+                <YouTubeEmbed {...demoReferenceVideos.finaleShowcase} />
                 <Card interactive className="border-success/35 bg-gradient-to-br from-success/[0.12] via-transparent to-transparent">
                   <p className="text-pretty text-xl font-medium leading-relaxed text-ink sm:text-2xl sm:leading-relaxed">
                     {caseStudyOutcome}
