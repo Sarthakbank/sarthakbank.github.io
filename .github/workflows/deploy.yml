@@ -1,5 +1,6 @@
-# Deploy static Next.js site to GitHub Pages (user site: sarthakbank.github.io)
-# Artifact: `out/` from `next build` with output: "export"
+# Deploy static Next.js site to GitHub Pages (USER site: https://sarthakbank.github.io/)
+# Requires: Settings → Pages → Build and deployment → Source: GitHub Actions
+# No basePath / assetPrefix — `out/` is site root.
 
 name: Deploy to GitHub Pages
 
@@ -7,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
 
 permissions:
@@ -18,9 +20,13 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,6 +43,14 @@ jobs:
       - name: Build static site
         run: npm run build
 
+      - name: Verify static export output
+        run: |
+          test -d out || { echo "Missing out/ — is output: \"export\" set in next.config?"; exit 1; }
+          test -f out/index.html || { echo "Missing out/index.html"; exit 1; }
+          # Jekyll would otherwise ignore _next; Next usually emits this — ensure it exists.
+          if [ ! -f out/.nojekyll ]; then touch out/.nojekyll; fi
+          echo "Export OK ($(du -sh out | cut -f1))"
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -45,6 +59,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
