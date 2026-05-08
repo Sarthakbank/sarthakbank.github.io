@@ -41,6 +41,9 @@ jobs:
         run: npm ci
 
       - name: Build static site
+        env:
+          # Match local `.env.local` when set: repo → Settings → Secrets and variables → Actions → Variables → `NEXT_PUBLIC_IMMERSIVE_LAB` = `true`
+          NEXT_PUBLIC_IMMERSIVE_LAB: ${{ vars.NEXT_PUBLIC_IMMERSIVE_LAB }}
         run: npm run build
 
       - name: Verify static export output
