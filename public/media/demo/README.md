@@ -1,32 +1,28 @@
-# Demo media (Phase 3)
+# Demo media (Phase 4)
 
-Local placeholders for the portfolio **until** Black Tidemark and profile shots replace them.
+Cohesive **cold coast / industrial / fortress** world for the portfolio until Black Tidemark and personal plates replace these files.
 
-## Layout
+## Folders
 
-| Folder | Role |
-|--------|------|
+| Path | Use |
+|------|-----|
 | `home/` | Home hero ambient |
 | `case-study/` | Case hero + world plate |
 | `gallery/` | Case-study gallery grid |
-| `beats/` | Beat row stills (copies or unique frames) |
-| `process/` | Process + iteration before/after |
-| `video-posters/` | Reference YouTube poster frames (curated stills) |
+| `beats/` | Walkthrough beat stills |
+| `process/` | Process support plate |
+| `iterations/` | Before / after iteration pair |
+| `video-posters/` | Reference video posters (curated stills) |
 
 ## Source of truth
 
-Paths and credits: `content/demoMediaManifest.ts`  
-Reference videos: `content/demoMedia.ts`
+- Paths: `content/demoMediaManifest.ts`
+- Reference videos: `content/demoMedia.ts`
 
-## Stills license
+## License
 
-Still images were downloaded from **Pexels** (free use). Each file’s original page URL and download URL are listed in `demoImageSources` inside `content/demoMediaManifest.ts`.
+Stills are from **Pexels** (free use). Download URLs and subjects are recorded in `demoImageSources` in the manifest.
 
 ## Videos
 
-Embedded clips are **third-party reference** (Epic / Unreal–related). They are **not** presented as Sarthak’s project footage. Update `content/demoMedia.ts` when swapping to your own uploads.
-
-## Replacing assets
-
-1. Drop new JPG/WebP into the matching folder (keep filenames **or** update the manifest paths).
-2. Re-run `npm run build` to verify static export.
+Embeds are **third-party reference** only. Use **Watch reference video** or **Play embedded preview** in the UI. Update `content/demoMedia.ts` when swapping to your own footage.

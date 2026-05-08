@@ -7,7 +7,6 @@ import { cn } from "@/lib/cn";
 type Props = {
   src: string;
   alt: string;
-  /** Short label — prefer “Demo plate” / replace hints */
   caption?: string;
   className?: string;
   priority?: boolean;
@@ -15,13 +14,13 @@ type Props = {
 };
 
 /**
- * Portfolio scene frame — local `/media/demo/...` or future `/media/...` shots.
- * Base gradient + load fallback avoids empty black boxes on missing files.
+ * Scene frame for local `/media/demo/...` plates. Base fill + error fallback
+ * avoids empty black boxes; overlays stay light for a crisp dark mode read.
  */
 export function TempSceneImage({
   src,
   alt,
-  caption = "Demo visual — replace with project media",
+  caption = "Demo plate",
   className,
   priority,
   sizes = "100vw",
@@ -36,7 +35,7 @@ export function TempSceneImage({
       )}
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface via-elevated/80 to-surface"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface via-elevated/90 to-surface dark:via-elevated/70"
         aria-hidden
       />
       {!broken ? (
@@ -56,11 +55,11 @@ export function TempSceneImage({
         </div>
       )}
       <div
-        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-canvas/65 via-transparent to-canvas/15 dark:from-black/70 dark:via-transparent dark:to-black/20"
+        className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-canvas/55 via-transparent to-canvas/10 dark:from-black/60 dark:to-black/15"
         aria-hidden
       />
-      <figcaption className="pointer-events-none absolute bottom-0 left-0 right-0 z-[3] flex justify-center px-4 pb-3.5 pt-8 sm:pb-4">
-        <span className="max-w-[95%] rounded-full border border-hairline/90 bg-elevated/95 px-3 py-1.5 text-center text-[10px] font-semibold uppercase leading-snug tracking-[0.14em] text-muted shadow-panel backdrop-blur-md dark:bg-elevated/90">
+      <figcaption className="pointer-events-none absolute bottom-0 left-0 right-0 z-[3] flex justify-center px-4 pb-3 pt-6 sm:pb-3.5">
+        <span className="max-w-[min(100%,42rem)] rounded-full border border-hairline/80 bg-elevated/95 px-3 py-1.5 text-center text-[10px] font-medium uppercase leading-snug tracking-[0.12em] text-muted shadow-panel backdrop-blur-md dark:bg-elevated/88">
           {caption}
         </span>
       </figcaption>

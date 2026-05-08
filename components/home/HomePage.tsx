@@ -126,7 +126,7 @@ export function HomePage() {
                     className="aspect-[16/11] min-h-[220px] w-full sm:min-h-[260px]"
                     sizes="(min-width: 1024px) 480px, 100vw"
                     priority
-                    caption="Demo ambient — replace in public/media/demo/home/"
+                    caption="Demo · home atmosphere"
                   />
                 </ParallaxFloat>
                 <div className="relative z-10 -mt-[28%] flex justify-center px-4 sm:-mt-[26%] lg:px-6">
@@ -219,7 +219,7 @@ export function HomePage() {
                   alt="Architectural environment reference for featured project (temporary)"
                   className="aspect-[16/10] w-full lg:aspect-[5/3]"
                   sizes="(min-width: 1024px) 50vw, 100vw"
-                  caption="Demo key art — replace in public/media/demo/case-study/"
+                  caption="Demo · featured key art"
                 />
               </ParallaxFloat>
             </div>

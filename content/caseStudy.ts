@@ -88,12 +88,12 @@ export const caseStudyGallery: readonly {
   key: TempImageryKey;
   caption: string;
 }[] = [
-  { key: "galleryStormCoast", caption: "Demo gallery — coastal pressure" },
-  { key: "galleryBrutalist", caption: "Demo gallery — vista / legibility" },
-  { key: "galleryUrbanDepth", caption: "Demo gallery — urban depth" },
-  { key: "galleryFogPath", caption: "Demo gallery — fog exploration" },
-  { key: "galleryInteriorRhythm", caption: "Demo gallery — interior rhythm" },
-  { key: "galleryPeaks", caption: "Demo gallery — vertical scale" },
+  { key: "galleryStormCoast", caption: "Demo · sea state" },
+  { key: "galleryBrutalist", caption: "Demo · brutalist read" },
+  { key: "galleryUrbanDepth", caption: "Demo · industrial depth" },
+  { key: "galleryFogPath", caption: "Demo · fog layer" },
+  { key: "galleryInteriorRhythm", caption: "Demo · service rhythm" },
+  { key: "galleryPeaks", caption: "Demo · ridgeline scale" },
 ];
 
 export const caseStudyGoal =

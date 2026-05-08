@@ -125,7 +125,7 @@ export function CaseStudyView() {
                     className="aspect-[16/10] w-full lg:aspect-[5/3]"
                     sizes="(min-width: 1024px) 520px, 100vw"
                     priority
-                    caption="Demo plate — replace in public/media/demo/case-study/"
+                    caption="Demo · case hero"
                   />
                 </ParallaxFloat>
               </div>
@@ -213,7 +213,7 @@ export function CaseStudyView() {
                   alt="Demo coastal atmosphere plate"
                   className="aspect-[16/10] w-full"
                   sizes="(min-width: 1024px) 42vw, 100vw"
-                  caption="Demo plate — world / setting (replace)"
+                  caption="Demo · world coast"
                 />
               </div>
             </FadeIn>
@@ -330,14 +330,14 @@ export function CaseStudyView() {
                   alt="Temporary architectural readability reference"
                   className="aspect-video w-full"
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  caption="Demo plate — topology / readability (replace)"
+                  caption="Demo · topology plate"
                 />
                 <TempSceneImage
                   src={tempImagery.galleryUrbanDepth}
                   alt="Temporary urban depth mood"
                   className="aspect-video w-full"
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  caption="Demo plate — routing / verticality (replace)"
+                  caption="Demo · routing plate"
                 />
               </div>
             </FadeIn>
@@ -391,15 +391,15 @@ export function CaseStudyView() {
                 Beats & atmosphere
               </h2>
               <p className="mt-4 max-w-2xl text-pretty text-muted">
-                Reference clips set UE5 tone only — swap IDs and posters in{" "}
+                Reference clips only — swap IDs in{" "}
                 <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">
                   content/demoMedia.ts
-                </code>{" "}
-                and{" "}
+                </code>
+                ; posters in{" "}
                 <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">
                   public/media/demo/video-posters/
-                </code>{" "}
-                when Black Tidemark captures ship.
+                </code>
+                . Use “Watch reference video” if embed fails in your region.
               </p>
               <div className="mt-10">
                 <YouTubeEmbed {...demoReferenceVideos.gameplayAtmosphere} />
@@ -429,7 +429,7 @@ export function CaseStudyView() {
                             alt={`Demo beat ${idx + 1} plate`}
                             className="aspect-video w-full"
                             sizes="(min-width: 1024px) 56vw, 100vw"
-                            caption={`Demo beat ${idx + 1} — replace in public/media/demo/beats/`}
+                            caption={`Demo · beat ${idx + 1}`}
                           />
                         </div>
                       </div>
@@ -508,7 +508,7 @@ export function CaseStudyView() {
                   alt="Demo process atmosphere plate"
                   className="aspect-[21/9] min-h-[200px] w-full"
                   sizes="(min-width: 1024px) 40vw, 100vw"
-                  caption="Demo process plate — replace in public/media/demo/process/"
+                  caption="Demo · process plate"
                 />
               </div>
             </FadeIn>
@@ -526,11 +526,11 @@ export function CaseStudyView() {
                 Mood & reference plates
               </h2>
               <p className="mt-4 max-w-2xl text-pretty text-sm leading-relaxed text-muted sm:text-base">
-                Local demo gallery — replace files under{" "}
+                Local plates — swap files in{" "}
                 <code className="rounded-md bg-elevated px-1.5 py-0.5 text-xs text-ink">
                   public/media/demo/gallery/
                 </code>{" "}
-                or update paths in{" "}
+                or paths in{" "}
                 <code className="rounded-md bg-elevated px-1.5 py-0.5 text-xs text-ink">
                   content/demoMediaManifest.ts
                 </code>
@@ -588,7 +588,7 @@ export function CaseStudyView() {
                     alt="Demo iteration before plate"
                     className="aspect-video w-full"
                     sizes="50vw"
-                    caption="Demo — iteration before (replace)"
+                    caption="Demo · iteration before"
                   />
                 </div>
                 <div className="space-y-2">
@@ -600,7 +600,7 @@ export function CaseStudyView() {
                     alt="Demo iteration after plate"
                     className="aspect-video w-full"
                     sizes="50vw"
-                    caption="Demo — iteration after (replace)"
+                    caption="Demo · iteration after"
                   />
                 </div>
               </div>

@@ -1,12 +1,12 @@
 /**
- * Reference / mood demo videos (not Black Tidemark project footage).
- * IDs must stay embed-friendly; posters live under `public/media/demo/video-posters/`.
- * Update `watchUrl` if you change `videoId`.
+ * Reference / mood / placeholder demo videos — not Black Tidemark footage.
+ * Posters: `public/media/demo/video-posters/`. Embeds load on user action (see `YouTubeEmbed`).
  */
 
 export const demoVideoCategory = {
   "reference-walkthrough": "Reference walkthrough",
-  "reference-mood": "Reference mood",
+  "mood-finale-reference": "Mood / finale reference",
+  "demo-placeholder-footage": "Demo placeholder footage",
 } as const;
 
 export type DemoVideoCategory = keyof typeof demoVideoCategory;
@@ -16,35 +16,35 @@ export const demoReferenceVideos = {
     videoId: "qC5Ktat73Ew",
     watchUrl: "https://www.youtube.com/watch?v=qC5Ktat73Ew",
     posterSrc: "/media/demo/video-posters/reference-overview-poster.jpg",
-    category: "reference-mood" as const,
-    title: "Unreal Engine 5 reveal — Epic Games (reference)",
-    caption: "Reference video — not Black Tidemark footage",
+    category: "demo-placeholder-footage" as const,
+    title: "Unreal Engine 5 reveal — Epic Games",
+    caption: "Placeholder reel — not your shipped work",
     disclaimer:
-      "Third-party Epic/Unreal showcase for tone only. Replace with your reel when ready.",
+      "Third-party Epic showcase for portfolio tone only. Replace with a Black Tidemark or personal reel.",
   },
   gameplayAtmosphere: {
     videoId: "wB7dcD02IZQ",
     watchUrl: "https://www.youtube.com/watch?v=wB7dcD02IZQ",
     posterSrc: "/media/demo/video-posters/reference-gameplay-poster.jpg",
     category: "reference-walkthrough" as const,
-    title: "Lumen in the Land of Nanite — Epic Games (reference)",
-    caption: "Reference walkthrough — not project gameplay",
+    title: "Lumen in the Land of Nanite — Epic Games",
+    caption: "Reference walkthrough — not in-engine slice",
     disclaimer:
-      "Official Epic tech demo for pacing reference. Swap for in-engine Black Tidemark capture.",
+      "Official Epic tech demo for pacing and readability reference. Swap for Black Tidemark capture.",
   },
   finaleShowcase: {
-    videoId: "FIsJfYU_BuQ",
-    watchUrl: "https://www.youtube.com/watch?v=FIsJfYU_BuQ",
+    videoId: "TGoWRUWNUWw",
+    watchUrl: "https://www.youtube.com/watch?v=TGoWRUWNUWw",
     posterSrc: "/media/demo/video-posters/reference-finale-poster.jpg",
-    category: "reference-mood" as const,
-    title: "The Matrix Awakens — UE5 sample (reference)",
-    caption: "Reference showcase — not project finale",
+    category: "mood-finale-reference" as const,
+    title: "Nanite | Unreal Engine 5 — Epic Games",
+    caption: "Mood / finale reference — not project outcome",
     disclaimer:
-      "Epic/Unreal sample project trailer used as finale-tone placeholder only.",
+      "Third-party Epic tech overview for scale and finale tone. Not Sarthak’s original footage.",
   },
 } as const;
 
-/** @deprecated Use `demoReferenceVideos` — kept for incremental refactors */
+/** @deprecated Use `demoReferenceVideos` */
 export const demoYouTube = {
   overviewReel: {
     videoId: demoReferenceVideos.overviewReel.videoId,
