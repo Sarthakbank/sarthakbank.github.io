@@ -1,5 +1,6 @@
 "use client";
 
+import { useImmersiveLab } from "@/components/experiment/ImmersiveLabProvider";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { cn } from "@/lib/cn";
@@ -16,6 +17,9 @@ export function ParallaxFloat({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const lab = useImmersiveLab();
+  const range = yRange * (lab ? 1.45 : 1);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 0.9", "end 0.1"],
@@ -23,7 +27,7 @@ export function ParallaxFloat({
   const y = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    reduce ? [0, 0, 0] : [yRange * 0.4, 0, -yRange * 0.4],
+    reduce ? [0, 0, 0] : [range * 0.4, 0, -range * 0.4],
   );
 
   return (

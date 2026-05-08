@@ -1,8 +1,9 @@
 "use client";
 
+import { useImmersiveLab } from "@/components/experiment/ImmersiveLabProvider";
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import type { ReactNode } from "react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { cn } from "@/lib/cn";
 
 const spring = { stiffness: 260, damping: 22, mass: 0.45 };
@@ -21,11 +22,14 @@ export function TiltCard({
   maxTilt?: number;
 }) {
   const reduce = useReducedMotion();
+  const lab = useImmersiveLab();
+  const tilt = useMemo(() => maxTilt * (lab ? 1.22 : 1), [lab, maxTilt]);
+
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
   const srx = useSpring(rx, spring);
   const sry = useSpring(ry, spring);
-  const transform = useMotionTemplate`perspective(900px) rotateX(${srx}deg) rotateY(${sry}deg)`;
+  const transform = useMotionTemplate`perspective(${lab ? 1100 : 900}px) rotateX(${srx}deg) rotateY(${sry}deg)`;
 
   const onMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -34,10 +38,10 @@ export function TiltCard({
       const r = el.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      ry.set(px * 2 * maxTilt);
-      rx.set(-py * 2 * maxTilt);
+      ry.set(px * 2 * tilt);
+      rx.set(-py * 2 * tilt);
     },
-    [maxTilt, reduce, rx, ry],
+    [tilt, reduce, rx, ry],
   );
 
   const onLeave = useCallback(() => {

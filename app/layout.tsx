@@ -3,8 +3,10 @@ import { Inter, Newsreader } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ImmersiveLabProvider } from "@/components/experiment/ImmersiveLabProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { IMMERSIVE_LAB_ENABLED } from "@/lib/immersiveLab";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,9 +62,11 @@ export default function RootLayout({
           {themeScript}
         </Script>
         <ThemeProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <ImmersiveLabProvider enabled={IMMERSIVE_LAB_ENABLED}>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </ImmersiveLabProvider>
         </ThemeProvider>
       </body>
     </html>

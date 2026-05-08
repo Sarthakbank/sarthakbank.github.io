@@ -42,7 +42,8 @@
 
   --hero-glow: color-mix(in srgb, var(--color-accent) 22%, transparent);
   --hero-glow-warm: color-mix(in srgb, var(--color-warn) 14%, transparent);
-  --shadow-panel: 0 1px 0 color-mix(in srgb, #ffffff 8%, transparent),
+  --shadow-panel:
+    0 1px 0 color-mix(in srgb, #ffffff 8%, transparent),
     0 32px 120px #000000;
   --shadow-lift: 0 28px 90px rgba(0, 0, 0, 0.65);
   --shadow-glow: 0 0 100px color-mix(in srgb, var(--color-accent) 25%, transparent);
@@ -131,5 +132,34 @@ body {
 
   .border-hairline {
     border-color: color-mix(in srgb, var(--color-border) 85%, transparent);
+  }
+}
+
+/* Immersive lab — ambient light sweep (disabled globally when reduced-motion via short animation) */
+html[data-immersive-lab="on"] .immersive-light-sweep {
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    color-mix(in srgb, var(--color-accent) 14%, transparent) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 240% 100%;
+  animation: immersive-sweep 18s ease-in-out infinite;
+  opacity: 0.2;
+}
+
+.dark html[data-immersive-lab="on"] .immersive-light-sweep {
+  opacity: 0.26;
+}
+
+@keyframes immersive-sweep {
+  0%,
+  100% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
   }
 }

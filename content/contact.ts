@@ -6,6 +6,14 @@ export const contactIntro = {
     "For level design opportunities or a conversation about spatial gameplay and vertical slices.",
 };
 
+/** Presentation-only CTA copy — does not change factual channels below. */
+export const contactOpportunity = {
+  eyebrow: "Open to opportunities",
+  headline: "Let's work together",
+  supporting:
+    "Level design roles, prototyping collaborations, and thoughtful conversations about spatial gameplay are welcome — reach out through any channel below.",
+} as const;
+
 export const contactChannels = {
   email: {
     label: "Email",

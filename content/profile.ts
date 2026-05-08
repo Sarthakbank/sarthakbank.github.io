@@ -86,3 +86,5 @@ export const profileTools = [
   "Figma",
   "Miro",
 ] as const;
+
+export type ProfileTool = (typeof profileTools)[number];
