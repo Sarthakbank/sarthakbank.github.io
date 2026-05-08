@@ -44,7 +44,9 @@ jobs:
         env:
           # Match local `.env.local` when set: repo → Settings → Secrets and variables → Actions → Variables → `NEXT_PUBLIC_IMMERSIVE_LAB` = `true`
           NEXT_PUBLIC_IMMERSIVE_LAB: ${{ vars.NEXT_PUBLIC_IMMERSIVE_LAB }}
-        run: npm run build
+        run: |
+          echo "NEXT_PUBLIC_IMMERSIVE_LAB (build) = '${NEXT_PUBLIC_IMMERSIVE_LAB:-}'  ← must be exactly 'true' to match .env.local"
+          npm run build
 
       - name: Verify static export output
         run: |
