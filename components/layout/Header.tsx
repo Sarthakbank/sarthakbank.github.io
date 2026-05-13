@@ -27,6 +27,11 @@ export function Header() {
     };
   }, [menuOpen]);
 
+  /** Editorial routes ship their own chrome (light Apple-style home + case study). */
+  if (pathname === "/" || pathname === "/case-study") {
+    return null;
+  }
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-hairline bg-canvas/85 shadow-[0_1px_0_rgba(0,0,0,0.04)] backdrop-blur-2xl dark:bg-canvas/72 dark:shadow-[0_1px_0_rgba(255,255,255,0.06)] supports-[padding:max(0px)]:pt-[max(0.35rem,env(safe-area-inset-top))]">
       <Container className="flex min-h-[3.5rem] items-center justify-between gap-2 py-2 sm:min-h-0 sm:h-[4.25rem] sm:gap-4 sm:py-0">

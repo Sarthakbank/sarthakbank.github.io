@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CaseStudyView } from "@/components/case-study/CaseStudyView";
 
 export const metadata: Metadata = {
-  title: "Featured project — Black Tidemark (demo)",
+  title: "Featured project — Escape Protocol",
   description:
-    "Demo case study: third-person stealth-action level design breakdown for Black Tidemark.",
+    "Editorial case study: level design breakdown for Escape Protocol — spatial flow, pillars, and process.",
 };
 
 export default function Page() {

@@ -1,728 +1,398 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useRef } from "react";
-import {
-  ArrowUpRight,
-  Gamepad2,
-  Mail,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, Eye, Mail, Plus, RefreshCw, Users } from "lucide-react";
 import { SiGithub } from "react-icons/si";
-import {
-  motion,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import { Card } from "@/components/ui/Card";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { FadeIn } from "@/components/motion/FadeIn";
-import { MotionSection } from "@/components/motion/MotionSection";
-import { ParallaxFloat } from "@/components/motion/ParallaxFloat";
-import {
-  staggerContainerOpening,
-  staggerItemOpening,
-} from "@/components/motion/motionPresets";
-import { StaggerGroup, StaggerItem } from "@/components/motion/StaggerGroup";
-import { TiltCard } from "@/components/motion/TiltCard";
 import { Container } from "@/components/layout/Container";
-import { Section } from "@/components/layout/Section";
-import { SectionDivider } from "@/components/layout/SectionDivider";
-import { ProfilePortrait } from "@/components/media/ProfilePortrait";
-import { TempSceneImage } from "@/components/media/TempSceneImage";
-import { ToolIcon } from "@/components/icons/ToolIcon";
 import {
   homeAboutPreview,
+  homeCaseStudyCard,
+  homeConnectSection,
   homeContactCta,
   homeCtas,
+  homeDesignPrinciples,
   homeFeaturedPreview,
+  homeFooter,
   homeHero,
-  homeHighlights,
+  homeSkillGrid,
+  homeThinkInSpace,
 } from "@/content/home";
-import { homeHeroChips } from "@/content/homeHeroChips";
-import { profileSkills, profileTools } from "@/content/profile";
-import { profileToolGroups } from "@/content/toolGroups";
 import { contactChannels } from "@/content/contact";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { IsometricBlockoutHeroVisual } from "@/components/home/IsometricBlockoutHeroVisual";
+import { TempSceneImage } from "@/components/media/TempSceneImage";
 import { tempImagery } from "@/content/tempImagery";
-import { HeroLabLayers } from "@/components/experiment/HeroLabLayers";
-import { HomeImmersiveHeroColumn } from "@/components/home/HomeImmersiveHeroColumn";
-import { DepthFrame } from "@/components/experiment/DepthFrame";
-import { useImmersiveLab } from "@/components/experiment/ImmersiveLabProvider";
+import { SkillIcon } from "@/components/icons/SkillIcon";
 import { cn } from "@/lib/cn";
 
-const Hero3DStage = dynamic(
-  () =>
-    import("@/components/experiment/Hero3DStage").then((m) => ({
-      default: m.Hero3DStage,
-    })),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-full min-h-[420px] w-full animate-pulse bg-surface/10 dark:bg-elevated/10" />
-    ),
-  },
-);
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const principleIcon = {
+  users: Users,
+  eye: Eye,
+  refresh: RefreshCw,
+} as const;
+
+function FadeUp({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) {
+    return <div className={className}>{children}</div>;
+  }
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -8% 0px", amount: 0.15 }}
+      transition={{ duration: 0.55, delay, ease }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const shell =
+  "bg-[#fbfbfd] text-[#1d1d1f] antialiased selection:bg-[#0071e3]/18 selection:text-[#1d1d1f] dark:bg-[#fbfbfd] dark:text-[#1d1d1f]";
 
 export function HomePage() {
-  const lab = useImmersiveLab();
-  const reduceMotion = useReducedMotion();
-  const featuredRef = useRef<HTMLDivElement>(null);
-  const homeFeaturedPs5PinRef = useRef<HTMLDivElement>(null);
-  const homeFeaturedPs5ScrollRef = useRef(0);
-  const { scrollYProgress: featuredScroll } = useScroll({
-    target: featuredRef,
-    offset: ["start 0.88", "end 0.18"],
-  });
-  const { scrollYProgress: homeFeaturedPs5Progress } = useScroll({
-    target: homeFeaturedPs5PinRef,
-    offset: ["start start", "end end"],
-  });
-  useMotionValueEvent(homeFeaturedPs5Progress, "change", (v) => {
-    homeFeaturedPs5ScrollRef.current = v;
-  });
-  /** Single damped scroll read on featured media — no layered glows. */
-  const featuredMediaY = useTransform(featuredScroll, [0, 0.48, 1], [8, 0, -6]);
-
-  const heroIntroLabBlocks = (
-    <>
-      <motion.div variants={staggerItemOpening}>
-        <div className="flex flex-wrap gap-2 max-sm:gap-1.5">
-          {homeHeroChips.map((chip, i) => (
-            <span
-              key={chip.text}
-              className="inline-flex items-center gap-2 rounded-full border border-hairline bg-elevated/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md"
-            >
-              {i === 0 ? (
-                <MapPin className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-              ) : (
-                <Sparkles className="h-3.5 w-3.5 shrink-0 text-accent/80" aria-hidden />
-              )}
-              {chip.text}
-            </span>
-          ))}
-        </div>
-      </motion.div>
-      <motion.div variants={staggerItemOpening}>
-        <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
-          Level design portfolio
-        </p>
-      </motion.div>
-      <motion.div variants={staggerItemOpening}>
-        <h1 className="mt-3 max-w-3xl text-balance font-display text-display-lg font-semibold lg:text-display-xl">
-          {homeHero.name}
-        </h1>
-      </motion.div>
-      <motion.div variants={staggerItemOpening}>
-        <p className="mt-4 text-xl font-medium tracking-tight text-ink/90 sm:text-2xl">
-          {homeHero.role}
-        </p>
-      </motion.div>
-      <motion.div variants={staggerItemOpening}>
-        <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
-          {homeHero.tagline}
-        </p>
-      </motion.div>
-      <motion.div variants={staggerItemOpening}>
-        <div className="mt-8 flex flex-wrap gap-2.5 sm:mt-10 sm:gap-3">
-          <ButtonLink
-            href={homeCtas.primary.href}
-            variant="primary"
-            icon={<Gamepad2 />}
-          >
-            {homeCtas.primary.label}
-          </ButtonLink>
-          <ButtonLink
-            href={homeCtas.secondary.href}
-            variant="secondary"
-            icon={<ArrowUpRight />}
-            iconPosition="end"
-          >
-            {homeCtas.secondary.label}
-          </ButtonLink>
-          <ButtonLink href="/contact" variant="ghost" icon={<Mail />}>
-            Contact
-          </ButtonLink>
-          <ButtonLink
-            href={contactChannels.github.href}
-            variant="ghost"
-            icon={<SiGithub />}
-            external
-          >
-            GitHub
-          </ButtonLink>
-        </div>
-      </motion.div>
-      <motion.div variants={staggerItemOpening}>
-        <div className="mt-10 border-t border-hairline pt-8">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
-            Focus areas
-          </p>
-          <StaggerGroup className="mt-4 flex flex-wrap gap-2 max-sm:justify-start sm:snap-x sm:snap-mandatory sm:overflow-x-auto sm:pb-1 md:overflow-visible">
-            {homeHighlights.map((h) => (
-              <StaggerItem key={h} className="snap-start">
-                <span className="inline-block rounded-xl border border-hairline bg-surface/60 px-4 py-2.5 text-[13px] font-semibold leading-snug text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition hover:border-accent/30 dark:bg-surface/40">
-                  {h}
-                </span>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
-      </motion.div>
-    </>
-  );
-
-  const heroIntro = lab ? (
-    reduceMotion ? (
-      <StaggerGroup margin="-10% 0px -14% 0px">
-        <StaggerItem>
-          <div className="flex flex-wrap gap-2">
-            {homeHeroChips.map((chip, i) => (
-              <span
-                key={chip.text}
-                className="inline-flex items-center gap-2 rounded-full border border-hairline bg-elevated/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md"
-              >
-                {i === 0 ? (
-                  <MapPin className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                ) : (
-                  <Sparkles className="h-3.5 w-3.5 shrink-0 text-accent/80" aria-hidden />
-                )}
-                {chip.text}
-              </span>
-            ))}
-          </div>
-        </StaggerItem>
-        <StaggerItem>
-          <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
-            Level design portfolio
-          </p>
-        </StaggerItem>
-        <StaggerItem>
-          <h1 className="mt-3 max-w-3xl text-balance font-display text-display-lg font-semibold lg:text-display-xl">
-            {homeHero.name}
-          </h1>
-        </StaggerItem>
-        <StaggerItem>
-          <p className="mt-4 text-xl font-medium tracking-tight text-ink/90 sm:text-2xl">
-            {homeHero.role}
-          </p>
-        </StaggerItem>
-        <StaggerItem>
-          <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
-            {homeHero.tagline}
-          </p>
-        </StaggerItem>
-        <StaggerItem>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <ButtonLink
-              href={homeCtas.primary.href}
-              variant="primary"
-              icon={<Gamepad2 />}
-            >
-              {homeCtas.primary.label}
-            </ButtonLink>
-            <ButtonLink
-              href={homeCtas.secondary.href}
-              variant="secondary"
-              icon={<ArrowUpRight />}
-              iconPosition="end"
-            >
-              {homeCtas.secondary.label}
-            </ButtonLink>
-            <ButtonLink href="/contact" variant="ghost" icon={<Mail />}>
-              Contact
-            </ButtonLink>
-            <ButtonLink
-              href={contactChannels.github.href}
-              variant="ghost"
-              icon={<SiGithub />}
-              external
-            >
-              GitHub
-            </ButtonLink>
-          </div>
-        </StaggerItem>
-        <StaggerItem>
-          <div className="mt-10 border-t border-hairline pt-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
-              Focus areas
-            </p>
-            <StaggerGroup className="mt-4 flex flex-wrap gap-2 max-sm:justify-start sm:snap-x sm:snap-mandatory sm:overflow-x-auto sm:pb-1 md:overflow-visible">
-              {homeHighlights.map((h) => (
-                <StaggerItem key={h} className="snap-start">
-                  <span className="inline-block rounded-xl border border-hairline bg-surface/60 px-4 py-2.5 text-[13px] font-semibold leading-snug text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition hover:border-accent/30 dark:bg-surface/40">
-                    {h}
-                  </span>
-                </StaggerItem>
-              ))}
-            </StaggerGroup>
-          </div>
-        </StaggerItem>
-      </StaggerGroup>
-    ) : (
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-8% 0px -6% 0px", amount: 0.06 }}
-        variants={staggerContainerOpening}
-      >
-        {heroIntroLabBlocks}
-      </motion.div>
-    )
-  ) : (
-    <FadeIn>
-      <div className="flex flex-wrap gap-2">
-        {homeHeroChips.map((chip, i) => (
-          <TiltCard key={chip.text} maxTilt={4} className="inline-block">
-            <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-elevated/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-muted shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md">
-              {i === 0 ? (
-                <MapPin className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-              ) : (
-                <Sparkles className="h-3.5 w-3.5 shrink-0 text-accent/80" aria-hidden />
-              )}
-              {chip.text}
-            </span>
-          </TiltCard>
-        ))}
-      </div>
-
-      <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent">
-        Level design portfolio
-      </p>
-
-      <h1 className="mt-3 max-w-3xl text-balance font-display text-display-lg font-semibold lg:text-display-xl">
-        {homeHero.name}
-      </h1>
-      <p className="mt-4 text-xl font-medium tracking-tight text-ink/90 sm:text-2xl">
-        {homeHero.role}
-      </p>
-      <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted sm:text-xl sm:leading-relaxed">
-        {homeHero.tagline}
-      </p>
-
-      <div className="mt-10 flex flex-wrap gap-3">
-        <ButtonLink
-          href={homeCtas.primary.href}
-          variant="primary"
-          icon={<Gamepad2 />}
-        >
-          {homeCtas.primary.label}
-        </ButtonLink>
-        <ButtonLink
-          href={homeCtas.secondary.href}
-          variant="secondary"
-          icon={<ArrowUpRight />}
-          iconPosition="end"
-        >
-          {homeCtas.secondary.label}
-        </ButtonLink>
-        <ButtonLink href="/contact" variant="ghost" icon={<Mail />}>
-          Contact
-        </ButtonLink>
-        <ButtonLink
-          href={contactChannels.github.href}
-          variant="ghost"
-          icon={<SiGithub />}
-          external
-        >
-          GitHub
-        </ButtonLink>
-      </div>
-
-      <div className="mt-10 border-t border-hairline pt-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">
-          Focus areas
-        </p>
-        <div className="mt-4 flex flex-wrap gap-2 max-sm:justify-start sm:snap-x sm:snap-mandatory sm:flex-nowrap sm:overflow-x-auto sm:pb-1 md:flex-wrap md:overflow-visible">
-          {homeHighlights.map((h) => (
-            <TiltCard key={h} maxTilt={5} className="snap-start">
-              <span className="inline-block rounded-xl border border-hairline bg-surface/60 px-4 py-2.5 text-[13px] font-semibold leading-snug text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition hover:border-accent/30 dark:bg-surface/40">
-                {h}
-              </span>
-            </TiltCard>
-          ))}
-        </div>
-      </div>
-    </FadeIn>
-  );
-
-  const heroMedia = lab ? (
-    <HomeImmersiveHeroColumn />
-  ) : (
-    <FadeIn delay={0.08}>
-      <div className="relative mx-auto w-full max-w-lg lg:mx-0 lg:max-w-none">
-        <ParallaxFloat yRange={22}>
-          <TempSceneImage
-            src={tempImagery.homeHeroAmbient}
-            alt="Atmospheric environment reference (temporary)"
-            className="aspect-[16/11] min-h-[220px] w-full sm:min-h-[260px]"
-            sizes="(min-width: 1024px) 480px, 100vw"
-            priority
-            caption="Demo · home atmosphere"
-          />
-        </ParallaxFloat>
-        <div className="relative z-10 -mt-[28%] flex justify-center px-4 sm:-mt-[26%] lg:px-6">
-          <ProfilePortrait className="w-[min(100%,320px)] shadow-lift sm:w-[min(100%,360px)]" priority />
-        </div>
-      </div>
-    </FadeIn>
-  );
-
-  const aboutBlock = (
-    <>
-      <SectionLabel>About preview</SectionLabel>
-      <div className="mt-6 grid gap-10 md:gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-        <div>
-          <h2 className="max-w-xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-[1.08]">
-            Spatial clarity under pressure
-          </h2>
-          <Card interactive className="mt-8 border-hairline">
-            <div className="space-y-5 text-pretty text-base leading-relaxed text-muted sm:text-lg">
-              {homeAboutPreview.paragraphs.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-            <div className="mt-8 border-t border-hairline pt-8">
-              <ButtonLink href="/about" variant="secondary" icon={<ArrowUpRight />} iconPosition="end">
-                Read full about
-              </ButtonLink>
-            </div>
-          </Card>
-        </div>
-        <div className="relative">
-          <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-accent/5 blur-3xl dark:bg-accent/10" />
-          <div className="relative">
-            <Card className="overflow-hidden border-hairline p-2 sm:p-3">
-              <ProfilePortrait embedded />
-            </Card>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-
-  const featuredBlock = (
-    <>
-      <SectionLabel>Featured project</SectionLabel>
-      <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <h2 className="max-w-xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          {homeFeaturedPreview.title}
-        </h2>
-        <p className="max-w-xl text-sm font-semibold uppercase tracking-[0.14em] leading-relaxed text-warn">
-          {homeFeaturedPreview.eyebrow}
-        </p>
-      </div>
-
-      <div
-        className={cn(
-          "group/featured relative mt-10 grid gap-8 lg:items-stretch lg:gap-10",
-          lab && !reduceMotion ? "lg:grid-cols-1" : "lg:grid-cols-2",
-          lab &&
-            "rounded-[1.75rem] p-[1px] transition-[box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:hover:shadow-[0_0_0_1px_color-mix(in_srgb,var(--color-accent)_28%,transparent),0_32px_80px_-36px_color-mix(in_srgb,var(--color-accent)_10%,transparent)]",
-        )}
-      >
-        <Card interactive className="flex flex-col border-accent/25 lg:justify-between">
-          <div>
-            <p className="text-lg leading-relaxed text-muted">
-              {homeFeaturedPreview.description}
-            </p>
-            <p className="mt-5 text-sm leading-relaxed text-muted/90">
-              {homeFeaturedPreview.meta}
-            </p>
-          </div>
-          <div className="mt-8 border-t border-hairline pt-8">
-            <ButtonLink
-              href={homeFeaturedPreview.href}
-              variant="primary"
-              icon={<Gamepad2 />}
-            >
-              Open case study
-            </ButtonLink>
-          </div>
-        </Card>
-        {lab && !reduceMotion ? null : (
-          <div className="min-h-0">
-            {lab ? (
-              reduceMotion ? (
-                <DepthFrame intensity={0.52} className="rounded-3xl">
-                  <TempSceneImage
-                    src={tempImagery.featuredCaseHero}
-                    alt="Architectural environment reference for featured project (temporary)"
-                    className="aspect-[16/10] w-full lg:aspect-[5/3]"
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    caption="Demo · featured key art"
-                    cinematic
-                  />
-                </DepthFrame>
-              ) : (
-                <motion.div style={{ y: featuredMediaY }} className="min-h-0 will-change-transform">
-                  <DepthFrame intensity={0.52} className="rounded-3xl">
-                    <TempSceneImage
-                      src={tempImagery.featuredCaseHero}
-                      alt="Architectural environment reference for featured project (temporary)"
-                      className="aspect-[16/10] w-full lg:aspect-[5/3]"
-                      sizes="(min-width: 1024px) 50vw, 100vw"
-                      caption="Demo · featured key art"
-                      cinematic
-                    />
-                  </DepthFrame>
-                </motion.div>
-              )
-            ) : (
-              <TempSceneImage
-                src={tempImagery.featuredCaseHero}
-                alt="Architectural environment reference for featured project (temporary)"
-                className="aspect-[16/10] w-full lg:aspect-[5/3]"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                caption="Demo · featured key art"
-              />
-            )}
-          </div>
-        )}
-      </div>
-      {lab && !reduceMotion ? (
-        <div
-          ref={homeFeaturedPs5PinRef}
-          className="relative mt-14 h-[min(240vh,2400px)] w-full max-w-[min(100%,72rem)] lg:mx-auto"
-        >
-          <div className="sticky top-[calc(env(safe-area-inset-top,0px)+4.75rem)] flex min-h-[calc(100dvh-5.5rem)] flex-col justify-center gap-5 pb-10 pt-4">
-            <div className="h-[min(76dvh,800px)] min-h-[440px] w-full">
-              <Hero3DStage
-                preset="showcase"
-                className="h-full w-full"
-                scrollProgressRef={homeFeaturedPs5ScrollRef}
-                scale={1.12}
-                modelFit={2.34}
-              />
-            </div>
-            <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
-              Scroll — product angles
-            </p>
-          </div>
-        </div>
-      ) : null}
-    </>
-  );
-
-  const skillsBlock = (
-    <>
-      <SectionLabel>Skills</SectionLabel>
-      <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-        How I think in space
-      </h2>
-      <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
-        Demo presentation layer — copy stays aligned with your real profile; swap emphasis anytime in{" "}
-        <code className="rounded-md bg-surface px-1.5 py-0.5 text-xs text-ink">content/profile.ts</code>.
-      </p>
-      {lab ? (
-        <StaggerGroup
-          className="mt-10 grid items-stretch gap-3 sm:grid-cols-2 md:[grid-auto-rows:1fr] lg:grid-cols-3 lg:gap-4"
-          margin="-10% 0px -14% 0px"
-        >
-          {profileSkills.map((skill) => (
-            <StaggerItem key={skill} className="h-full min-h-0">
-              <Card interactive className="h-full border-hairline py-5 sm:p-6">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">Focus</p>
-                <p className="mt-2 font-display text-lg font-semibold tracking-tight text-ink">{skill}</p>
-              </Card>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
-      ) : (
-        <div className="mt-10 grid items-stretch gap-3 sm:grid-cols-2 md:[grid-auto-rows:1fr] lg:grid-cols-3 lg:gap-4">
-          {profileSkills.map((skill) => (
-            <TiltCard key={skill} maxTilt={5}>
-              <Card interactive className="h-full border-hairline py-5 sm:p-6">
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">Focus</p>
-                <p className="mt-2 font-display text-lg font-semibold tracking-tight text-ink">{skill}</p>
-              </Card>
-            </TiltCard>
-          ))}
-        </div>
-      )}
-    </>
-  );
-
-  const toolsBlock = (
-    <>
-      <SectionLabel>Tool stack</SectionLabel>
-      <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-        Tools I work with
-      </h2>
-      <p className="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-muted sm:text-lg">
-        {lab
-          ? "Stack is grouped by how it shows up in work — same approved toolset as your profile, clearer rhythm when scanning."
-          : "Icons reflect the approved tool list — update assets or labels in content when your toolchain changes."}
-      </p>
-      {lab ? (
-        <div className="mt-10 space-y-11">
-          {profileToolGroups.map((group) => (
-            <div key={group.title}>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent">
-                {group.title}
-              </p>
-              <p className="mt-1 text-sm text-muted">{group.subtitle}</p>
-              <StaggerGroup
-                className="mt-5 grid grid-cols-2 items-stretch gap-3 sm:grid-cols-3 md:grid-cols-4 md:[grid-auto-rows:1fr] lg:gap-4"
-                margin="-10% 0px -14% 0px"
-              >
-                {group.tools.map((tool) => (
-                  <StaggerItem key={tool} className="min-h-0">
-                    <div
-                      className={cn(
-                        "group flex h-full min-h-[5.5rem] flex-col items-center justify-center gap-2 rounded-2xl border border-hairline bg-gradient-to-b from-elevated/98 to-surface/45 px-2 py-4 text-center shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition duration-300 hover:border-accent/40 dark:from-elevated/90 dark:to-canvas/35",
-                        "hover:shadow-[0_22px_56px_-28px_color-mix(in_srgb,var(--color-accent)_16%,transparent)] dark:hover:shadow-[0_28px_64px_-24px_rgba(0,0,0,0.45)]",
-                      )}
-                    >
-                      <ToolIcon
-                        tool={tool}
-                        className="h-7 w-7 text-accent transition duration-300 group-hover:scale-[1.04]"
-                      />
-                      <span className="text-xs font-semibold leading-tight tracking-tight text-ink sm:text-sm">
-                        {tool}
-                      </span>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerGroup>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="mt-10 grid grid-cols-2 items-stretch gap-3 sm:grid-cols-3 md:grid-cols-4 md:[grid-auto-rows:1fr] lg:gap-4">
-          {profileTools.map((tool) => (
-            <TiltCard key={tool} maxTilt={6}>
-              <div className="group flex min-h-[5.25rem] flex-col items-center justify-center gap-2 rounded-2xl border border-hairline bg-gradient-to-b from-elevated/98 to-surface/45 px-2 py-4 text-center shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-accent/40 dark:from-elevated/90 dark:to-canvas/35">
-                <ToolIcon
-                  tool={tool}
-                  className="h-7 w-7 text-accent transition group-hover:scale-105"
-                />
-                <span className="text-xs font-semibold leading-tight tracking-tight text-ink sm:text-sm">
-                  {tool}
-                </span>
-              </div>
-            </TiltCard>
-          ))}
-        </div>
-      )}
-    </>
-  );
-
-  const contactBlock = (
-    <Card interactive className="overflow-hidden border-accent/30 bg-gradient-to-br from-accent/[0.14] via-elevated/50 to-success/[0.1] dark:via-elevated/20">
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-        <div className="max-w-2xl">
-          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent">
-            Let&apos;s talk
-          </p>
-          <h2 className="mt-3 text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl lg:text-[2rem] lg:leading-snug">
-            {homeContactCta.body}
-          </h2>
-        </div>
-        <div className="flex flex-shrink-0 flex-wrap gap-3">
-          <ButtonLink href={homeContactCta.href} variant="primary" icon={<Mail />}>
-            {homeContactCta.label}
-          </ButtonLink>
-          <ButtonLink href="/case-study" variant="secondary" icon={<Gamepad2 />}>
-            Featured project
-          </ButtonLink>
-          <ButtonLink
-            href={contactChannels.github.href}
-            variant="secondary"
-            icon={<SiGithub />}
-            external
-          >
-            GitHub
-          </ButtonLink>
-        </div>
-      </div>
-    </Card>
-  );
+  const reduce = useReducedMotion();
+  const year = new Date().getFullYear();
 
   return (
-    <>
-      <Section
-        className={cn(
-          "relative overflow-hidden pt-28 sm:pt-32 lg:min-h-[min(92vh,900px)]",
-          lab && "pb-1",
-        )}
-      >
-        <HeroLabLayers />
-        <div className="pointer-events-none absolute inset-0 bg-hero-mesh" />
-        <div
-          className={cn(
-            "pointer-events-none absolute inset-0 bg-hero-radial",
-            lab ? "opacity-90" : "opacity-85",
-          )}
-        />
-        <div
-          className={cn(
-            "pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-canvas to-transparent dark:from-black",
-            lab ? "h-56 sm:h-64" : "h-48",
-          )}
-        />
-
-        <Container className="relative pb-9 pt-2 sm:pb-20 sm:pt-4 lg:pb-12 lg:pt-8">
-          <div
-            className={cn(
-              "grid items-center gap-6 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16",
-              lab
-                ? "max-lg:flex max-lg:flex-col-reverse lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]"
-                : "max-lg:flex max-lg:flex-col-reverse lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]",
-            )}
-          >
-            <div className="min-w-0 max-lg:pt-0.5">{heroIntro}</div>
-            <div className="min-w-0 max-lg:mt-1">{heroMedia}</div>
+    <div className={cn(shell, "pb-0")}>
+      <header className="border-b border-black/[0.06] bg-white/90 backdrop-blur-xl dark:border-black/[0.06] dark:bg-white/90">
+        <Container className="flex min-h-[3.75rem] items-center justify-between py-3 sm:min-h-[4rem] sm:py-4">
+          <span className="font-display text-[15px] font-semibold tracking-tight text-[#1d1d1f] sm:text-base">
+            {homeHero.name.split(" ")[0]}{" "}
+            <span className="font-normal text-[#6e6e73]">Portfolio</span>
+          </span>
+          <nav className="hidden items-center gap-1 sm:flex" aria-label="Primary">
+            {[
+              { href: "/case-study", label: "Work" },
+              { href: "/about", label: "About" },
+              { href: "/contact", label: "Contact" },
+            ].map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="rounded-full px-3 py-1.5 text-[13px] font-medium text-[#424245] transition hover:bg-black/[0.04] hover:text-[#1d1d1f]"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+          <div className="flex shrink-0 items-center gap-2">
+            <ThemeToggle />
           </div>
         </Container>
-      </Section>
+      </header>
 
-      <div
-        className={cn(
-          "border-y border-hairline bg-section-fade",
-          lab && "border-t-accent/10",
-        )}
-      >
-        <Section className={cn("py-14 sm:py-16", lab && "pt-16 sm:pt-20")}>
+      {/* 1. Hero */}
+      <section className="border-b border-black/[0.06] bg-[#fbfbfd] pt-10 pb-14 sm:pt-14 sm:pb-20">
+        <Container>
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.02fr)] lg:gap-14 xl:gap-16">
+            <FadeUp>
+              <h1 className="max-w-xl font-display text-[clamp(2.25rem,4vw+1rem,3.35rem)] font-semibold leading-[1.04] tracking-tight text-[#1d1d1f]">
+                {homeHero.name}
+              </h1>
+              <p className="mt-3 text-xl font-medium tracking-tight text-[#424245] sm:text-2xl">{homeHero.role}</p>
+              <p className="mt-5 max-w-md text-pretty text-[17px] leading-relaxed text-[#6e6e73] sm:text-lg">
+                {homeHero.tagline}
+              </p>
+              <div className="mt-9 flex flex-wrap gap-3">
+                <ButtonLink
+                  href={homeCtas.primary.href}
+                  variant="primary"
+                  className="!rounded-full !border-0 !bg-[#1d1d1f] !px-6 !py-3 !text-[15px] !font-semibold !text-white !shadow-[0_1px_2px_rgba(0,0,0,0.08)] hover:!brightness-110"
+                >
+                  {homeCtas.primary.label}
+                </ButtonLink>
+                <ButtonLink
+                  href={homeCtas.secondary.href}
+                  variant="secondary"
+                  icon={<ArrowUpRight />}
+                  iconPosition="end"
+                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-sm hover:!border-black/[0.18]"
+                >
+                  {homeCtas.secondary.label}
+                </ButtonLink>
+                <ButtonLink
+                  href={homeCtas.tertiary.href}
+                  variant="secondary"
+                  icon={<Mail />}
+                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-sm"
+                >
+                  {homeCtas.tertiary.label}
+                </ButtonLink>
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.06} className="relative">
+              <IsometricBlockoutHeroVisual />
+            </FadeUp>
+          </div>
+        </Container>
+      </section>
+
+      {/* 2. Design principles */}
+      <section className="border-b border-black/[0.06] bg-white py-16 sm:py-20">
+        <Container>
+          <FadeUp className="text-center">
+            <h2 className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6e6e73] sm:text-xs">
+              Design Principles
+            </h2>
+          </FadeUp>
+          <div className="mt-10 grid gap-5 sm:grid-cols-3 sm:gap-6">
+            {homeDesignPrinciples.map((p, i) => {
+              const Icon = principleIcon[p.icon];
+              return (
+                <FadeUp key={p.title} delay={reduce ? 0 : i * 0.06}>
+                  <div
+                    className={cn(
+                      "flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)]",
+                      p.border,
+                    )}
+                  >
+                    <div className={cn("h-[5.25rem] shrink-0 bg-gradient-to-r sm:h-[5.5rem]", p.topGradient)} />
+                    <div className="flex flex-1 flex-col items-center px-5 pb-7 pt-8 text-center sm:px-6 sm:pb-8 sm:pt-9">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-black/[0.06] bg-[#fafafa] text-[#0071e3] shadow-sm">
+                        <Icon className="h-6 w-6" strokeWidth={1.65} aria-hidden />
+                      </div>
+                      <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-[#1d1d1f] sm:text-xl">
+                        {p.title}
+                      </h3>
+                      <div className="mt-8 flex justify-center">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.1] bg-white text-[#6e6e73] shadow-sm">
+                          <Plus className="h-4 w-4" strokeWidth={2} aria-hidden />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </FadeUp>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
+      {/* 3. Featured project */}
+      <section className="border-b border-black/[0.06] bg-[#fbfbfd] py-16 sm:py-20">
+        <Container>
+          <FadeUp>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e6e73]">
+              {homeFeaturedPreview.sectionLabel}
+            </p>
+          </FadeUp>
+          <div className="mt-6 rounded-[1.35rem] border border-black/[0.06] bg-[#ececee] p-6 shadow-inner sm:p-8 lg:p-10">
+            <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
+              <FadeUp>
+                <h2 className="font-display text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-4xl">
+                  {homeFeaturedPreview.title}
+                </h2>
+                <p className="mt-2 text-[15px] font-semibold uppercase tracking-wide text-[#ff9500]">
+                  {homeFeaturedPreview.subtitle}
+                </p>
+                <p className="mt-5 max-w-lg text-pretty text-[17px] leading-relaxed text-[#424245]">
+                  {homeFeaturedPreview.description}
+                </p>
+                <dl className="mt-8 space-y-3 border-t border-black/[0.08] pt-8">
+                  {homeFeaturedPreview.metaLines.map((row) => (
+                    <div key={row.label} className="flex flex-wrap gap-x-2 gap-y-0.5 text-[15px]">
+                      <dt className="font-semibold text-[#1d1d1f]">{row.label}:</dt>
+                      <dd className="text-[#424245]">{row.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="mt-8">
+                  <ButtonLink
+                    href={homeFeaturedPreview.href}
+                    variant="primary"
+                    icon={<ArrowUpRight />}
+                    iconPosition="end"
+                    className="!rounded-full !border-0 !bg-[#1d1d1f] !px-6 !py-2.5 !text-[14px] !font-semibold !text-white hover:!brightness-110"
+                  >
+                    {homeFeaturedPreview.cta}
+                  </ButtonLink>
+                </div>
+              </FadeUp>
+              <FadeUp delay={0.06}>
+                <div className="overflow-hidden rounded-2xl border border-black/[0.06] bg-white shadow-[0_20px_50px_-28px_rgba(0,0,0,0.14)]">
+                  {/*
+                    Local demo plate — replace with Escape Protocol in-engine frame (Group PDFs).
+                  */}
+                  <TempSceneImage
+                    src={tempImagery.featuredCaseHero}
+                    alt="Escape Protocol — gameplay environment reference (temporary)"
+                    className="aspect-[16/10] w-full lg:aspect-[5/3]"
+                    sizes="(min-width: 1024px) 44vw, 100vw"
+                    caption="Gameplay reference (temporary)"
+                  />
+                </div>
+              </FadeUp>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* 4. About + Case study */}
+      <section className="border-b border-black/[0.06] bg-white py-16 sm:py-20">
+        <Container>
+          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+            <FadeUp>
+              <a
+                href={homeAboutPreview.href}
+                className="group flex h-full flex-col rounded-2xl border border-black/[0.08] bg-[#fafafa] p-8 shadow-sm transition hover:border-black/[0.14] hover:shadow-md"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6e6e73]">About</p>
+                <h3 className="mt-3 font-display text-2xl font-semibold text-[#1d1d1f]">{homeAboutPreview.title}</h3>
+                <p className="mt-4 flex-1 text-[15px] leading-relaxed text-[#424245]">{homeAboutPreview.summary}</p>
+                <span className="mt-8 inline-flex items-center gap-1 text-[15px] font-semibold text-[#0071e3]">
+                  {homeAboutPreview.cta}
+                  <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </a>
+            </FadeUp>
+            <FadeUp delay={0.05}>
+              <a
+                href={homeCaseStudyCard.href}
+                className="group flex h-full flex-col rounded-2xl border border-black/[0.08] bg-[#fafafa] p-8 shadow-sm transition hover:border-black/[0.14] hover:shadow-md"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6e6e73]">Case Study</p>
+                <h3 className="mt-3 font-display text-2xl font-semibold text-[#1d1d1f]">{homeCaseStudyCard.title}</h3>
+                <p className="mt-4 flex-1 text-[15px] leading-relaxed text-[#424245]">{homeCaseStudyCard.summary}</p>
+                <span className="mt-8 inline-flex items-center gap-1 text-[15px] font-semibold text-[#0071e3]">
+                  {homeCaseStudyCard.cta}
+                  <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </a>
+            </FadeUp>
+          </div>
+        </Container>
+      </section>
+
+      {/* 5. How I think in space */}
+      <section className="border-b border-black/[0.06] bg-[#fbfbfd] py-16 sm:py-20">
+        <Container>
+          <FadeUp className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-4xl">
+              {homeThinkInSpace.title}
+            </h2>
+            <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#6e6e73] sm:text-[16px]">
+              {homeThinkInSpace.subtitle}
+            </p>
+          </FadeUp>
+          <div className="mx-auto mt-12 grid max-w-6xl grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
+            {homeSkillGrid.map((row, i) => (
+              <FadeUp key={row.skill} delay={reduce ? 0 : i * 0.03}>
+                <div className="flex h-full flex-col rounded-xl border border-black/[0.08] bg-white px-4 py-5 text-left shadow-sm transition hover:border-[#0071e3]/25 hover:shadow-md sm:px-4 sm:py-5">
+                  <SkillIcon skill={row.skill} className="h-5 w-5 shrink-0 text-[#0071e3]" />
+                  <p className="mt-3 text-[14px] font-semibold leading-snug text-[#1d1d1f]">{row.skill}</p>
+                  <p className="mt-2 text-[12px] leading-relaxed text-[#6e6e73]">{row.descriptor}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* 6. Let’s connect + footer */}
+      <section className="bg-white">
+        <Container className="py-12 sm:py-14">
+          <FadeUp>
+            <h2 className="text-center font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6e6e73] sm:text-xs">
+              {homeConnectSection.title}
+            </h2>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <ButtonLink
+                href={homeContactCta.href}
+                variant="primary"
+                icon={<Mail />}
+                className="!rounded-full !border-0 !bg-[#0071e3] !px-6 !py-2.5 !text-[14px] !font-semibold !text-white hover:!brightness-110"
+              >
+                {homeContactCta.label}
+              </ButtonLink>
+              <ButtonLink
+                href="/case-study"
+                variant="secondary"
+                icon={<ArrowUpRight />}
+                iconPosition="end"
+                className="!rounded-full !border-black/[0.1] !bg-[#f5f5f7] !px-6 !py-2.5 !text-[14px] !font-semibold !text-[#1d1d1f]"
+              >
+                Featured project
+              </ButtonLink>
+              <ButtonLink
+                href={contactChannels.github.href}
+                variant="secondary"
+                icon={<SiGithub />}
+                external
+                className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-2.5 !text-[14px] !shadow-sm"
+              >
+                GitHub
+              </ButtonLink>
+            </div>
+          </FadeUp>
+        </Container>
+
+        <footer className="border-t border-black/[0.06] bg-[#fafafa] py-10">
           <Container>
-            {lab ? <MotionSection>{aboutBlock}</MotionSection> : <FadeIn>{aboutBlock}</FadeIn>}
+            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
+              <div>
+                <p className="font-display text-lg font-semibold text-[#1d1d1f]">{homeFooter.name}</p>
+                <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-[#6e6e73]">
+                  Level design portfolio — spatial craft, process, and featured work.
+                </p>
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#86868b]">Explore</p>
+                <ul className="mt-4 space-y-2">
+                  {homeFooter.explore.map((l) => (
+                    <li key={l.href}>
+                      <Link href={l.href} className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#86868b]">Connect</p>
+                <ul className="mt-4 space-y-2">
+                  {homeFooter.connect.map((l) => (
+                    <li key={l.href}>
+                      <Link href={l.href} className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li>
+                    <a
+                      href={contactChannels.github.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]"
+                    >
+                      GitHub
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <p className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[12px] text-[#86868b]">
+              {homeFooter.legal.replace("{year}", String(year))}
+            </p>
           </Container>
-        </Section>
-      </div>
-
-      <Container>
-        <SectionDivider label="Featured" />
-      </Container>
-
-      <div ref={featuredRef} className="relative">
-        <Section className="relative border-y border-hairline bg-surface/40 pb-16 pt-4 dark:bg-surface/25 md:pt-6">
-          <div className="pointer-events-none absolute inset-0 bg-section-fade opacity-80" />
-          <Container className="relative z-[1]">
-            {lab ? <MotionSection>{featuredBlock}</MotionSection> : <FadeIn>{featuredBlock}</FadeIn>}
-          </Container>
-        </Section>
-      </div>
-
-      <Section className="py-14 sm:py-16">
-        <Container>
-          {lab ? <MotionSection>{skillsBlock}</MotionSection> : <FadeIn>{skillsBlock}</FadeIn>}
-        </Container>
-      </Section>
-
-      <Section className="border-t border-hairline bg-surface/30 dark:bg-surface/20">
-        <Container>
-          {lab ? <MotionSection>{toolsBlock}</MotionSection> : <FadeIn>{toolsBlock}</FadeIn>}
-        </Container>
-      </Section>
-
-      <Section className="border-t border-hairline bg-surface/35 pb-6 dark:bg-surface/20">
-        <Container>
-          {lab ? <MotionSection>{contactBlock}</MotionSection> : <FadeIn>{contactBlock}</FadeIn>}
-        </Container>
-      </Section>
-    </>
+        </footer>
+      </section>
+    </div>
   );
 }
