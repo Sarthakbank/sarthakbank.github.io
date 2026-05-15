@@ -29,7 +29,7 @@ import { contactChannels } from "@/content/contact";
 import { Container } from "@/components/layout/Container";
 
 const shell =
-  "min-h-dvh bg-[#fbfbfd] text-[#1d1d1f] antialiased dark:bg-[#fbfbfd] dark:text-[#1d1d1f]";
+  "min-h-dvh overflow-x-hidden bg-[#fbfbfd] pb-[calc(5.25rem+env(safe-area-inset-bottom,0px))] text-[#1d1d1f] antialiased dark:bg-[#fbfbfd] dark:text-[#1d1d1f] lg:pb-0";
 
 function FadeUp({
   children,
@@ -86,11 +86,11 @@ export function CaseStudyView() {
             <p className="mt-5 max-w-2xl text-pretty text-[17px] leading-relaxed text-[#6e6e73]">{caseStudySummary}</p>
           </FadeUp>
           <FadeUp delay={0.06} className="mt-10">
-            <div className="overflow-hidden rounded-2xl border border-black/[0.06] bg-[#ececee] shadow-[0_20px_56px_-32px_rgba(0,0,0,0.12)]">
+            <div className="overflow-hidden rounded-xl border border-black/[0.06] bg-[#f5f5f7] shadow-[0_8px_28px_-16px_rgba(0,0,0,0.08)]">
               <TempSceneImage
                 src={tempImagery.featuredCaseHero}
                 alt="Escape Protocol — gameplay environment (temporary reference)"
-                className="aspect-[21/9] w-full object-cover sm:aspect-[2.35/1]"
+                className="aspect-[21/9] w-full object-cover object-center sm:aspect-[2.35/1]"
                 sizes="100vw"
                 priority
                 caption="Gameplay visual (temporary)"
@@ -227,7 +227,7 @@ export function CaseStudyView() {
       </section>
 
       {/* 7. Outcome / CTA */}
-      <section id="outcome" className="scroll-mt-28 bg-white pb-24 pt-14 sm:pb-28 sm:pt-16">
+      <section id="outcome" className="scroll-mt-28 bg-white pb-[calc(6rem+env(safe-area-inset-bottom,0px))] pt-12 sm:pb-24 sm:pt-16 lg:pb-28">
         <Container>
           <FadeUp>
             <div className="rounded-2xl border border-black/[0.08] bg-[#fafafa] px-8 py-9 shadow-sm sm:px-10 sm:py-11">
@@ -266,7 +266,7 @@ export function CaseStudyView() {
         </Container>
       </section>
 
-      <footer className="border-t border-black/[0.06] bg-[#fafafa] py-10">
+      <footer className="border-t border-black/[0.06] bg-[#fafafa] py-8 sm:py-9">
         <Container>
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
             <div>

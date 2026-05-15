@@ -301,7 +301,7 @@ export function ContactPage() {
   const continueRow = <div className="mt-12">{continueRowInner}</div>;
 
   return (
-    <Section className="relative overflow-hidden border-b border-black/[0.06] bg-[#fbfbfd] pt-24 sm:pt-28">
+    <Section className="relative overflow-x-hidden border-b border-black/[0.06] bg-[#fbfbfd] pb-16 pt-24 sm:pb-20 sm:pt-28">
       <Container className="relative max-w-6xl pb-[max(5rem,calc(4.25rem+env(safe-area-inset-bottom)))] sm:pb-24">
         {lab ? (
           <>

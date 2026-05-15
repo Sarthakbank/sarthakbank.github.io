@@ -33,7 +33,8 @@ function enhanceMaterials(root: THREE.Object3D, isDark: boolean) {
     const mats = Array.isArray(child.material) ? child.material : [child.material];
     for (const mat of mats) {
       if (mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial) {
-        mat.envMapIntensity = isDark ? 0.95 : 1.15;
+        // Slightly higher IBL in dark so light-grey blockout stays readable on page.
+        mat.envMapIntensity = isDark ? 1.34 : 1.06;
         if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
         if (mat.emissiveMap) mat.emissiveMap.colorSpace = THREE.SRGBColorSpace;
       }
@@ -174,6 +175,8 @@ export function HeroFloatContent({
   interactive = true,
   modelFit,
   respectReducedMotion = false,
+  /** Off for editorial hero: avoids a “mat” / boxed shadow under the model on the page background. */
+  contactShadow = true,
 }: {
   mouseRef: MutableRefObject<{ x: number; y: number }>;
   scale?: number;
@@ -181,6 +184,7 @@ export function HeroFloatContent({
   interactive?: boolean;
   modelFit?: number;
   respectReducedMotion?: boolean;
+  contactShadow?: boolean;
 }) {
   const root = useRef<THREE.Group>(null);
   const scrollModelGroup = useRef<THREE.Group>(null);
@@ -228,14 +232,14 @@ export function HeroFloatContent({
     const mx = pointerOn ? mouseRef.current.x : 0;
     const my = pointerOn ? mouseRef.current.y : 0;
     const t = drift.current;
-    const idleRx = Math.sin(t * 0.28) * 0.0025;
-    const idleRy = Math.sin(t * 0.2) * 0.003;
-    const idleRz = Math.cos(t * 0.22) * 0.0012;
+    const idleRx = Math.sin(t * 0.18) * 0.0014;
+    const idleRy = Math.sin(t * 0.14) * 0.0018;
+    const idleRz = Math.cos(t * 0.16) * 0.0008;
     const ptr = pointerOn ? 1 : 0;
-    const targetRx = my * -0.055 * ptr + idleRx;
-    const targetRy = mx * 0.07 * ptr + idleRy;
-    const targetRz = mx * -0.014 * ptr + idleRz;
-    const lerp = 0.045;
+    const targetRx = my * -0.038 * ptr + idleRx;
+    const targetRy = mx * 0.048 * ptr + idleRy;
+    const targetRz = mx * -0.01 * ptr + idleRz;
+    const lerp = 0.038;
     root.current.rotation.x = THREE.MathUtils.lerp(root.current.rotation.x, targetRx, lerp);
     root.current.rotation.y = THREE.MathUtils.lerp(root.current.rotation.y, targetRy, lerp);
     root.current.rotation.z = THREE.MathUtils.lerp(root.current.rotation.z, targetRz, lerp);
@@ -250,7 +254,7 @@ export function HeroFloatContent({
   const centered = motionOff ? (
     <Center>{scaledMesh}</Center>
   ) : (
-    <Float speed={0.35} rotationIntensity={0.04} floatIntensity={0.05}>
+    <Float speed={0.16} rotationIntensity={0.022} floatIntensity={0.032}>
       <Center>{scaledMesh}</Center>
     </Float>
   );
@@ -264,15 +268,16 @@ export function HeroFloatContent({
         </>
       ) : null}
 
-      <ambientLight intensity={isDark ? 0.12 : 0.2} />
+      <ambientLight intensity={isDark ? 0.22 : 0.2} />
       <hemisphereLight
-        color={isDark ? "#eef2ff" : "#ffffff"}
-        groundColor={isDark ? "#0a0c12" : "#d8dce6"}
-        intensity={isDark ? 0.42 : 0.58}
+        color={isDark ? "#f4f6fc" : "#ffffff"}
+        groundColor={isDark ? "#1a1d26" : "#d8dce6"}
+        intensity={isDark ? 0.52 : 0.58}
       />
-      <directionalLight position={[3.2, 4.2, 3.6]} intensity={isDark ? 1.55 : 1.75} color="#ffffff" />
-      <directionalLight position={[-4.5, 2.2, -2.8]} intensity={isDark ? 1.4 : 1.05} color="#b8d4ff" />
-      <directionalLight position={[0.4, -1.8, 2.8]} intensity={isDark ? 0.35 : 0.4} color="#9aa8bc" />
+      <directionalLight position={[3.2, 4.2, 3.6]} intensity={isDark ? 1.85 : 1.75} color="#ffffff" />
+      <directionalLight position={[-4.5, 2.2, -2.8]} intensity={isDark ? 1.55 : 1.05} color="#b8d4ff" />
+      <directionalLight position={[0.4, -1.8, 2.8]} intensity={isDark ? 0.48 : 0.4} color="#9aa8bc" />
+      <directionalLight position={[-1.2, 1.2, 4.2]} intensity={isDark ? 0.42 : 0.22} color="#e8eefc" />
 
       <group ref={root} rotation={scrollMode ? [0, 0, 0] : [0.12, -0.42, 0]}>
         <group ref={scrollModelGroup}>
@@ -284,16 +289,18 @@ export function HeroFloatContent({
         </group>
       </group>
 
-      <ContactShadows
-        key={shadowY.toFixed(3)}
-        position={[0, shadowY, 0]}
-        opacity={isDark ? 0.45 : 0.28}
-        scale={10}
-        blur={2.2}
-        far={5}
-        frames={1}
-        color="#000000"
-      />
+      {contactShadow ? (
+        <ContactShadows
+          key={shadowY.toFixed(3)}
+          position={[0, shadowY, 0]}
+          opacity={isDark ? 0.32 : 0.18}
+          scale={14}
+          blur={3.2}
+          far={6}
+          frames={1}
+          color="#000000"
+        />
+      ) : null}
     </>
   );
 }

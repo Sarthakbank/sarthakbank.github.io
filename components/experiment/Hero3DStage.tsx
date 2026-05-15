@@ -24,8 +24,8 @@ const cameraPresets = {
   ribbon: { position: [0, 0.08, 5.35] as const, fov: 40 },
   /** Case study ribbon — pulled back for scroll-driven angles. */
   showcase: { position: [0.22, 0.1, 3.45] as const, fov: 24.5 },
-  /** Home hero — isometric product-style framing on light canvas. */
-  editorial: { position: [0.72, 0.48, 1.28] as const, fov: 34 },
+  /** Home hero — isometric framing; pulled back slightly so the blockout is not cropped. */
+  editorial: { position: [0.74, 0.46, 1.38] as const, fov: 31 },
 } as const;
 
 const scalePresets = {
@@ -45,6 +45,7 @@ export function Hero3DStage({
   scrollProgressRef,
   interactive,
   modelFit,
+  contactShadow,
 }: {
   className?: string;
   scale?: number;
@@ -52,6 +53,8 @@ export function Hero3DStage({
   scrollProgressRef?: MutableRefObject<number>;
   interactive?: boolean;
   modelFit?: number;
+  /** When omitted, contact shadow is off for `editorial` (home hero) and on for ribbon/showcase. */
+  contactShadow?: boolean;
 }) {
   const reduce = useReducedMotion();
   const mouseRef = useRef({ x: 0, y: 0 });
@@ -61,6 +64,7 @@ export function Hero3DStage({
   const resolvedScale = scale ?? scalePresets[preset];
   const cam = cameraPresets[preset];
   const pointerOn = interactive ?? scrollProgressRef == null;
+  const resolvedContactShadow = contactShadow ?? preset !== "editorial";
 
   const flushPointer = () => {
     pointerRaf.current = null;
@@ -94,7 +98,11 @@ export function Hero3DStage({
 
   return (
     <div
-      className={cn("relative min-h-[240px] w-full overflow-hidden touch-pan-y", className)}
+      className={cn(
+        "relative w-full touch-pan-y",
+        preset === "editorial" ? "min-h-0 overflow-visible" : "min-h-[240px] overflow-hidden",
+        className,
+      )}
       onPointerMove={syncPointer}
       onPointerDown={syncPointer}
       onPointerLeave={clearPointer}
@@ -121,6 +129,7 @@ export function Hero3DStage({
             interactive={pointerOn}
             modelFit={modelFit}
             respectReducedMotion={!!reduce}
+            contactShadow={resolvedContactShadow}
           />
         </Suspense>
       </Canvas>

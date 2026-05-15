@@ -35,7 +35,7 @@ const HomeHero3D = dynamic(
     ssr: false,
     loading: () => (
       <div
-        className="flex min-h-[min(280px,52vw)] w-full items-center justify-center rounded-2xl bg-[#ececee]/80 sm:min-h-[320px]"
+        className="flex min-h-[min(240px,50vw)] w-full items-center justify-center bg-transparent sm:min-h-[280px]"
         aria-hidden
       />
     ),
@@ -84,11 +84,11 @@ export function HomePage() {
   const year = new Date().getFullYear();
 
   return (
-    <div className={cn(shell, "pb-0")}>
+    <div className={cn(shell, "pb-0 overflow-x-hidden")}>
       {/* 1. Hero */}
-      <section className="border-b border-black/[0.06] bg-[#fbfbfd] pt-10 pb-14 sm:pt-14 sm:pb-20">
+      <section className="border-b border-black/[0.06] bg-[#fbfbfd] pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-14 lg:pb-20">
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.02fr)] lg:gap-14 xl:gap-16">
+          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 xl:gap-16">
             <FadeUp>
               <h1 className="max-w-xl font-display text-[clamp(2.25rem,4vw+1rem,3.35rem)] font-semibold leading-[1.04] tracking-tight text-[#1d1d1f]">
                 {homeHero.name}
@@ -101,7 +101,7 @@ export function HomePage() {
                 <ButtonLink
                   href={homeCtas.primary.href}
                   variant="primary"
-                  className="!rounded-full !border-0 !bg-[#1d1d1f] !px-6 !py-3 !text-[15px] !font-semibold !text-white !shadow-[0_1px_2px_rgba(0,0,0,0.08)] hover:!brightness-110"
+                  className="!rounded-full !border-0 !bg-[#0071e3] !px-6 !py-3 !text-[15px] !font-semibold !text-white !shadow-[0_1px_2px_rgba(0,0,0,0.06)] hover:!brightness-110"
                 >
                   {homeCtas.primary.label}
                 </ButtonLink>
@@ -110,7 +110,7 @@ export function HomePage() {
                   variant="secondary"
                   icon={<ArrowUpRight />}
                   iconPosition="end"
-                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-sm hover:!border-black/[0.18]"
+                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:!border-black/[0.16]"
                 >
                   {homeCtas.secondary.label}
                 </ButtonLink>
@@ -118,21 +118,23 @@ export function HomePage() {
                   href={homeCtas.tertiary.href}
                   variant="secondary"
                   icon={<Mail />}
-                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-sm"
+                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
                 >
                   {homeCtas.tertiary.label}
                 </ButtonLink>
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.06} className="relative w-full min-w-0">
-              <div className="relative mx-auto aspect-[4/3] w-full max-w-[min(100%,520px)] min-h-[240px] lg:aspect-[5/4] lg:max-w-none lg:min-h-[min(420px,52vh)]">
-                <HomeHero3D
-                  preset="editorial"
-                  className="absolute inset-0 h-full w-full min-h-[inherit]"
-                  modelFit={1.82}
-                  interactive
-                />
+            <FadeUp delay={0.06} className="relative w-full min-w-0 lg:self-center">
+              <div className="relative mx-auto flex w-full max-w-[520px] justify-center lg:mx-0 lg:max-w-none lg:justify-end">
+                <div className="relative aspect-[1/1] w-full max-h-[min(420px,52vh)] min-h-[min(260px,62vw)] sm:min-h-[min(300px,56vw)] sm:max-h-[min(440px,54vh)] lg:aspect-[5/4] lg:min-h-[min(340px,48vh)] lg:max-h-[min(480px,56vh)]">
+                  <HomeHero3D
+                    preset="editorial"
+                    className="absolute inset-0 h-full w-full"
+                    modelFit={1.58}
+                    interactive
+                  />
+                </div>
               </div>
             </FadeUp>
           </div>
@@ -140,26 +142,26 @@ export function HomePage() {
       </section>
 
       {/* 2. Design principles */}
-      <section className="border-b border-black/[0.06] bg-white py-16 sm:py-20">
+      <section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
         <Container>
           <FadeUp className="text-center">
             <h2 className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6e6e73] sm:text-xs">
               Design Principles
             </h2>
           </FadeUp>
-          <div className="mt-10 grid gap-5 sm:grid-cols-3 sm:gap-6">
+          <div className="mt-10 grid items-stretch gap-5 sm:grid-cols-3 sm:gap-6">
             {homeDesignPrinciples.map((p, i) => {
               const Icon = principleIcon[p.icon];
               return (
                 <FadeUp key={p.title} delay={reduce ? 0 : i * 0.06}>
                   <div
                     className={cn(
-                      "flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)]",
+                      "flex min-h-[268px] h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_2px_20px_-6px_rgba(0,0,0,0.07)] sm:min-h-[280px]",
                       p.border,
                     )}
                   >
                     <div className={cn("h-[5.25rem] shrink-0 bg-gradient-to-r sm:h-[5.5rem]", p.topGradient)} />
-                    <div className="flex flex-1 flex-col items-center px-5 pb-7 pt-8 text-center sm:px-6 sm:pb-8 sm:pt-9">
+                    <div className="flex flex-1 flex-col items-center bg-white px-5 pb-7 pt-8 text-center sm:px-6 sm:pb-8 sm:pt-9">
                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-black/[0.06] bg-[#fafafa] text-[#0071e3] shadow-sm">
                         <Icon className="h-6 w-6" strokeWidth={1.65} aria-hidden />
                       </div>
@@ -181,14 +183,14 @@ export function HomePage() {
       </section>
 
       {/* 3. Featured project */}
-      <section className="border-b border-black/[0.06] bg-[#fbfbfd] py-16 sm:py-20">
+      <section className="border-b border-black/[0.06] bg-[#fbfbfd] py-14 sm:py-16 lg:py-20">
         <Container>
           <FadeUp>
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e6e73]">
               {homeFeaturedPreview.sectionLabel}
             </p>
           </FadeUp>
-          <div className="mt-6 rounded-[1.35rem] border border-black/[0.06] bg-[#ececee] p-6 shadow-inner sm:p-8 lg:p-10">
+          <div className="mt-6 rounded-[1.25rem] border border-black/[0.06] bg-white p-6 shadow-[0_4px_32px_-14px_rgba(0,0,0,0.08)] sm:p-8 lg:p-10">
             <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-12">
               <FadeUp>
                 <h2 className="font-display text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-4xl">
@@ -214,21 +216,21 @@ export function HomePage() {
                     variant="primary"
                     icon={<ArrowUpRight />}
                     iconPosition="end"
-                    className="!rounded-full !border-0 !bg-[#1d1d1f] !px-6 !py-2.5 !text-[14px] !font-semibold !text-white hover:!brightness-110"
+                    className="!rounded-full !border-0 !bg-[#0071e3] !px-6 !py-2.5 !text-[14px] !font-semibold !text-white hover:!brightness-110"
                   >
                     {homeFeaturedPreview.cta}
                   </ButtonLink>
                 </div>
               </FadeUp>
               <FadeUp delay={0.06}>
-                <div className="overflow-hidden rounded-2xl border border-black/[0.06] bg-white shadow-[0_20px_50px_-28px_rgba(0,0,0,0.14)]">
+                <div className="overflow-hidden rounded-xl border border-black/[0.06] bg-[#f5f5f7] shadow-[0_8px_28px_-16px_rgba(0,0,0,0.08)]">
                   {/*
                     Local demo plate — replace with Escape Protocol in-engine frame (Group PDFs).
                   */}
                   <TempSceneImage
                     src={tempImagery.featuredCaseHero}
                     alt="Escape Protocol — gameplay environment reference (temporary)"
-                    className="aspect-[16/10] w-full lg:aspect-[5/3]"
+                    className="aspect-[16/10] w-full object-cover object-center lg:aspect-[5/3]"
                     sizes="(min-width: 1024px) 44vw, 100vw"
                     caption="Gameplay reference (temporary)"
                   />
@@ -240,13 +242,13 @@ export function HomePage() {
       </section>
 
       {/* 4. About + Case study */}
-      <section className="border-b border-black/[0.06] bg-white py-16 sm:py-20">
+      <section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
         <Container>
-          <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+          <div className="grid items-stretch gap-5 md:grid-cols-2 md:gap-6">
             <FadeUp>
               <a
                 href={homeAboutPreview.href}
-                className="group flex h-full flex-col rounded-2xl border border-black/[0.08] bg-[#fafafa] p-8 shadow-sm transition hover:border-black/[0.14] hover:shadow-md"
+                className="group flex h-full min-h-[280px] flex-col rounded-2xl border border-black/[0.08] bg-[#fafafa] p-8 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow] duration-300 hover:border-black/[0.12] hover:shadow-[0_6px_24px_-10px_rgba(0,0,0,0.08)]"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6e6e73]">About</p>
                 <h3 className="mt-3 font-display text-2xl font-semibold text-[#1d1d1f]">{homeAboutPreview.title}</h3>
@@ -260,7 +262,7 @@ export function HomePage() {
             <FadeUp delay={0.05}>
               <a
                 href={homeCaseStudyCard.href}
-                className="group flex h-full flex-col rounded-2xl border border-black/[0.08] bg-[#fafafa] p-8 shadow-sm transition hover:border-black/[0.14] hover:shadow-md"
+                className="group flex h-full min-h-[280px] flex-col rounded-2xl border border-black/[0.08] bg-[#fafafa] p-8 shadow-[0_2px_16px_-6px_rgba(0,0,0,0.06)] transition-[border-color,box-shadow] duration-300 hover:border-black/[0.12] hover:shadow-[0_6px_24px_-10px_rgba(0,0,0,0.08)]"
               >
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6e6e73]">Case Study</p>
                 <h3 className="mt-3 font-display text-2xl font-semibold text-[#1d1d1f]">{homeCaseStudyCard.title}</h3>
@@ -276,7 +278,7 @@ export function HomePage() {
       </section>
 
       {/* 5. How I think in space */}
-      <section className="border-b border-black/[0.06] bg-[#fbfbfd] py-16 sm:py-20">
+      <section className="border-b border-black/[0.06] bg-[#fbfbfd] py-14 sm:py-16 lg:py-20">
         <Container>
           <FadeUp className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-3xl font-semibold tracking-tight text-[#1d1d1f] sm:text-4xl">
@@ -286,10 +288,10 @@ export function HomePage() {
               {homeThinkInSpace.subtitle}
             </p>
           </FadeUp>
-          <div className="mx-auto mt-12 grid max-w-6xl grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
+          <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
             {homeSkillGrid.map((row, i) => (
               <FadeUp key={row.skill} delay={reduce ? 0 : i * 0.03}>
-                <div className="flex h-full flex-col rounded-xl border border-black/[0.08] bg-white px-4 py-5 text-left shadow-sm transition hover:border-[#0071e3]/25 hover:shadow-md sm:px-4 sm:py-5">
+                <div className="flex h-full flex-col rounded-xl border border-black/[0.08] bg-white px-4 py-5 text-left shadow-[0_1px_12px_-4px_rgba(0,0,0,0.05)] transition-[border-color,box-shadow] duration-300 hover:border-[#0071e3]/22 hover:shadow-[0_4px_18px_-8px_rgba(0,0,0,0.07)] sm:px-4 sm:py-5">
                   <SkillIcon skill={row.skill} className="h-5 w-5 shrink-0 text-[#0071e3]" />
                   <p className="mt-3 text-[14px] font-semibold leading-snug text-[#1d1d1f]">{row.skill}</p>
                   <p className="mt-2 text-[12px] leading-relaxed text-[#6e6e73]">{row.descriptor}</p>
@@ -302,7 +304,7 @@ export function HomePage() {
 
       {/* 6. Let’s connect + footer */}
       <section className="bg-white">
-        <Container className="py-12 sm:py-14">
+        <Container className="py-10 sm:py-12">
           <FadeUp>
             <h2 className="text-center font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6e6e73] sm:text-xs">
               {homeConnectSection.title}
@@ -338,9 +340,9 @@ export function HomePage() {
           </FadeUp>
         </Container>
 
-        <footer className="border-t border-black/[0.06] bg-[#fafafa] py-10">
+        <footer className="border-t border-black/[0.06] bg-[#fafafa] py-8 sm:py-9">
           <Container>
-            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
+            <div className="grid gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-[1.2fr_1fr_1fr]">
               <div>
                 <p className="font-display text-lg font-semibold text-[#1d1d1f]">{homeFooter.name}</p>
                 <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-[#6e6e73]">
