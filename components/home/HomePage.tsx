@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ArrowUpRight, Eye, Mail, Plus, RefreshCw, Users } from "lucide-react";
 import { SiGithub } from "react-icons/si";
@@ -20,12 +21,26 @@ import {
   homeThinkInSpace,
 } from "@/content/home";
 import { contactChannels } from "@/content/contact";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { IsometricBlockoutHeroVisual } from "@/components/home/IsometricBlockoutHeroVisual";
 import { TempSceneImage } from "@/components/media/TempSceneImage";
 import { tempImagery } from "@/content/tempImagery";
 import { SkillIcon } from "@/components/icons/SkillIcon";
 import { cn } from "@/lib/cn";
+
+const HomeHero3D = dynamic(
+  () =>
+    import("@/components/experiment/Hero3DStage").then((m) => ({
+      default: m.Hero3DStage,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="flex min-h-[min(280px,52vw)] w-full items-center justify-center rounded-2xl bg-[#ececee]/80 sm:min-h-[320px]"
+        aria-hidden
+      />
+    ),
+  },
+);
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -70,33 +85,6 @@ export function HomePage() {
 
   return (
     <div className={cn(shell, "pb-0")}>
-      <header className="border-b border-black/[0.06] bg-white/90 backdrop-blur-xl dark:border-black/[0.06] dark:bg-white/90">
-        <Container className="flex min-h-[3.75rem] items-center justify-between py-3 sm:min-h-[4rem] sm:py-4">
-          <span className="font-display text-[15px] font-semibold tracking-tight text-[#1d1d1f] sm:text-base">
-            {homeHero.name.split(" ")[0]}{" "}
-            <span className="font-normal text-[#6e6e73]">Portfolio</span>
-          </span>
-          <nav className="hidden items-center gap-1 sm:flex" aria-label="Primary">
-            {[
-              { href: "/case-study", label: "Work" },
-              { href: "/about", label: "About" },
-              { href: "/contact", label: "Contact" },
-            ].map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="rounded-full px-3 py-1.5 text-[13px] font-medium text-[#424245] transition hover:bg-black/[0.04] hover:text-[#1d1d1f]"
-              >
-                {l.label}
-              </a>
-            ))}
-          </nav>
-          <div className="flex shrink-0 items-center gap-2">
-            <ThemeToggle />
-          </div>
-        </Container>
-      </header>
-
       {/* 1. Hero */}
       <section className="border-b border-black/[0.06] bg-[#fbfbfd] pt-10 pb-14 sm:pt-14 sm:pb-20">
         <Container>
@@ -137,8 +125,15 @@ export function HomePage() {
               </div>
             </FadeUp>
 
-            <FadeUp delay={0.06} className="relative">
-              <IsometricBlockoutHeroVisual />
+            <FadeUp delay={0.06} className="relative w-full min-w-0">
+              <div className="relative mx-auto aspect-[4/3] w-full max-w-[min(100%,520px)] min-h-[240px] lg:aspect-[5/4] lg:max-w-none lg:min-h-[min(420px,52vh)]">
+                <HomeHero3D
+                  preset="editorial"
+                  className="absolute inset-0 h-full w-full min-h-[inherit]"
+                  modelFit={1.82}
+                  interactive
+                />
+              </div>
             </FadeUp>
           </div>
         </Container>
@@ -328,7 +323,7 @@ export function HomePage() {
                 iconPosition="end"
                 className="!rounded-full !border-black/[0.1] !bg-[#f5f5f7] !px-6 !py-2.5 !text-[14px] !font-semibold !text-[#1d1d1f]"
               >
-                Featured project
+                Featured Project
               </ButtonLink>
               <ButtonLink
                 href={contactChannels.github.href}
@@ -349,7 +344,7 @@ export function HomePage() {
               <div>
                 <p className="font-display text-lg font-semibold text-[#1d1d1f]">{homeFooter.name}</p>
                 <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-[#6e6e73]">
-                  Level design portfolio — spatial craft, process, and featured work.
+                  Level Designer / Game Designer / 3D Artist — spatial craft, process, and featured work.
                 </p>
               </div>
               <div>

@@ -1,17 +1,15 @@
-# Hero 3D model (PS5)
+# 3D models (`/public/models`)
 
-The homepage hero loads a **GLB** exported from Sketchfab:
+## `sarthak-level-blockout.glb`
 
-- **Model:** “PS5” by **rtql8d**  
-- **Page:** https://sketchfab.com/3d-models/ps5-d788de3735964151a3e24fd59c0f1956  
-- **License:** [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (credit the author when redistributing the asset)
+White / neutral **level blockout** mesh used in the **home hero** (and optionally in immersive-lab ribbons). The site loads it from:
 
-## Setup
+`/models/sarthak-level-blockout.glb`
 
-1. Open the Sketchfab model page while signed in (free account is enough for downloadable CC models).
-2. Use **Download 3D model** and choose **glTF Binary (.glb)** (or export glTF from Blender after importing the official download).
-3. Save the file in this folder as:
+- Keep the file under `public/models/` so static export and GitHub Pages resolve the URL.
+- If the file is missing, the hero canvas shows a lightweight procedural blockout placeholder while lights still render.
 
-`ps5-sketchfab-d788de37.glb`
+## Notes
 
-The app loads it from `/models/ps5-sketchfab-d788de37.glb`. Until the file is present, the hero shows a minimal vertical placeholder so the page still runs.
+- Prefer keeping this GLB **small** (low poly, compressed textures) for fast first paint on mobile.
+- Attribution: portfolio-owned asset (Sarthak Bankar).

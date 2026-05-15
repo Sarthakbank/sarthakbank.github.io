@@ -31,7 +31,6 @@ import {
 import { skillGroups } from "@/content/skillGroups";
 import { profileToolGroups } from "@/content/toolGroups";
 import { contactChannels } from "@/content/contact";
-import { HeroLabLayers } from "@/components/experiment/HeroLabLayers";
 import { Magnetic } from "@/components/experiment/Magnetic";
 import { useImmersiveLab } from "@/components/experiment/ImmersiveLabProvider";
 import { cn } from "@/lib/cn";
@@ -70,11 +69,8 @@ export function AboutPage() {
   const [activeToolIdx, setActiveToolIdx] = useState(0);
 
   return (
-    <>
-      <Section className="relative overflow-hidden pt-28 sm:pt-32">
-        <HeroLabLayers />
-        <div className="pointer-events-none absolute inset-0 bg-hero-mesh opacity-90" />
-        <div className="pointer-events-none absolute inset-0 bg-hero-radial opacity-65" />
+    <div className="min-h-dvh bg-[#fbfbfd] text-[#1d1d1f] antialiased dark:bg-[#fbfbfd] dark:text-[#1d1d1f]">
+      <Section className="relative overflow-hidden border-b border-black/[0.06] bg-[#fbfbfd] pt-24 sm:pt-28">
         <Container className="relative">
           <div className="grid gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)] lg:items-center lg:gap-16">
             <FadeIn className="min-w-0">
@@ -96,7 +92,7 @@ export function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="border-y border-hairline bg-surface/40 dark:bg-surface/25">
+      <Section className="border-b border-black/[0.06] bg-white">
         <Container>
           <FadeIn>
             <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -165,7 +161,7 @@ export function AboutPage() {
 
       {lab ? <LabFlowBridge wash="strong" /> : null}
 
-      <Section className="border-y border-hairline bg-surface/40 dark:bg-surface/25">
+      <Section className="border-b border-black/[0.06] bg-white">
         <Container>
           <FadeIn>
             <SectionLabel>Education</SectionLabel>
@@ -245,7 +241,7 @@ export function AboutPage() {
 
       {lab ? <LabFlowBridge /> : null}
 
-      <Section className="border-y border-hairline bg-surface/40 dark:bg-surface/25">
+      <Section className="border-b border-black/[0.06] bg-white">
         <Container>
           {lab ? (
             <MotionSection>
@@ -582,7 +578,7 @@ export function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="border-y border-hairline bg-surface/40 dark:bg-surface/25">
+      <Section className="border-b border-black/[0.06] bg-white">
         <Container>
           <FadeIn>
             <SectionLabel>Approach</SectionLabel>
@@ -607,7 +603,7 @@ export function AboutPage() {
 
       {lab ? <LabFlowBridge /> : null}
 
-      <Section>
+      <Section className="border-b border-black/[0.06] bg-[#fafafa] pb-20">
         <Container>
           <FadeIn>
             <motion.div
@@ -616,7 +612,10 @@ export function AboutPage() {
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              <Card interactive={lab} className="overflow-hidden border-accent/30 bg-gradient-to-br from-accent/[0.14] via-transparent to-success/[0.08]">
+              <Card
+                interactive={lab}
+                className="overflow-hidden border border-black/[0.08] bg-white shadow-sm"
+              >
                 <h2 className="max-w-3xl text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl">
                   Explore the demo case study or reach out directly.
                 </h2>
@@ -663,6 +662,6 @@ export function AboutPage() {
           </FadeIn>
         </Container>
       </Section>
-    </>
+    </div>
   );
 }

@@ -1,27 +1,21 @@
 "use client";
 
 /**
- * 3D hero: PlayStation 5 mesh from Sketchfab (CC BY 4.0) — “PS5” by rtql8d.
- * Source page: https://sketchfab.com/3d-models/ps5-d788de3735964151a3e24fd59c0f1956
- *
- * Export glTF Binary from Sketchfab and add:
- *   public/models/ps5-sketchfab-d788de37.glb
- * See public/models/README.md for attribution and setup.
+ * Hero 3D: Sarthak’s level blockout GLB (portfolio asset).
+ * Path: `/models/sarthak-level-blockout.glb` — see `public/models/README.md`.
  */
 
 import type { MutableRefObject } from "react";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import { Center, ContactShadows, Float, RoundedBox } from "@react-three/drei";
+import { Center, ContactShadows, Float, RoundedBox, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
-const PS5_GLB_PATH = "/models/ps5-sketchfab-d788de37.glb";
+export const SARATHAK_LEVEL_GLB = "/models/sarthak-level-blockout.glb";
 
-const dracoDecoder = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
+useGLTF.preload(SARATHAK_LEVEL_GLB);
 
 function disposeObject3D(root: THREE.Object3D) {
   root.traverse((obj) => {
@@ -39,7 +33,7 @@ function enhanceMaterials(root: THREE.Object3D, isDark: boolean) {
     const mats = Array.isArray(child.material) ? child.material : [child.material];
     for (const mat of mats) {
       if (mat instanceof THREE.MeshStandardMaterial || mat instanceof THREE.MeshPhysicalMaterial) {
-        mat.envMapIntensity = isDark ? 1.15 : 1.38;
+        mat.envMapIntensity = isDark ? 0.95 : 1.15;
         if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace;
         if (mat.emissiveMap) mat.emissiveMap.colorSpace = THREE.SRGBColorSpace;
       }
@@ -69,7 +63,6 @@ function smoothstep01(t: number) {
   return x * x * (3 - 2 * x);
 }
 
-/** Four curated product views — scroll 0→1 moves through 0→1→2→3. */
 const SCROLL_CAM_POS: readonly THREE.Vector3[] = [
   new THREE.Vector3(0.24, 0.12, 3.42),
   new THREE.Vector3(1.08, 0.16, 3.05),
@@ -89,7 +82,6 @@ const SCROLL_MODEL_EULER: readonly THREE.Euler[] = [
 function ScrollCameraRig({ scrollRef }: { scrollRef: MutableRefObject<number> }) {
   const cam = useThree((s) => s.camera as THREE.PerspectiveCamera);
   const tmpV = useMemo(() => new THREE.Vector3(), []);
-  const tmpE = useMemo(() => new THREE.Euler(), []);
 
   useFrame(() => {
     const raw = Math.min(1, Math.max(0, scrollRef.current));
@@ -121,45 +113,58 @@ function ScrollModelRig({
     const u = raw * 3;
     const i = Math.min(2, Math.floor(u));
     const f = smoothstep01(u - i);
-    tmpE.x = THREE.MathUtils.lerp(
-      SCROLL_MODEL_EULER[i].x,
-      SCROLL_MODEL_EULER[i + 1].x,
-      f,
-    );
-    tmpE.y = THREE.MathUtils.lerp(
-      SCROLL_MODEL_EULER[i].y,
-      SCROLL_MODEL_EULER[i + 1].y,
-      f,
-    );
-    tmpE.z = THREE.MathUtils.lerp(
-      SCROLL_MODEL_EULER[i].z,
-      SCROLL_MODEL_EULER[i + 1].z,
-      f,
-    );
+    tmpE.x = THREE.MathUtils.lerp(SCROLL_MODEL_EULER[i].x, SCROLL_MODEL_EULER[i + 1].x, f);
+    tmpE.y = THREE.MathUtils.lerp(SCROLL_MODEL_EULER[i].y, SCROLL_MODEL_EULER[i + 1].y, f);
+    tmpE.z = THREE.MathUtils.lerp(SCROLL_MODEL_EULER[i].z, SCROLL_MODEL_EULER[i + 1].z, f);
     groupRef.current.rotation.copy(tmpE);
   });
 
   return null;
 }
 
-function Ps5LoadFallback() {
+export function BlockoutLoadFallback() {
   return (
     <group>
-      <RoundedBox args={[0.44, 1.22, 0.42]} radius={0.035} smoothness={3} position={[0, 0.1, 0]}>
-        <meshPhysicalMaterial
-          color="#f2f4f8"
-          metalness={0.15}
-          roughness={0.38}
-          clearcoat={0.55}
-          clearcoatRoughness={0.2}
-        />
+      <RoundedBox args={[1.1, 0.14, 0.85]} radius={0.02} smoothness={2} position={[0, -0.32, 0]}>
+        <meshPhysicalMaterial color="#f4f5f7" metalness={0.02} roughness={0.55} />
       </RoundedBox>
-      <mesh position={[0.22, 0.08, 0.22]} rotation={[0, 0.35, 0]}>
-        <boxGeometry args={[0.06, 0.85, 0.28]} />
-        <meshPhysicalMaterial color="#1a1d24" metalness={0.85} roughness={0.35} />
-      </mesh>
+      <RoundedBox args={[0.55, 0.42, 0.55]} radius={0.03} smoothness={2} position={[-0.12, 0.02, 0.08]}>
+        <meshPhysicalMaterial color="#ffffff" metalness={0.04} roughness={0.42} />
+      </RoundedBox>
+      <RoundedBox args={[0.32, 0.55, 0.32]} radius={0.025} smoothness={2} position={[0.22, 0.18, -0.1]}>
+        <meshPhysicalMaterial color="#eceef2" metalness={0.03} roughness={0.48} />
+      </RoundedBox>
     </group>
   );
+}
+
+function BlockoutGltfMesh({
+  fitTarget,
+  isDark,
+  onGroundY,
+}: {
+  fitTarget: number;
+  isDark: boolean;
+  onGroundY: (y: number) => void;
+}) {
+  const { scene } = useGLTF(SARATHAK_LEVEL_GLB);
+  const clone = useMemo(() => scene.clone(true), [scene]);
+  const lastFit = useRef<number | null>(null);
+
+  useLayoutEffect(() => {
+    enhanceMaterials(clone, isDark);
+    if (lastFit.current !== fitTarget) {
+      const ground = fitAndCenterScene(clone, fitTarget);
+      onGroundY(ground - 0.02);
+      lastFit.current = fitTarget;
+    }
+  }, [clone, isDark, fitTarget, onGroundY]);
+
+  useEffect(() => {
+    return () => disposeObject3D(clone);
+  }, [clone]);
+
+  return <primitive object={clone} />;
 }
 
 export function HeroFloatContent({
@@ -168,30 +173,32 @@ export function HeroFloatContent({
   scrollProgressRef,
   interactive = true,
   modelFit,
+  respectReducedMotion = false,
 }: {
   mouseRef: MutableRefObject<{ x: number; y: number }>;
   scale?: number;
   scrollProgressRef?: MutableRefObject<number>;
   interactive?: boolean;
-  /** Larger value = larger on-screen model (world units). */
   modelFit?: number;
+  respectReducedMotion?: boolean;
 }) {
   const root = useRef<THREE.Group>(null);
   const scrollModelGroup = useRef<THREE.Group>(null);
   const drift = useRef(0);
-  const lastFittedId = useRef<string | null>(null);
-  const lastFitApplied = useRef<number | null>(null);
   const { gl, scene } = useThree();
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
   const scrollMode = scrollProgressRef != null;
-  const fitTarget =
-    modelFit ?? (scrollMode ? 2.28 : 2.58);
+  const fitTarget = modelFit ?? (scrollMode ? 2.28 : 2.58);
 
-  const [model, setModel] = useState<THREE.Object3D | null>(null);
-  const [loadFailed, setLoadFailed] = useState(false);
+  const motionOff = respectReducedMotion;
+  const pointerOn = interactive && !motionOff && !scrollMode;
+
   const [shadowY, setShadowY] = useState(-1.05);
+  const onGroundY = useCallback((y: number) => {
+    requestAnimationFrame(() => setShadowY(y));
+  }, []);
 
   useLayoutEffect(() => {
     const prevFog = scene.fog;
@@ -214,80 +221,39 @@ export function HeroFloatContent({
     };
   }, [gl, scene]);
 
-  useEffect(() => {
-    let cancelled = false;
-    const loader = new GLTFLoader();
-    const draco = new DRACOLoader();
-    draco.setDecoderPath(dracoDecoder);
-    loader.setDRACOLoader(draco);
-
-    loader.load(
-      PS5_GLB_PATH,
-      (gltf) => {
-        if (cancelled) {
-          disposeObject3D(gltf.scene);
-          draco.dispose();
-          return;
-        }
-        draco.dispose();
-        setModel(gltf.scene);
-      },
-      undefined,
-      () => {
-        if (!cancelled) setLoadFailed(true);
-        draco.dispose();
-      },
-    );
-
-    return () => {
-      cancelled = true;
-      draco.dispose();
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!model) return;
-    const id = model.uuid;
-    const needsFit =
-      lastFittedId.current !== id || lastFitApplied.current !== fitTarget;
-    if (needsFit) {
-      enhanceMaterials(model, isDark);
-      const ground = fitAndCenterScene(model, fitTarget);
-      setShadowY(ground - 0.03);
-      lastFittedId.current = id;
-      lastFitApplied.current = fitTarget;
-      return;
-    }
-    enhanceMaterials(model, isDark);
-  }, [model, isDark, fitTarget]);
-
-  useEffect(() => {
-    return () => {
-      if (model) disposeObject3D(model);
-    };
-  }, [model]);
-
   useFrame((_, delta) => {
-    if (scrollMode) return;
+    if (scrollMode || motionOff) return;
     drift.current += delta;
     if (!root.current) return;
-    const mx = interactive ? mouseRef.current.x : 0;
-    const my = interactive ? mouseRef.current.y : 0;
+    const mx = pointerOn ? mouseRef.current.x : 0;
+    const my = pointerOn ? mouseRef.current.y : 0;
     const t = drift.current;
-    const idleRx = Math.sin(t * 0.28) * 0.003;
-    const idleRy = Math.sin(t * 0.2) * 0.004;
-    const idleRz = Math.cos(t * 0.22) * 0.0015;
-    const ptr = interactive ? 1 : 0;
-    const targetRx = my * -0.07 * ptr + idleRx;
-    const targetRy = mx * 0.09 * ptr + idleRy;
-    const targetRz = mx * -0.018 * ptr + idleRz;
-    const lerp = 0.04;
+    const idleRx = Math.sin(t * 0.28) * 0.0025;
+    const idleRy = Math.sin(t * 0.2) * 0.003;
+    const idleRz = Math.cos(t * 0.22) * 0.0012;
+    const ptr = pointerOn ? 1 : 0;
+    const targetRx = my * -0.055 * ptr + idleRx;
+    const targetRy = mx * 0.07 * ptr + idleRy;
+    const targetRz = mx * -0.014 * ptr + idleRz;
+    const lerp = 0.045;
     root.current.rotation.x = THREE.MathUtils.lerp(root.current.rotation.x, targetRx, lerp);
     root.current.rotation.y = THREE.MathUtils.lerp(root.current.rotation.y, targetRy, lerp);
     root.current.rotation.z = THREE.MathUtils.lerp(root.current.rotation.z, targetRz, lerp);
   });
 
-  const showFallback = loadFailed || !model;
+  const scaledMesh = (
+    <group scale={scale}>
+      <BlockoutGltfMesh fitTarget={fitTarget} isDark={isDark} onGroundY={onGroundY} />
+    </group>
+  );
+
+  const centered = motionOff ? (
+    <Center>{scaledMesh}</Center>
+  ) : (
+    <Float speed={0.35} rotationIntensity={0.04} floatIntensity={0.05}>
+      <Center>{scaledMesh}</Center>
+    </Float>
+  );
 
   return (
     <>
@@ -298,66 +264,33 @@ export function HeroFloatContent({
         </>
       ) : null}
 
-      <ambientLight intensity={isDark ? 0.1 : 0.14} />
+      <ambientLight intensity={isDark ? 0.12 : 0.2} />
       <hemisphereLight
-        color={isDark ? "#e8efff" : "#ffffff"}
-        groundColor={isDark ? "#06080e" : "#c4cad8"}
-        intensity={isDark ? 0.46 : 0.6}
+        color={isDark ? "#eef2ff" : "#ffffff"}
+        groundColor={isDark ? "#0a0c12" : "#d8dce6"}
+        intensity={isDark ? 0.42 : 0.58}
       />
-      <directionalLight
-        position={[3.6, 4.8, 4]}
-        intensity={isDark ? 1.88 : 2.08}
-        color={isDark ? "#f8faff" : "#ffffff"}
-      />
-      <directionalLight
-        position={[-5, 2.6, -3.2]}
-        intensity={isDark ? 1.98 : 1.28}
-        color="#a8c8ff"
-      />
-      <directionalLight
-        position={[0.5, -2.2, 3.4]}
-        intensity={isDark ? 0.4 : 0.46}
-        color={isDark ? "#5a6a88" : "#9aaec8"}
-      />
-      <directionalLight
-        position={[4.2, 0.4, -1.6]}
-        intensity={isDark ? 0.5 : 0.38}
-        color="#ffe8d8"
-      />
+      <directionalLight position={[3.2, 4.2, 3.6]} intensity={isDark ? 1.55 : 1.75} color="#ffffff" />
+      <directionalLight position={[-4.5, 2.2, -2.8]} intensity={isDark ? 1.4 : 1.05} color="#b8d4ff" />
+      <directionalLight position={[0.4, -1.8, 2.8]} intensity={isDark ? 0.35 : 0.4} color="#9aa8bc" />
 
-      <group ref={root} rotation={scrollMode ? [0, 0, 0] : [0.045, -0.32, 0]}>
+      <group ref={root} rotation={scrollMode ? [0, 0, 0] : [0.12, -0.42, 0]}>
         <group ref={scrollModelGroup}>
-          <group scale={scale}>
-            {scrollMode ? (
-              showFallback ? (
-                <Center>
-                  <Ps5LoadFallback />
-                </Center>
-              ) : (
-                <primitive object={model} />
-              )
-            ) : (
-              <Float speed={0.22} rotationIntensity={0.003} floatIntensity={0.012}>
-                {showFallback ? (
-                  <Center>
-                    <Ps5LoadFallback />
-                  </Center>
-                ) : (
-                  <primitive object={model} />
-                )}
-              </Float>
-            )}
-          </group>
+          {scrollMode ? (
+            <Center>{scaledMesh}</Center>
+          ) : (
+            centered
+          )}
         </group>
       </group>
 
       <ContactShadows
         key={shadowY.toFixed(3)}
         position={[0, shadowY, 0]}
-        opacity={isDark ? 0.62 : 0.36}
-        scale={12}
-        blur={2.35}
-        far={6}
+        opacity={isDark ? 0.45 : 0.28}
+        scale={10}
+        blur={2.2}
+        far={5}
         frames={1}
         color="#000000"
       />

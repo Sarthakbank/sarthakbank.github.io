@@ -51,7 +51,7 @@ export const homeHighlights = [
 export const homeAboutPreview = {
   title: "About",
   summary:
-    "Immersive, intuitive, player-centered level design — balancing spatial clarity, encounter rhythm, and environmental storytelling.",
+    "I’m a Level Designer focused on creating intuitive, immersive gameplay spaces. I build levels that guide players naturally through flow, pacing, and smart encounter design.",
   href: "/about",
   cta: "View More",
 };
@@ -59,7 +59,7 @@ export const homeAboutPreview = {
 export const homeCaseStudyCard = {
   title: "Case Study",
   summary:
-    "AI in Game Design — how intelligent tooling and design process intersect to support iteration, readability, and player-first spaces.",
+    "My research explored how AI tools impact modern game design workflows, evaluating whether they genuinely improve creativity, efficiency, and production quality.",
   href: "/case-study",
   cta: "View More",
 };
@@ -96,8 +96,7 @@ export const homeSkillGrid = [
 
 export const homeThinkInSpace = {
   title: "How I Think in Space",
-  subtitle:
-    "Ten focus areas that show up in every blockout — from first greybox to final polish.",
+  subtitle: "Designing gameplay spaces through clarity, rhythm, and player intuition.",
 };
 
 export const homeConnectSection = {
@@ -113,7 +112,7 @@ export const homeFooter = {
   name: "Sarthak Bankar",
   explore: [
     { href: "/", label: "Home" },
-    { href: "/case-study", label: "Featured project" },
+    { href: "/case-study", label: "Featured Project" },
     { href: "/about", label: "About" },
   ],
   connect: [

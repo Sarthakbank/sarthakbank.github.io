@@ -19,7 +19,6 @@ import {
 } from "@/content/contact";
 import { cn } from "@/lib/cn";
 import { useImmersiveLab } from "@/components/experiment/ImmersiveLabProvider";
-import { HeroLabLayers } from "@/components/experiment/HeroLabLayers";
 
 function ContactChannelShell({
   children,
@@ -33,13 +32,19 @@ function ContactChannelShell({
 
   const shellClass = cn(
     "group relative flex h-full min-h-[290px] flex-col overflow-hidden rounded-2xl sm:min-h-[320px]",
-    "border border-hairline bg-gradient-to-b from-elevated/95 via-elevated/80 to-surface/40",
-    "shadow-[0_28px_80px_-40px_rgba(0,0,0,0.22)] ring-1 ring-inset ring-[var(--ring-inset)]",
-    "transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-    "dark:from-elevated/85 dark:via-canvas/50 dark:to-black/40 dark:shadow-[0_36px_90px_-36px_rgba(0,0,0,0.65)]",
-    lab &&
-      "motion-safe:hover:border-accent/40 motion-safe:hover:shadow-[0_48px_110px_-34px_color-mix(in_srgb,var(--color-accent)_22%,transparent)] dark:motion-safe:hover:shadow-[0_56px_120px_-30px_rgba(0,0,0,0.72)]",
-    "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,color-mix(in_srgb,var(--color-accent)_16%,transparent),transparent_55%)] before:opacity-70 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
+    ...(lab
+      ? ([
+          "border border-hairline bg-gradient-to-b from-elevated/95 via-elevated/80 to-surface/40",
+          "shadow-[0_28px_80px_-40px_rgba(0,0,0,0.22)] ring-1 ring-inset ring-[var(--ring-inset)]",
+          "transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "dark:from-elevated/85 dark:via-canvas/50 dark:to-black/40 dark:shadow-[0_36px_90px_-36px_rgba(0,0,0,0.65)]",
+          "motion-safe:hover:border-accent/40 motion-safe:hover:shadow-[0_48px_110px_-34px_color-mix(in_srgb,var(--color-accent)_22%,transparent)] dark:motion-safe:hover:shadow-[0_56px_120px_-30px_rgba(0,0,0,0.72)]",
+          "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,color-mix(in_srgb,var(--color-accent)_16%,transparent),transparent_55%)] before:opacity-70 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
+        ] as const)
+      : ([
+          "border border-black/[0.08] bg-white shadow-[0_8px_28px_-14px_rgba(0,0,0,0.08)]",
+          "transition-[transform,box-shadow,border-color] duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-black/[0.12] motion-safe:hover:shadow-md",
+        ] as const)),
     className,
   );
 
@@ -77,8 +82,12 @@ export function ContactPage() {
 
   const intro = (
     <div className="relative">
-      <div className="pointer-events-none absolute -right-8 -top-24 h-72 w-72 rounded-full bg-accent/[0.07] blur-3xl dark:bg-accent/[0.11]" />
-      <div className="pointer-events-none absolute -left-16 top-1/3 h-56 w-56 -translate-y-1/2 rounded-full bg-success/[0.05] blur-3xl dark:bg-success/[0.08]" />
+      {lab ? (
+        <>
+          <div className="pointer-events-none absolute -right-8 -top-24 h-72 w-72 rounded-full bg-accent/[0.07] blur-3xl dark:bg-accent/[0.11]" />
+          <div className="pointer-events-none absolute -left-16 top-1/3 h-56 w-56 -translate-y-1/2 rounded-full bg-success/[0.05] blur-3xl dark:bg-success/[0.08]" />
+        </>
+      ) : null}
       <SectionLabel>Contact</SectionLabel>
       <h1 className="relative mt-5 max-w-3xl text-balance font-display text-display-lg font-semibold tracking-tight sm:text-5xl lg:text-display-xl">
         Let&apos;s work together
@@ -86,8 +95,20 @@ export function ContactPage() {
       <p className="relative mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted sm:text-xl">
         {contactIntro.subtitle}
       </p>
-      <div className="relative mt-10 max-w-2xl rounded-2xl border border-accent/20 bg-gradient-to-br from-accent/[0.08] via-transparent to-transparent px-5 py-4 backdrop-blur-sm sm:px-6 sm:py-5">
-        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent">
+      <div
+        className={cn(
+          "relative mt-10 max-w-2xl rounded-2xl px-5 py-4 sm:px-6 sm:py-5",
+          lab
+            ? "border border-accent/20 bg-gradient-to-br from-accent/[0.08] via-transparent to-transparent backdrop-blur-sm"
+            : "border border-black/[0.08] bg-[#f5f5f7]",
+        )}
+      >
+        <p
+          className={cn(
+            "text-[11px] font-bold uppercase tracking-[0.22em]",
+            lab ? "text-accent" : "text-[#0071e3]",
+          )}
+        >
           {contactOpportunity.eyebrow}
         </p>
         <p className="mt-2 font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl">
@@ -235,14 +256,26 @@ export function ContactPage() {
     <Card
       interactive
       className={cn(
-        "relative overflow-hidden border-accent/25 bg-gradient-to-br from-accent/[0.12] via-elevated/50 to-success/[0.1] p-6 sm:p-10",
-        "shadow-[0_32px_90px_-40px_rgba(0,0,0,0.28)] dark:via-elevated/25 dark:to-canvas/40 dark:shadow-[0_40px_100px_-36px_rgba(0,0,0,0.55)]",
-        "before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(115deg,transparent_40%,color-mix(in_srgb,var(--color-accent)_10%,transparent)_50%,transparent_60%)] before:opacity-60 before:transition-opacity before:duration-700 hover:before:opacity-100",
-        lab &&
-          "ring-1 ring-inset ring-accent/15 after:pointer-events-none after:absolute after:inset-x-8 after:bottom-6 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent dark:after:via-white/12",
+        "relative overflow-hidden p-6 sm:p-10",
+        ...(lab
+          ? ([
+              "border-accent/25 bg-gradient-to-br from-accent/[0.12] via-elevated/50 to-success/[0.1]",
+              "shadow-[0_32px_90px_-40px_rgba(0,0,0,0.28)] dark:via-elevated/25 dark:to-canvas/40 dark:shadow-[0_40px_100px_-36px_rgba(0,0,0,0.55)]",
+              "before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(115deg,transparent_40%,color-mix(in_srgb,var(--color-accent)_10%,transparent)_50%,transparent_60%)] before:opacity-60 before:transition-opacity before:duration-700 hover:before:opacity-100",
+              "ring-1 ring-inset ring-accent/15 after:pointer-events-none after:absolute after:inset-x-8 after:bottom-6 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent dark:after:via-white/12",
+            ] as const)
+          : ([
+              "border border-black/[0.08] bg-white shadow-[0_12px_40px_-24px_rgba(0,0,0,0.1)]",
+              "motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-md",
+            ] as const)),
       )}
     >
-      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent">
+      <p
+        className={cn(
+          "text-[11px] font-bold uppercase tracking-[0.22em]",
+          lab ? "text-accent" : "text-[#0071e3]",
+        )}
+      >
         Next step
       </p>
       <h2 className="mt-4 max-w-2xl font-display text-xl font-semibold tracking-tight text-ink sm:text-2xl lg:text-[1.75rem] lg:leading-snug">
@@ -268,12 +301,7 @@ export function ContactPage() {
   const continueRow = <div className="mt-12">{continueRowInner}</div>;
 
   return (
-    <Section className="relative overflow-hidden pt-28 sm:pt-32">
-      <HeroLabLayers />
-      <div className="pointer-events-none absolute inset-0 bg-hero-mesh opacity-85" />
-      <div className="pointer-events-none absolute inset-0 bg-hero-radial opacity-60" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t from-canvas via-canvas/70 to-transparent dark:from-black dark:via-black/70" />
-
+    <Section className="relative overflow-hidden border-b border-black/[0.06] bg-[#fbfbfd] pt-24 sm:pt-28">
       <Container className="relative max-w-6xl pb-[max(5rem,calc(4.25rem+env(safe-area-inset-bottom)))] sm:pb-24">
         {lab ? (
           <>

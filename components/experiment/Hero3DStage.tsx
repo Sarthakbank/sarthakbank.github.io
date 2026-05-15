@@ -1,40 +1,42 @@
 "use client";
 
 import type { MutableRefObject } from "react";
-import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Center } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
-import { HeroFloatContent } from "./r3f/HeroFloatContent";
+import { BlockoutLoadFallback, HeroFloatContent } from "./r3f/HeroFloatContent";
 
-function StaticFallback({ className }: { className?: string }) {
+function CanvasSuspenseFallback() {
   return (
-    <div
-      className={cn(
-        "flex h-full min-h-[240px] w-full items-center justify-center bg-gradient-to-br from-accent/[0.12] via-transparent to-success/[0.06] dark:from-accent/[0.18]",
-        className,
-      )}
-      aria-hidden
-    >
-      <div className="h-36 w-48 rounded-[1.75rem] border border-white/[0.07] bg-gradient-to-b from-[#0a0c10] via-[#121820] to-[#06080c] opacity-80 shadow-[0_40px_80px_-24px_rgba(0,0,0,0.65)] ring-1 ring-inset ring-white/[0.04] dark:from-[#050608] dark:via-[#0e1218] dark:to-black" />
-    </div>
+    <>
+      <ambientLight intensity={0.18} />
+      <hemisphereLight color="#ffffff" groundColor="#d8dce6" intensity={0.55} />
+      <Center>
+        <BlockoutLoadFallback />
+      </Center>
+    </>
   );
 }
 
 const cameraPresets = {
   ribbon: { position: [0, 0.08, 5.35] as const, fov: 40 },
-  /** Homepage PS5 — pulled back, wider FOV, full silhouette, not cropped. */
+  /** Case study ribbon — pulled back for scroll-driven angles. */
   showcase: { position: [0.22, 0.1, 3.45] as const, fov: 24.5 },
+  /** Home hero — isometric product-style framing on light canvas. */
+  editorial: { position: [0.72, 0.48, 1.28] as const, fov: 34 },
 } as const;
 
 const scalePresets = {
   ribbon: 0.72,
   showcase: 1.05,
+  editorial: 1,
 } as const;
 
 /**
- * Interactive WebGL — client-only Canvas; respects reduced motion.
- * Optional `scrollProgressRef` (0–1) drives curated product angles (featured scroll).
+ * Interactive WebGL — client-only Canvas; respects reduced motion (static model, no float).
+ * Optional `scrollProgressRef` (0–1) drives curated angles (featured scroll / ribbon).
  */
 export function Hero3DStage({
   className,
@@ -46,12 +48,9 @@ export function Hero3DStage({
 }: {
   className?: string;
   scale?: number;
-  preset?: "ribbon" | "showcase";
-  /** When set, camera / model angles follow scroll; pair with a tall pinned section. */
+  preset?: "ribbon" | "showcase" | "editorial";
   scrollProgressRef?: MutableRefObject<number>;
-  /** Pointer response; defaults false when `scrollProgressRef` is set. */
   interactive?: boolean;
-  /** Passed to scene fitter — higher = larger silhouette in frame. */
   modelFit?: number;
 }) {
   const reduce = useReducedMotion();
@@ -62,10 +61,6 @@ export function Hero3DStage({
   const resolvedScale = scale ?? scalePresets[preset];
   const cam = cameraPresets[preset];
   const pointerOn = interactive ?? scrollProgressRef == null;
-
-  if (reduce) {
-    return <StaticFallback className={className} />;
-  }
 
   const flushPointer = () => {
     pointerRaf.current = null;
@@ -118,13 +113,14 @@ export function Hero3DStage({
         }}
         dpr={[1, 1.5]}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={<CanvasSuspenseFallback />}>
           <HeroFloatContent
             mouseRef={mouseRef}
             scale={resolvedScale}
             scrollProgressRef={scrollProgressRef}
             interactive={pointerOn}
             modelFit={modelFit}
+            respectReducedMotion={!!reduce}
           />
         </Suspense>
       </Canvas>

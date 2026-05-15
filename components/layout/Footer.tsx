@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SiGithub } from "react-icons/si";
 import { FaEnvelope, FaLinkedinIn } from "react-icons/fa";
 import { mainNav } from "@/content/nav";
@@ -7,7 +10,12 @@ import { contactChannels } from "@/content/contact";
 import { Container } from "./Container";
 
 export function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname === "/" || pathname === "/case-study") {
+    return null;
+  }
 
   return (
     <footer className="border-t border-border bg-surface/50 py-14">

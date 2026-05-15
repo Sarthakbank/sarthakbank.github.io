@@ -24,10 +24,9 @@ import {
   caseStudySummary,
   caseStudyTargetExperience,
 } from "@/content/caseStudy";
-import { homeContactCta } from "@/content/home";
+import { homeContactCta, homeFooter } from "@/content/home";
 import { contactChannels } from "@/content/contact";
 import { Container } from "@/components/layout/Container";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 const shell =
   "min-h-dvh bg-[#fbfbfd] text-[#1d1d1f] antialiased dark:bg-[#fbfbfd] dark:text-[#1d1d1f]";
@@ -57,35 +56,29 @@ function FadeUp({
 }
 
 export function CaseStudyView() {
+  const year = new Date().getFullYear();
+
   return (
     <div className={shell}>
       <FloatingSectionNav items={caseStudyNav} editorial />
-
-      <header className="border-b border-black/[0.06] bg-white/95 backdrop-blur-xl">
-        <Container className="flex flex-wrap items-center justify-between gap-4 py-4 sm:py-5">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#0071e3] transition hover:opacity-80"
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden />
-            Home
-          </Link>
-          <div className="flex items-center gap-3">
-            <span className="rounded-full border border-black/[0.08] bg-[#f5f5f7] px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#6e6e73]">
-              {caseStudyDemoLabel}
-            </span>
-            <span className="[&>button]:h-9 [&>button]:w-9 [&>button]:rounded-full [&>button]:border-black/[0.1] [&>button]:bg-white">
-              <ThemeToggle />
-            </span>
-          </div>
-        </Container>
-      </header>
 
       {/* 1. Hero */}
       <section id="hero" className="scroll-mt-28 border-b border-black/[0.06] bg-white pb-14 pt-8 sm:pb-16 sm:pt-10">
         <Container>
           <FadeUp>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e6e73]">Featured project</p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 text-[14px] font-semibold text-[#0071e3] transition hover:opacity-80"
+              >
+                <ArrowLeft className="h-4 w-4" aria-hidden />
+                Home
+              </Link>
+              <span className="rounded-full border border-black/[0.08] bg-[#f5f5f7] px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#6e6e73]">
+                {caseStudyDemoLabel}
+              </span>
+            </div>
+            <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6e6e73]">Featured Project</p>
             <h1 className="mt-3 max-w-3xl font-display text-[clamp(2rem,4vw+1rem,3.1rem)] font-semibold leading-[1.06] tracking-tight text-[#1d1d1f]">
               {caseStudyMeta.name}
             </h1>
@@ -272,6 +265,62 @@ export function CaseStudyView() {
           </FadeUp>
         </Container>
       </section>
+
+      <footer className="border-t border-black/[0.06] bg-[#fafafa] py-10">
+        <Container>
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
+            <div>
+              <p className="font-display text-lg font-semibold text-[#1d1d1f]">{homeFooter.name}</p>
+              <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-[#6e6e73]">
+                Level Designer / Game Designer / 3D Artist — explore work and connect.
+              </p>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#86868b]">Explore</p>
+              <ul className="mt-4 space-y-2">
+                {homeFooter.explore.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#86868b]">Connect</p>
+              <ul className="mt-4 space-y-2">
+                {homeFooter.connect.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <a
+                    href={contactChannels.github.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]"
+                  >
+                    GitHub
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p className="mt-10 border-t border-black/[0.06] pt-6 text-center text-[12px] text-[#86868b]">
+            {homeFooter.legal.replace("{year}", String(year))}
+          </p>
+        </Container>
+      </footer>
     </div>
   );
 }
