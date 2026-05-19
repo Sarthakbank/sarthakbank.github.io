@@ -27,6 +27,9 @@ import {
   stitchGlass,
   stitchHeadlineLg,
   stitchHome,
+  stitchFooterInner,
+  stitchFooterLink,
+  stitchFooterShell,
   stitchLabel,
   stitchSection,
 } from "@/lib/stitchTokens";
@@ -71,7 +74,7 @@ export function HomePage() {
       <section id="principles" className={cn(stitchSection, "scroll-mt-28")}>
         <div className={stitchContainer}>
           <p className={cn(stitchLabel, "mb-10 text-[#859399]")}>Design Principles</p>
-          <div className="grid gap-5 sm:gap-6 md:grid-cols-3">
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-3 md:items-stretch">
             {homeDesignPrinciples.map((p, i) => (
               <DesignPrincipleCard
                 key={p.title}
@@ -223,7 +226,7 @@ export function HomePage() {
       </section>
 
       {/* Connect strip + Stitch footer */}
-      <section className="border-t border-white/[0.06] bg-[#0b0e12] py-14 md:py-16">
+      <section className="border-t border-white/[0.06] bg-[#0b0e12] py-12 md:py-14">
         <div className={cn(stitchContainer, "text-center")}>
           <p className={cn(stitchLabel, "text-[#859399]")}>Let&apos;s connect</p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -237,26 +240,18 @@ export function HomePage() {
         </div>
       </section>
 
-      <footer className="border-t border-white/[0.05] bg-[#0b0e12] py-12 md:py-16">
-        <div
-          className={cn(
-            stitchContainer,
-            "flex flex-col items-center justify-between gap-8 md:flex-row md:items-start",
-          )}
-        >
+      <footer className={stitchFooterShell}>
+        <div className={cn(stitchContainer, stitchFooterInner)}>
           <p className="max-w-md text-center font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e1e2e8] md:text-left">
             © {year} {homeFooter.name}. Level Design Portfolio.
           </p>
-          <nav className="flex flex-wrap justify-center gap-6 md:justify-end" aria-label="Footer">
-            <Link
-              href={contactChannels.email.href}
-              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
-            >
+          <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2.5 md:justify-end" aria-label="Footer">
+            <Link href={contactChannels.email.href} className={stitchFooterLink}>
               Email
             </Link>
             <Link
               href={contactChannels.linkedIn.href}
-              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
+              className={stitchFooterLink}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -264,18 +259,14 @@ export function HomePage() {
             </Link>
             <Link
               href={contactChannels.github.href}
-              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
+              className={stitchFooterLink}
               target="_blank"
               rel="noopener noreferrer"
             >
               GitHub
             </Link>
             {homeFooter.explore.slice(1).map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
-              >
+              <Link key={l.href} href={l.href} className={stitchFooterLink}>
                 {l.label}
               </Link>
             ))}

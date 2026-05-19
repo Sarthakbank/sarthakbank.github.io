@@ -40,7 +40,15 @@ export const stitchChip =
   "inline-flex items-center rounded border border-[#ff9f0a]/20 bg-[#ff9f0a]/10 px-2 py-0.5 font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#ff9f0a]";
 
 export const stitchBtnPrimary =
-  "inline-flex items-center justify-center rounded bg-[#00d1ff] px-8 py-3 font-mono text-[12px] font-semibold uppercase tracking-[0.15em] text-black transition hover:bg-[#4cd6ff] hover:shadow-[0_0_20px_0_rgba(0,209,255,0.2)]";
+  "inline-flex max-w-full items-center justify-center rounded bg-[#00d1ff] px-6 py-3 font-mono text-[12px] font-semibold uppercase tracking-[0.15em] text-black transition hover:bg-[#4cd6ff] hover:shadow-[0_0_20px_0_rgba(0,209,255,0.2)] sm:px-8";
 
 export const stitchBtnGhost =
-  "inline-flex items-center justify-center rounded border border-[#00d1ff]/40 bg-transparent px-6 py-3 font-mono text-[12px] font-semibold uppercase tracking-[0.15em] text-[#e1e2e8] transition hover:border-[#00d1ff] hover:bg-[#00d1ff]/5";
+  "inline-flex max-w-full items-center justify-center rounded border border-[#00d1ff]/40 bg-transparent px-5 py-3 font-mono text-[12px] font-semibold uppercase tracking-[0.15em] text-[#e1e2e8] transition hover:border-[#00d1ff] hover:bg-[#00d1ff]/5 sm:px-6";
+
+export const stitchFooterShell = "border-t border-white/[0.05] bg-[#0b0e12] py-10 md:py-12";
+
+export const stitchFooterInner =
+  "flex flex-col items-center justify-between gap-5 md:flex-row md:items-center";
+
+export const stitchFooterLink =
+  "font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5";

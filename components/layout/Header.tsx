@@ -51,8 +51,7 @@ export function Header() {
       >
         <div
           className={cn(
-            "mx-auto flex w-full max-w-[90rem] items-center justify-between gap-3 px-4 py-4 md:px-16",
-            stitchHome && "md:py-4",
+            "mx-auto flex w-full max-w-[90rem] items-center justify-between gap-3 px-4 py-3.5 sm:px-6 md:px-16 md:py-4",
           )}
         >
           <Link
@@ -128,7 +127,7 @@ export function Header() {
                   <X className="h-5 w-5" aria-hidden />
                 </button>
               </div>
-              <nav className="flex flex-1 flex-col gap-0.5 p-3" aria-label="Primary mobile">
+              <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Primary mobile">
                 {mainNav.map((item) => {
                   const active =
                     item.href === "/"
@@ -140,7 +139,7 @@ export function Header() {
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
                       className={cn(
-                        "rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition",
+                        "rounded-lg px-4 py-3 text-[15px] font-semibold tracking-tight transition",
                         active
                           ? "bg-[#00d1ff]/15 text-[#4cd6ff]"
                           : "text-[#bbc9cf] hover:bg-white/[0.06] hover:text-[#e1e2e8]",

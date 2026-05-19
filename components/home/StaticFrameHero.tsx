@@ -21,24 +21,28 @@ export function StaticFrameHero() {
   return (
     <>
       <section
-        className="relative flex min-h-[min(90vh,900px)] flex-col items-center justify-center overflow-hidden px-4 pb-12 pt-[5.5rem] sm:px-6 sm:pb-16 sm:pt-28 md:px-16 md:pb-20 md:pt-32"
+        className="relative flex min-h-[min(88vh,900px)] flex-col items-center justify-center overflow-hidden px-4 pb-20 pt-[5.5rem] sm:px-6 sm:pb-16 sm:pt-28 md:px-16 md:pb-20 md:pt-32"
         aria-label="Hero"
       >
         <div
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(0,209,255,0.06)_0%,transparent_55%)]"
           aria-hidden
         />
-        <div className={cn(stitchContainer, "relative z-10 max-w-4xl text-center")}>
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 h-[min(72vh,640px)] bg-gradient-to-b from-[#050607] via-[#050607]/92 via-30% to-transparent md:via-[#050607]/75 md:via-40%"
+          aria-hidden
+        />
+        <div className={cn(stitchContainer, "relative z-10 max-w-4xl px-1 text-center sm:px-0")}>
           <p className={cn(stitchLabel, "text-[#4cd6ff]")}>{homeHero.role}</p>
           <h1 className="mt-5 font-display text-[clamp(2.25rem,5.5vw+1rem,4.25rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#e1e2e8]">
             {homeHero.name}
           </h1>
           <p className={cn("mx-auto mt-6 max-w-2xl text-pretty", stitchBody)}>{homeHero.tagline}</p>
-          <div className="mt-12 flex w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <Link href={homeCtas.primary.href} className={cn(stitchBtnPrimary, "sm:min-w-[220px]")}>
+          <div className="mt-12 flex w-full max-w-full flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4">
+            <Link href={homeCtas.primary.href} className={cn(stitchBtnPrimary, "w-full sm:w-auto sm:min-w-[200px]")}>
               {homeCtas.primary.label}
             </Link>
-            <Link href={homeCtas.secondary.href} className={cn(stitchBtnGhost, "sm:min-w-[200px]")}>
+            <Link href={homeCtas.secondary.href} className={cn(stitchBtnGhost, "w-full sm:w-auto sm:min-w-[180px]")}>
               {homeCtas.secondary.label}
             </Link>
           </div>
@@ -112,7 +116,7 @@ export function StaticFrameHero() {
                   </span>
                 </div>
 
-                <div className="relative mt-3 flex min-h-[280px] items-center justify-center overflow-hidden rounded-lg border border-white/[0.06] bg-[#050607] sm:min-h-[360px] md:min-h-[420px] lg:min-h-[480px]">
+                <div className="relative mt-3 flex min-h-[220px] items-center justify-center overflow-hidden rounded-lg border border-white/[0.06] bg-[#050607] sm:min-h-[320px] md:min-h-[400px] lg:min-h-[460px]">
                   <div
                     className="pointer-events-none absolute inset-3 rounded-md border border-dashed border-white/[0.08]"
                     aria-hidden

@@ -29,6 +29,9 @@ import {
   stitchGlassPanel,
   stitchHeadlineLg,
   stitchHome,
+  stitchFooterInner,
+  stitchFooterLink,
+  stitchFooterShell,
   stitchLabel,
   stitchSection,
 } from "@/lib/stitchTokens";
@@ -216,7 +219,7 @@ export function CaseStudyView() {
                 key={beat.id}
                 className={cn(
                   stitchGlass,
-                  "overflow-hidden rounded-lg border-white/10",
+                  "min-w-0 overflow-hidden rounded-lg border-white/10",
                   i % 2 === 1 && "lg:flex-row-reverse",
                   "lg:flex lg:items-stretch",
                 )}
@@ -344,27 +347,16 @@ export function CaseStudyView() {
         </div>
       </section>
 
-      <footer className="border-t border-white/[0.05] bg-[#0b0e12] py-12 md:py-16">
-        <div
-          className={cn(
-            stitchContainer,
-            "flex flex-col items-center justify-between gap-8 md:flex-row md:items-start",
-          )}
-        >
+      <footer className={stitchFooterShell}>
+        <div className={cn(stitchContainer, stitchFooterInner)}>
           <p className="max-w-md text-center font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e1e2e8] md:text-left">
             © {year} {homeFooter.name}. Level Design Portfolio.
           </p>
-          <nav className="flex flex-wrap justify-center gap-6 md:justify-end" aria-label="Footer">
-            <Link
-              href={contactChannels.email.href}
-              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
-            >
+          <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2.5 md:justify-end" aria-label="Footer">
+            <Link href={contactChannels.email.href} className={stitchFooterLink}>
               Email
             </Link>
-            <Link
-              href="/"
-              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
-            >
+            <Link href="/" className={stitchFooterLink}>
               Home
             </Link>
           </nav>

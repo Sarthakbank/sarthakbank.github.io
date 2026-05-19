@@ -112,7 +112,7 @@ export function ContactPage() {
   return (
     <div className={cn(stitchHome, "overflow-x-hidden")}>
       {/* 1. Hero */}
-      <section className="scroll-mt-28 bg-[#050607] pt-[5.5rem] sm:pt-20">
+      <section className="relative scroll-mt-28 overflow-hidden bg-[#050607] pt-[5.5rem] sm:pt-20">
         <div className={stitchContainer}>
           <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Contact</p>
           <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw+1rem,3.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#e1e2e8]">

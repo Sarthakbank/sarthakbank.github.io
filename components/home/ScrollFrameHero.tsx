@@ -188,10 +188,14 @@ export function ScrollFrameHero() {
           className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0a0a0c] to-transparent"
           aria-hidden
         />
+        <div
+          className="pointer-events-none absolute inset-0 max-md:bg-gradient-to-b max-md:from-[#0a0a0c] max-md:from-0% max-md:via-[#0a0a0c]/95 max-md:via-35% max-md:to-transparent max-md:to-65%"
+          aria-hidden
+        />
 
         <div
           className={cn(
-            "relative z-10 flex h-full flex-col justify-center px-5 pb-6 pt-20 sm:px-8 sm:pt-24 lg:px-12",
+            "relative z-10 flex h-full flex-col justify-center px-5 pb-8 pt-20 sm:px-8 sm:pb-6 sm:pt-24 lg:px-12",
             objectDominant ? "max-w-[min(100%,19rem)]" : "max-w-xl",
           )}
         >
