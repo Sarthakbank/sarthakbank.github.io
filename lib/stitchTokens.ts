@@ -34,7 +34,11 @@ export const stitchGlass =
   "rounded-lg border border-white/10 bg-[rgba(23,26,32,0.88)] shadow-sm transition-[box-shadow,border-color] duration-300 hover:border-[#00d1ff]/25 hover:shadow-[0_0_20px_0_rgba(0,209,255,0.12)]";
 
 export const stitchGlassPanel =
-  "rounded-lg border border-white/10 bg-[rgba(23,26,32,0.88)] backdrop-blur-sm";
+  "rounded-lg border border-white/10 bg-[rgba(23,26,32,0.88)] backdrop-blur-sm transition-[box-shadow,border-color] duration-300";
+
+/** Interactive glass — hover depth without layout shift */
+export const stitchGlassInteractive =
+  "rounded-lg border border-white/10 bg-[rgba(23,26,32,0.88)] backdrop-blur-sm transition-[box-shadow,border-color,transform] duration-300 hover:border-[#00d1ff]/25 hover:shadow-[0_0_20px_0_rgba(0,209,255,0.12)]";
 
 export const stitchChip =
   "inline-flex items-center rounded border border-[#ff9f0a]/20 bg-[#ff9f0a]/10 px-2 py-0.5 font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#ff9f0a]";

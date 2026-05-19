@@ -26,6 +26,7 @@ import {
   stitchChip,
   stitchContainer,
   stitchGlass,
+  stitchGlassInteractive,
   stitchGlassPanel,
   stitchHeadlineLg,
   stitchHome,
@@ -35,6 +36,7 @@ import {
   stitchLabel,
   stitchSection,
 } from "@/lib/stitchTokens";
+import { StitchReveal, StitchRevealItem } from "@/components/motion/StitchReveal";
 import { cn } from "@/lib/cn";
 
 const sectionAlt = "border-t border-white/[0.06] bg-[#0b0d10]";
@@ -53,8 +55,10 @@ export function CaseStudyView() {
       <FloatingSectionNav items={caseStudyNav} editorial dark />
 
       {/* 1. Hero */}
-      <section id="hero" className="scroll-mt-28 bg-[#050607] pt-[5.5rem] sm:pt-20">
+      <section id="hero" className="relative scroll-mt-28 overflow-hidden bg-[#050607] pt-[5.5rem] sm:pt-20">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_0%,rgba(0,209,255,0.06)_0%,transparent_42%)]" aria-hidden />
         <div className={stitchContainer}>
+          <StitchReveal>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <Link
               href="/"
@@ -102,22 +106,26 @@ export function CaseStudyView() {
               />
             </div>
           </article>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 2. Goal */}
       <section id="goal" className={cn("scroll-mt-28", stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Goal</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Design intent</h2>
           <p className={cn("mt-5 max-w-3xl text-pretty", stitchBody)}>{caseStudyGoal.intent}</p>
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            <div className={cn(stitchGlassPanel, "p-6 sm:p-8")}>
+            <div className={cn(stitchGlassInteractive,
+  stitchGlassPanel, "p-6 sm:p-8")}>
               <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Player experience target</p>
               <p className={cn("mt-4 text-pretty", stitchBody)}>{caseStudyGoal.experienceTarget}</p>
             </div>
-            <div className={cn(stitchGlassPanel, "p-6 sm:p-8")}>
+            <div className={cn(stitchGlassInteractive,
+  stitchGlassPanel, "p-6 sm:p-8")}>
               <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Design goals</p>
               <ul className="mt-4 space-y-3">
                 {caseStudyGoal.designGoals.map((goal, i) => (
@@ -134,12 +142,14 @@ export function CaseStudyView() {
               </ul>
             </div>
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 3. Level overview */}
       <section id="overview" className={cn("scroll-mt-28", stitchSection, sectionBase)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Level overview</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Setting & flow</h2>
 
@@ -150,13 +160,15 @@ export function CaseStudyView() {
                 { label: "Player objective", body: caseStudyOverview.playerObjective },
                 { label: "Spatial flow", body: caseStudyOverview.spatialFlow },
               ] as const
-            ).map((block) => (
-              <div key={block.label} className={cn(stitchGlassPanel, "flex flex-col p-6 sm:p-7")}>
+            ).map((block, i) => (
+              <StitchRevealItem key={block.label} index={i} className="h-full">
+              <div className={cn(stitchGlassInteractive, "flex h-full flex-col p-6 sm:p-7")}>
                 <p className={cn(stitchLabel, "text-[#4cd6ff]")}>{block.label}</p>
                 <p className={cn("mt-4 flex-1 text-pretty text-[15px] leading-relaxed text-[#bbc9cf]")}>
                   {block.body}
                 </p>
               </div>
+              </StitchRevealItem>
             ))}
           </div>
 
@@ -166,7 +178,7 @@ export function CaseStudyView() {
               <img
                 src={homeFeaturedMedia.corridorDetail}
                 alt="Service corridor — spatial flow reference (placeholder)"
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                className="absolute inset-0 h-full w-full object-cover object-[center_42%] sm:object-center"
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[#050607]/80 via-transparent to-[#050607]/40" aria-hidden />
@@ -175,37 +187,44 @@ export function CaseStudyView() {
               </p>
             </div>
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 4. Technique highlights */}
       <section id="techniques" className={cn("scroll-mt-28", stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Technique highlights</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Level design craft</h2>
           <ul className="mt-12 grid gap-5 md:grid-cols-3">
             {caseStudyTechniques.map((t, i) => (
-              <li
-                key={t.title}
-                className={cn(
-                  stitchGlassPanel,
-                  "border-l-2 p-6 sm:p-7",
-                  i === 0 && "border-l-[#00d1ff]",
-                  i === 1 && "border-l-[#3e90ff]",
-                  i === 2 && "border-l-[#ffb051]",
-                )}
-              >
+              <li key={t.title}>
+                <StitchRevealItem index={i} className="h-full">
+                <div
+                  className={cn(
+                    stitchGlassInteractive,
+                    "h-full border-l-2 p-6 sm:p-7",
+                    i === 0 && "border-l-[#00d1ff]",
+                    i === 1 && "border-l-[#3e90ff]",
+                    i === 2 && "border-l-[#ffb051]",
+                  )}
+                >
                 <h3 className="font-display text-lg font-semibold tracking-tight text-[#e1e2e8]">{t.title}</h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-[#bbc9cf]">{t.body}</p>
+                </div>
+                </StitchRevealItem>
               </li>
             ))}
           </ul>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 5. Walkthrough / beats */}
       <section id="beats" className={cn("scroll-mt-28", stitchSection, sectionBase)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Walkthrough</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Mission beats</h2>
           <p className={cn("mt-4 max-w-2xl text-pretty", stitchBody)}>
@@ -215,8 +234,8 @@ export function CaseStudyView() {
 
           <ol className="mt-12 space-y-8">
             {caseStudyBeats.map((beat, i) => (
+              <StitchRevealItem key={beat.id} index={i}>
               <li
-                key={beat.id}
                 className={cn(
                   stitchGlass,
                   "min-w-0 overflow-hidden rounded-lg border-white/10",
@@ -229,7 +248,7 @@ export function CaseStudyView() {
                   <img
                     src={beat.image}
                     alt={`${beat.title} — ${beat.imageNote}`}
-                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    className="absolute inset-0 h-full w-full object-cover object-[center_42%] sm:object-center"
                     decoding="async"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#171a20]/90 via-[#171a20]/20 to-transparent lg:bg-gradient-to-r" />
@@ -256,26 +275,31 @@ export function CaseStudyView() {
                   </dl>
                 </div>
               </li>
+              </StitchRevealItem>
             ))}
           </ol>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 6. Process */}
       <section id="process" className={cn("scroll-mt-28", stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Process</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>From research to polish</h2>
 
           <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {caseStudyProcess.map((step, i) => (
-              <li key={step.title} className={cn(stitchGlassPanel, "flex flex-col p-5 sm:p-6")}>
+              <StitchRevealItem key={step.title} index={i}>
+              <li className={cn(stitchGlassInteractive, "flex h-full flex-col p-5 sm:p-6")}>
                 <span className="font-mono text-[11px] font-semibold text-[#00d1ff]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <p className="mt-2 font-display text-base font-semibold text-[#e1e2e8]">{step.title}</p>
                 <p className="mt-2 flex-1 text-[14px] leading-relaxed text-[#859399]">{step.body}</p>
               </li>
+              </StitchRevealItem>
             ))}
           </ol>
 
@@ -301,6 +325,7 @@ export function CaseStudyView() {
               Portfolio blockout still · replaces placeholder beats when in-engine captures are ready
             </p>
           </div>
+          </StitchReveal>
         </div>
       </section>
 
@@ -312,6 +337,7 @@ export function CaseStudyView() {
         )}
       >
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Outcome</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>What this demonstrates</h2>
           <p className={cn("mt-5 max-w-3xl text-pretty", stitchBody)}>{caseStudyOutcome.summary}</p>
@@ -344,6 +370,7 @@ export function CaseStudyView() {
               GitHub
             </Link>
           </div>
+          </StitchReveal>
         </div>
       </section>
 

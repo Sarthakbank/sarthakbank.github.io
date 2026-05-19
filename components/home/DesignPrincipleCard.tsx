@@ -12,7 +12,7 @@ type Props = {
   onToggle: () => void;
 };
 
-/** Stitch glass principle card — fixed-height detail slot; grid does not jump on expand. */
+/** Stitch glass principle card — fixed height; detail reveals in reserved slot. */
 export function DesignPrincipleCard({ principle, expanded, onToggle }: Props) {
   const panelId = useId();
   const titleId = useId();
@@ -32,8 +32,9 @@ export function DesignPrincipleCard({ principle, expanded, onToggle }: Props) {
       aria-controls={panelId}
       className={cn(
         stitchGlassPanel,
-        "flex h-full min-h-[320px] w-full flex-col p-6 text-left transition-[box-shadow,border-color] duration-300 md:min-h-[340px] md:p-8",
+        "flex h-[336px] w-full flex-col overflow-hidden p-6 text-left transition-[box-shadow,border-color] duration-300 md:h-[356px] md:p-8",
         "hover:shadow-[0_0_20px_0_rgba(0,209,255,0.12)]",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00d1ff]",
         expanded && "border-[#00d1ff]/30 shadow-[0_0_24px_0_rgba(0,209,255,0.14)]",
       )}
     >
@@ -50,24 +51,26 @@ export function DesignPrincipleCard({ principle, expanded, onToggle }: Props) {
         </h3>
         <ChevronDown
           className={cn(
-            "mt-0.5 h-5 w-5 shrink-0 text-[#00d1ff] transition-transform duration-300",
+            "mt-0.5 h-5 w-5 shrink-0 text-[#00d1ff] transition-transform duration-300 ease-out",
             expanded && "rotate-180",
           )}
           strokeWidth={2}
           aria-hidden
         />
       </div>
-      <p className="mt-4 shrink-0 text-[15px] leading-[1.6] text-[#bbc9cf] md:text-base">{principle.summary}</p>
+      <p className="mt-4 line-clamp-4 shrink-0 text-[15px] leading-[1.6] text-[#bbc9cf] md:text-base">
+        {principle.summary}
+      </p>
 
       <div
         id={panelId}
         role="region"
         aria-labelledby={titleId}
-        className="mt-5 min-h-[148px] flex-1 overflow-hidden"
+        className="relative mt-5 h-[148px] shrink-0"
       >
         <div
           className={cn(
-            "h-full overflow-y-auto overscroll-contain transition-opacity duration-300",
+            "absolute inset-0 overflow-y-auto overscroll-contain rounded-sm transition-opacity duration-300 ease-out",
             expanded ? "opacity-100" : "pointer-events-none opacity-0",
           )}
           aria-hidden={!expanded}

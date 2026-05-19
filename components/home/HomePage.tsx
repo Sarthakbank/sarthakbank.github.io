@@ -74,7 +74,7 @@ export function HomePage() {
       <section id="principles" className={cn(stitchSection, "scroll-mt-28")}>
         <div className={stitchContainer}>
           <p className={cn(stitchLabel, "mb-10 text-[#859399]")}>Design Principles</p>
-          <div className="grid gap-5 sm:gap-6 md:grid-cols-3 md:items-stretch">
+          <div className="grid gap-5 sm:gap-6 md:auto-rows-fr md:grid-cols-3 md:items-stretch">
             {homeDesignPrinciples.map((p, i) => (
               <DesignPrincipleCard
                 key={p.title}

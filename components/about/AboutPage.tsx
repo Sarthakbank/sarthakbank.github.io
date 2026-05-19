@@ -15,12 +15,14 @@ import {
 } from "@/content/profile";
 import { skillGroups } from "@/content/skillGroups";
 import { homeContactCta } from "@/content/home";
+import { StitchReveal, StitchRevealItem } from "@/components/motion/StitchReveal";
 import {
   stitchBody,
   stitchBtnGhost,
   stitchBtnPrimary,
   stitchContainer,
   stitchGlass,
+  stitchGlassInteractive,
   stitchGlassPanel,
   stitchHeadlineLg,
   stitchHome,
@@ -44,7 +46,12 @@ export function AboutPage() {
     <div className={cn(stitchHome, "overflow-x-hidden")}>
       {/* 1. Hero */}
       <section id="about-hero" className="relative scroll-mt-28 overflow-hidden bg-[#050607] pt-[5.5rem] sm:pt-20">
-        <div className={stitchContainer}>
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(0,209,255,0.07)_0%,transparent_45%)]"
+          aria-hidden
+        />
+        <div className={cn(stitchContainer, "relative")}>
+          <StitchReveal>
           <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14">
             <div className="min-w-0">
               <p className={cn(stitchLabel, "text-[#4cd6ff]")}>About</p>
@@ -59,12 +66,14 @@ export function AboutPage() {
             </div>
             <ProfilePortrait className="mx-auto w-full max-w-sm lg:mx-0 lg:max-w-md" priority />
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 2. Intro */}
       <section className={cn(stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Intro</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Background</h2>
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
@@ -82,43 +91,50 @@ export function AboutPage() {
               </p>
             </div>
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 3. Design philosophy */}
       <section className={cn(stitchSection, sectionBase)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Design philosophy</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>How I design spaces</h2>
           <ul className="mt-12 grid gap-5 md:grid-cols-3">
             {aboutPhilosophy.map((item, i) => (
-              <li
-                key={item.title}
-                className={cn(
-                  stitchGlassPanel,
-                  "border-l-2 p-6 sm:p-7",
-                  skillAccent[i % skillAccent.length],
-                )}
-              >
+              <li key={item.title}>
+                <StitchRevealItem index={i} className="h-full">
+                <div
+                  className={cn(
+                    stitchGlassInteractive,
+                    "h-full border-l-2 p-6 sm:p-7",
+                    skillAccent[i % skillAccent.length],
+                  )}
+                >
                 <h3 className="font-display text-lg font-semibold tracking-tight text-[#e1e2e8]">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-[#859399]">{item.body}</p>
+                </div>
+                </StitchRevealItem>
               </li>
             ))}
           </ul>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 4. Education */}
       <section className={cn(stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Education</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Timeline</h2>
           <ol className="relative mt-10 space-y-0 border-l border-white/[0.08] pl-6 sm:pl-8">
             {profileEducation.map((edu, i) => (
+              <StitchRevealItem key={edu.institution} index={i}>
               <li
-                key={edu.institution}
                 className={cn(
                   "relative pb-8 last:pb-0",
                   i < profileEducation.length - 1 && "mb-0",
@@ -140,19 +156,23 @@ export function AboutPage() {
                   </p>
                 </div>
               </li>
+              </StitchRevealItem>
             ))}
           </ol>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 5. Experience */}
       <section className={cn(stitchSection, sectionBase)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Experience</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Roles to date</h2>
           <ul className="mt-10 space-y-5">
-            {profileExperience.map((job) => (
-              <li key={`${job.company}-${job.duration}`} className={cn(stitchGlass, "p-6 sm:p-8")}>
+            {profileExperience.map((job, i) => (
+              <StitchRevealItem key={`${job.company}-${job.duration}`} index={i}>
+              <li className={cn(stitchGlassInteractive, "p-6 sm:p-8")}>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="flex gap-4">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-[#111418] text-[#00d1ff]">
@@ -175,23 +195,26 @@ export function AboutPage() {
                   {job.summary}
                 </p>
               </li>
+              </StitchRevealItem>
             ))}
           </ul>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 6. Skills by focus */}
       <section className={cn(stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Skills</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>By focus</h2>
           <div className="mt-12 grid gap-5 sm:grid-cols-2">
             {skillGroups.map((group, i) => (
+              <StitchRevealItem key={group.title} index={i}>
               <div
-                key={group.title}
                 className={cn(
-                  stitchGlassPanel,
-                  "border-l-2 p-6 sm:p-7",
+                  stitchGlassInteractive,
+                  "h-full border-l-2 p-6 sm:p-7",
                   skillAccent[i % skillAccent.length],
                 )}
               >
@@ -211,36 +234,42 @@ export function AboutPage() {
                   ))}
                 </ul>
               </div>
+              </StitchRevealItem>
             ))}
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 7. Tools */}
       <section className={cn(stitchSection, sectionBase)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Tools</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Production stack</h2>
           <p className={cn("mt-4 max-w-2xl text-pretty", stitchBody)}>
             Engines, DCC, and collaboration tools used across level design, 3D art, and studio workflow.
           </p>
           <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-            {profileTools.map((tool) => (
+            {profileTools.map((tool, i) => (
+              <StitchRevealItem key={tool} index={i % 6}>
               <li
-                key={tool}
                 className="flex flex-col items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-[#111418] px-3 py-5 text-center transition hover:border-[#00d1ff]/25 hover:bg-[#171a20]"
               >
                 <ToolIcon tool={tool} className="h-7 w-7 text-[#00d1ff]" />
                 <span className="text-[12px] font-semibold leading-tight text-[#bbc9cf]">{tool}</span>
               </li>
+              </StitchRevealItem>
             ))}
           </ul>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 8. CTA */}
       <section className={cn(stitchSection, sectionAlt, "pb-20 sm:pb-24")}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <div className={cn(stitchGlass, "px-6 py-10 text-center sm:px-10 sm:py-12 md:text-left")}>
             <p className={cn(stitchLabel, "text-[#859399]")}>Next step</p>
             <h2 className="mt-3 font-display text-[clamp(1.5rem,2vw+0.75rem,2rem)] font-semibold tracking-tight text-[#e1e2e8]">
@@ -266,6 +295,7 @@ export function AboutPage() {
               </Link>
             </div>
           </div>
+          </StitchReveal>
         </div>
       </section>
     </div>

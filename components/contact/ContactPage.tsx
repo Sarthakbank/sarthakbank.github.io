@@ -11,12 +11,14 @@ import {
   stitchBtnPrimary,
   stitchContainer,
   stitchGlass,
+  stitchGlassInteractive,
   stitchGlassPanel,
   stitchHeadlineLg,
   stitchHome,
   stitchLabel,
   stitchSection,
 } from "@/lib/stitchTokens";
+import { StitchReveal, StitchRevealItem } from "@/components/motion/StitchReveal";
 import { cn } from "@/lib/cn";
 
 const sectionAlt = "border-t border-white/[0.06] bg-[#0b0d10]";
@@ -52,7 +54,8 @@ function ChannelCard({ channelKey }: { channelKey: ChannelKey }) {
   return (
     <article
       className={cn(
-        stitchGlassPanel,
+        stitchGlassInteractive,
+  stitchGlassPanel,
         "flex h-full flex-col border-l-2 p-6 sm:p-7",
         meta.accent,
       )}
@@ -113,7 +116,12 @@ export function ContactPage() {
     <div className={cn(stitchHome, "overflow-x-hidden")}>
       {/* 1. Hero */}
       <section className="relative scroll-mt-28 overflow-hidden bg-[#050607] pt-[5.5rem] sm:pt-20">
-        <div className={stitchContainer}>
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_0%,rgba(0,209,255,0.07)_0%,transparent_45%)]"
+          aria-hidden
+        />
+        <div className={cn(stitchContainer, "relative")}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Contact</p>
           <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw+1rem,3.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#e1e2e8]">
             {contactHero.title}
@@ -144,12 +152,14 @@ export function ContactPage() {
               GitHub
             </Link>
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 2. Contact cards */}
       <section className={cn(stitchSection, sectionAlt)}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <p className={cn(stitchLabel, "text-[#859399]")}>Channels</p>
           <h2 className={cn("mt-3", stitchHeadlineLg)}>Reach out directly</h2>
           <p className={cn("mt-4 max-w-2xl text-pretty", stitchBody)}>
@@ -158,16 +168,18 @@ export function ContactPage() {
           </p>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-3">
-            <ChannelCard channelKey="email" />
-            <ChannelCard channelKey="linkedIn" />
-            <ChannelCard channelKey="github" />
+            <StitchRevealItem index={0} className="h-full"><ChannelCard channelKey="email" /></StitchRevealItem>
+            <StitchRevealItem index={1} className="h-full"><ChannelCard channelKey="linkedIn" /></StitchRevealItem>
+            <StitchRevealItem index={2} className="h-full"><ChannelCard channelKey="github" /></StitchRevealItem>
           </div>
+          </StitchReveal>
         </div>
       </section>
 
       {/* 3. Next step */}
       <section className={cn(stitchSection, "border-t border-white/[0.06] bg-[#050607] pb-20 sm:pb-24")}>
         <div className={stitchContainer}>
+          <StitchReveal>
           <div className={cn(stitchGlass, "px-6 py-10 sm:px-10 sm:py-12")}>
             <p className={cn(stitchLabel, "text-[#859399]")}>Next step</p>
             <h2 className="mt-3 font-display text-[clamp(1.5rem,2vw+0.75rem,2rem)] font-semibold tracking-tight text-[#e1e2e8]">
@@ -193,6 +205,7 @@ export function ContactPage() {
               </Link>
             </div>
           </div>
+          </StitchReveal>
         </div>
       </section>
     </div>
