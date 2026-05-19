@@ -50,7 +50,7 @@ export function CaseStudyView() {
       <FloatingSectionNav items={caseStudyNav} editorial dark />
 
       {/* 1. Hero */}
-      <section id="hero" className={cn("scroll-mt-28 pt-8 sm:pt-10", sectionBase)}>
+      <section id="hero" className="scroll-mt-28 bg-[#050607] pt-[5.5rem] sm:pt-20">
         <div className={stitchContainer}>
           <div className="flex flex-wrap items-center justify-between gap-3">
             <Link
@@ -72,11 +72,11 @@ export function CaseStudyView() {
           <span className={cn(stitchChip, "mt-4 inline-flex")}>{caseStudyMeta.subtitle}</span>
           <p className={cn("mt-6 max-w-2xl text-pretty", stitchBody)}>{caseStudyMeta.summary}</p>
 
-          <dl className="mt-8 grid gap-3 border-t border-white/[0.06] pt-8 sm:grid-cols-2 lg:grid-cols-3">
+          <dl className="mt-8 grid min-w-0 gap-3 border-t border-white/[0.06] pt-8 sm:grid-cols-2 lg:grid-cols-3">
             {caseStudyFactsLines.map((row) => (
-              <div key={row.label} className="flex gap-2 font-mono text-[13px]">
-                <dt className="text-[#859399]">{row.label}</dt>
-                <dd className="text-[#e1e2e8]">{row.value}</dd>
+              <div key={row.label} className="flex min-w-0 gap-2 font-mono text-[13px]">
+                <dt className="shrink-0 text-[#859399]">{row.label}</dt>
+                <dd className="min-w-0 break-words text-[#e1e2e8]">{row.value}</dd>
               </div>
             ))}
           </dl>

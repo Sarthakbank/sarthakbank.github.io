@@ -61,7 +61,7 @@ export default function RootLayout({
       className={`${inter.variable} ${hanken.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-dvh flex-col bg-canvas font-sans text-base">
+      <body className="flex min-h-dvh flex-col overflow-x-hidden bg-canvas font-sans text-base">
         <Script id="theme-init" strategy="beforeInteractive">
           {themeScript}
         </Script>

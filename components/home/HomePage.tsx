@@ -104,7 +104,7 @@ export function HomePage() {
                   {homeFeaturedPreview.sampleLabel}
                 </span>
               </div>
-              <div className="absolute right-3 top-3 z-20 flex flex-wrap justify-end gap-2">
+              <div className="absolute right-3 top-3 z-20 flex max-w-[calc(100%-1.5rem)] flex-wrap justify-end gap-1.5 sm:gap-2">
                 {COORDS.map((c) => (
                   <span
                     key={c.label}

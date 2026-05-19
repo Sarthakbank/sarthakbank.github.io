@@ -43,9 +43,9 @@ export function AboutPage() {
   return (
     <div className={cn(stitchHome, "overflow-x-hidden")}>
       {/* 1. Hero */}
-      <section id="about-hero" className={cn("scroll-mt-28 pt-10 sm:pt-14", sectionBase)}>
+      <section id="about-hero" className="scroll-mt-28 bg-[#050607] pt-[5.5rem] sm:pt-20">
         <div className={stitchContainer}>
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14">
+          <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14">
             <div className="min-w-0">
               <p className={cn(stitchLabel, "text-[#4cd6ff]")}>About</p>
               <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw+1rem,3.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#e1e2e8]">

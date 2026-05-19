@@ -9,14 +9,20 @@ import { profileIdentity } from "@/content/profile";
 import { homeHero } from "@/content/home";
 import { cn } from "@/lib/cn";
 import { Container } from "./Container";
-function isEditorialPath(pathname: string | null) {
-  return pathname === "/" || pathname === "/case-study" || pathname?.startsWith("/case-study/");
+function isStitchEditorialPath(pathname: string | null) {
+  return (
+    pathname === "/" ||
+    pathname === "/about" ||
+    pathname === "/contact" ||
+    pathname === "/case-study" ||
+    pathname?.startsWith("/case-study/")
+  );
 }
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-  const editorial = isEditorialPath(pathname);
+  const editorial = isStitchEditorialPath(pathname);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -55,7 +61,7 @@ export function Header() {
           >
             {homeHero.name}
           </Link>
-          <nav className="hidden min-w-0 items-center gap-6 md:flex" aria-label="Primary">
+          <nav className="hidden min-w-0 items-center gap-5 lg:flex" aria-label="Primary">
             {mainNav.map((item) => {
               const active =
                 item.href === "/"
@@ -81,7 +87,7 @@ export function Header() {
             <button
               type="button"
               className={cn(
-                "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border shadow-sm transition sm:hidden",
+                "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border shadow-sm transition lg:hidden",
                 "border-white/[0.08] bg-[#111418]/80 text-[#e1e2e8] hover:border-white/15 hover:bg-[#171a20]",
               )}
               aria-expanded={menuOpen}
@@ -97,7 +103,7 @@ export function Header() {
         {menuOpen ? (
           <div
             id="editorial-mobile-nav"
-            className="fixed inset-0 z-[60] sm:hidden"
+            className="fixed inset-0 z-[60] lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Site navigation"
@@ -110,12 +116,12 @@ export function Header() {
             />
             <div className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col border-l border-white/[0.08] bg-[#0b0d10] shadow-xl supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
               <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-3.5">
-                <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted">
+                <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-[#859399]">
                   Menu
                 </span>
                 <button
                   type="button"
-                  className="rounded-full p-2 text-muted transition hover:bg-white/[0.06]"
+                  className="rounded-full p-2 text-[#bbc9cf] transition hover:bg-white/[0.06]"
                   aria-label="Close menu"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -135,7 +141,9 @@ export function Header() {
                       onClick={() => setMenuOpen(false)}
                       className={cn(
                         "rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition",
-                        active ? "bg-accent text-white" : "text-ink hover:bg-white/[0.06]",
+                        active
+                          ? "bg-[#00d1ff]/15 text-[#4cd6ff]"
+                          : "text-[#bbc9cf] hover:bg-white/[0.06] hover:text-[#e1e2e8]",
                       )}
                     >
                       {item.label}

@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SiGithub } from "react-icons/si";
-import { FaEnvelope, FaLinkedinIn } from "react-icons/fa";
 import { mainNav } from "@/content/nav";
-import { profileIdentity } from "@/content/profile";
+import { homeFooter } from "@/content/home";
 import { contactChannels } from "@/content/contact";
-import { Container } from "./Container";
+import { stitchContainer } from "@/lib/stitchTokens";
+import { cn } from "@/lib/cn";
 
+/** Home & case study render inline Stitch footers — avoid duplicate chrome. */
 export function Footer() {
   const pathname = usePathname();
   const year = new Date().getFullYear();
@@ -18,82 +18,34 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-white/[0.06] bg-surface/50 py-12 sm:py-14">
-      <Container className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
-        <div className="max-w-md space-y-3">
-          <p className="font-display text-xl font-semibold text-ink">
-            {profileIdentity.name}
-          </p>
-          <p className="text-sm text-muted">
-            {profileIdentity.primaryRole} · {profileIdentity.headline} ·{" "}
-            {profileIdentity.location}
-          </p>
-        </div>
-
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <p className="label-caps mb-3">
-              Explore
-            </p>
-            <ul className="space-y-2 text-sm">
-              {mainNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-ink transition hover:text-accent"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className="label-caps mb-3">
-              Connect
-            </p>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <a
-                  href={contactChannels.email.href}
-                  className="inline-flex items-center gap-2.5 text-ink transition hover:text-accent"
-                >
-                  <FaEnvelope className="h-4 w-4 shrink-0 text-accent/90" aria-hidden />
-                  {contactChannels.email.value}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactChannels.linkedIn.href}
-                  className="inline-flex items-center gap-2.5 text-ink transition hover:text-accent"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedinIn className="h-4 w-4 shrink-0 text-accent/90" aria-hidden />
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactChannels.github.href}
-                  className="inline-flex items-center gap-2.5 text-ink transition hover:text-accent"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiGithub className="h-4 w-4 shrink-0 text-accent/90" aria-hidden />
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </Container>
-      <Container className="mt-12 border-t border-border/60 pt-8">
-        <p className="text-xs text-muted">
-          © {year} {profileIdentity.name}. Portfolio content reflects approved
-          facts; Black Tidemark is a labeled demo case study.
+    <footer className="border-t border-white/[0.05] bg-[#0b0e12] py-12 md:py-16">
+      <div
+        className={cn(
+          stitchContainer,
+          "flex flex-col items-center justify-between gap-8 md:flex-row md:items-start",
+        )}
+      >
+        <p className="max-w-md text-center font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e1e2e8] md:text-left">
+          © {year} {homeFooter.name}. Level Design Portfolio.
         </p>
-      </Container>
+        <nav className="flex flex-wrap justify-center gap-6 md:justify-end" aria-label="Footer">
+          {mainNav.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            href={contactChannels.email.href}
+            className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
+          >
+            Email
+          </Link>
+        </nav>
+      </div>
     </footer>
   );
 }

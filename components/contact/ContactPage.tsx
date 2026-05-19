@@ -84,7 +84,7 @@ function ChannelCard({ channelKey }: { channelKey: ChannelKey }) {
           target={channelKey === "email" ? undefined : "_blank"}
           rel={channelKey === "email" ? undefined : "noopener noreferrer"}
           className={cn(
-            "break-all font-semibold text-[#e1e2e8] transition hover:text-[#00d1ff]",
+            "break-all text-pretty font-semibold text-[#e1e2e8] transition hover:text-[#00d1ff]",
             isEmail ? "text-lg sm:text-xl" : "text-base",
           )}
         >
@@ -112,7 +112,7 @@ export function ContactPage() {
   return (
     <div className={cn(stitchHome, "overflow-x-hidden")}>
       {/* 1. Hero */}
-      <section className="scroll-mt-28 pt-10 sm:pt-14">
+      <section className="scroll-mt-28 bg-[#050607] pt-[5.5rem] sm:pt-20">
         <div className={stitchContainer}>
           <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Contact</p>
           <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw+1rem,3.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#e1e2e8]">
