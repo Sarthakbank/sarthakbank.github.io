@@ -18,6 +18,8 @@ export type HomeDesignPrinciple = {
   icon: "users" | "eye" | "refresh";
   topGradient: string;
   border: string;
+  detail: string;
+  bullets?: readonly string[];
 };
 
 export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
@@ -25,19 +27,28 @@ export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
     title: "Player-Centric Design",
     icon: "users",
     topGradient: "from-violet-400/90 via-fuchsia-400/75 to-indigo-400/85",
-    border: "border-violet-200/70",
+    border: "border-violet-400/25",
+    detail:
+      "Every route, vista, and encounter is judged by what players read under pressure—intent, risk, and reward stay legible before polish.",
+    bullets: ["Flow-first greybox", "Readable objectives", "Playtest-driven iteration"],
   },
   {
     title: "Readable Spaces",
     icon: "eye",
     topGradient: "from-sky-400/85 via-cyan-400/70 to-teal-400/80",
-    border: "border-sky-200/70",
+    border: "border-sky-400/25",
+    detail:
+      "Silhouette, lighting, and pacing work together so navigation feels intuitive—players always know where they are and what the space is asking.",
+    bullets: ["Strong landmarks", "Clear encounter reads", "Rhythm across beats"],
   },
   {
     title: "Iterative Craft",
     icon: "refresh",
     topGradient: "from-amber-400/85 via-orange-400/75 to-rose-400/70",
-    border: "border-amber-200/65",
+    border: "border-amber-400/25",
+    detail:
+      "Blockouts ship fast, feedback lands early, and each pass tightens mechanics, metrics, and mood without losing the core design intent.",
+    bullets: ["Rapid blockout loops", "Cross-discipline reviews", "Ship-ready documentation"],
   },
 ] as const;
 

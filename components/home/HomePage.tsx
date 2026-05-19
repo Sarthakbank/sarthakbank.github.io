@@ -2,21 +2,21 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { ArrowUpRight, Eye, Mail, Plus, RefreshCw, Users } from "lucide-react";
+import { useState } from "react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { SiGithub } from "react-icons/si";
 import { motion, useReducedMotion } from "framer-motion";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/layout/Container";
+import { DesignPrincipleCard } from "@/components/home/DesignPrincipleCard";
 import {
   homeAboutPreview,
   homeCaseStudyCard,
   homeConnectSection,
   homeContactCta,
-  homeCtas,
   homeDesignPrinciples,
   homeFeaturedPreview,
   homeFooter,
-  homeHero,
   homeSkillGrid,
   homeThinkInSpace,
 } from "@/content/home";
@@ -26,29 +26,15 @@ import { tempImagery } from "@/content/tempImagery";
 import { SkillIcon } from "@/components/icons/SkillIcon";
 import { cn } from "@/lib/cn";
 
-const HomeHero3D = dynamic(
-  () =>
-    import("@/components/experiment/Hero3DStage").then((m) => ({
-      default: m.Hero3DStage,
-    })),
+const HomeHero = dynamic(
+  () => import("@/components/home/HomeHero").then((m) => ({ default: m.HomeHero })),
   {
     ssr: false,
-    loading: () => (
-      <div
-        className="flex min-h-[min(240px,50vw)] w-full items-center justify-center bg-transparent sm:min-h-[280px]"
-        aria-hidden
-      />
-    ),
+    loading: () => <div className="min-h-[100dvh] bg-[#0a0a0c]" aria-hidden />,
   },
 );
 
 const ease = [0.22, 1, 0.36, 1] as const;
-
-const principleIcon = {
-  users: Users,
-  eye: Eye,
-  refresh: RefreshCw,
-} as const;
 
 function FadeUp({
   children,
@@ -82,102 +68,30 @@ const shell =
 export function HomePage() {
   const reduce = useReducedMotion();
   const year = new Date().getFullYear();
+  const [openPrinciple, setOpenPrinciple] = useState<number | null>(null);
 
   return (
-    <div className={cn(shell, "pb-0 overflow-x-hidden")}>
-      {/* 1. Hero */}
-      <section className="border-b border-black/[0.06] bg-[#fbfbfd] pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-14 lg:pb-20">
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-12 xl:gap-16">
-            <FadeUp>
-              <h1 className="max-w-xl font-display text-[clamp(2.25rem,4vw+1rem,3.35rem)] font-semibold leading-[1.04] tracking-tight text-[#1d1d1f]">
-                {homeHero.name}
-              </h1>
-              <p className="mt-3 text-xl font-medium tracking-tight text-[#424245] sm:text-2xl">{homeHero.role}</p>
-              <p className="mt-5 max-w-md text-pretty text-[17px] leading-relaxed text-[#6e6e73] sm:text-lg">
-                {homeHero.tagline}
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <ButtonLink
-                  href={homeCtas.primary.href}
-                  variant="primary"
-                  className="!rounded-full !border-0 !bg-[#0071e3] !px-6 !py-3 !text-[15px] !font-semibold !text-white !shadow-[0_1px_2px_rgba(0,0,0,0.06)] hover:!brightness-110"
-                >
-                  {homeCtas.primary.label}
-                </ButtonLink>
-                <ButtonLink
-                  href={homeCtas.secondary.href}
-                  variant="secondary"
-                  icon={<ArrowUpRight />}
-                  iconPosition="end"
-                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:!border-black/[0.16]"
-                >
-                  {homeCtas.secondary.label}
-                </ButtonLink>
-                <ButtonLink
-                  href={homeCtas.tertiary.href}
-                  variant="secondary"
-                  icon={<Mail />}
-                  className="!rounded-full !border-black/[0.1] !bg-white !px-6 !py-3 !text-[15px] !font-semibold !text-[#1d1d1f] !shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
-                >
-                  {homeCtas.tertiary.label}
-                </ButtonLink>
-              </div>
-            </FadeUp>
-
-            <FadeUp delay={0.06} className="relative w-full min-w-0 lg:self-center">
-              <div className="relative mx-auto flex w-full max-w-[520px] justify-center lg:mx-0 lg:max-w-none lg:justify-end">
-                <div className="relative aspect-[1/1] w-full max-h-[min(420px,52vh)] min-h-[min(260px,62vw)] sm:min-h-[min(300px,56vw)] sm:max-h-[min(440px,54vh)] lg:aspect-[5/4] lg:min-h-[min(340px,48vh)] lg:max-h-[min(480px,56vh)]">
-                  <HomeHero3D
-                    preset="editorial"
-                    className="absolute inset-0 h-full w-full"
-                    modelFit={1.58}
-                    interactive
-                  />
-                </div>
-              </div>
-            </FadeUp>
-          </div>
-        </Container>
-      </section>
+    <div className={cn(shell, "overflow-x-hidden pb-0")}>
+      <HomeHero />
 
       {/* 2. Design principles */}
-      <section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
+      <section className="border-t border-white/[0.06] bg-[#0e0e10] pt-10 pb-14 sm:pt-12 sm:pb-16 lg:pt-14 lg:pb-20">
         <Container>
           <FadeUp className="text-center">
-            <h2 className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#6e6e73] sm:text-xs">
+            <h2 className="font-display text-[11px] font-semibold uppercase tracking-[0.28em] text-[#86868b] sm:text-xs">
               Design Principles
             </h2>
           </FadeUp>
           <div className="mt-10 grid items-stretch gap-5 sm:grid-cols-3 sm:gap-6">
-            {homeDesignPrinciples.map((p, i) => {
-              const Icon = principleIcon[p.icon];
-              return (
-                <FadeUp key={p.title} delay={reduce ? 0 : i * 0.06}>
-                  <div
-                    className={cn(
-                      "flex min-h-[268px] h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-[0_2px_20px_-6px_rgba(0,0,0,0.07)] sm:min-h-[280px]",
-                      p.border,
-                    )}
-                  >
-                    <div className={cn("h-[5.25rem] shrink-0 bg-gradient-to-r sm:h-[5.5rem]", p.topGradient)} />
-                    <div className="flex flex-1 flex-col items-center bg-white px-5 pb-7 pt-8 text-center sm:px-6 sm:pb-8 sm:pt-9">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-black/[0.06] bg-[#fafafa] text-[#0071e3] shadow-sm">
-                        <Icon className="h-6 w-6" strokeWidth={1.65} aria-hidden />
-                      </div>
-                      <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-[#1d1d1f] sm:text-xl">
-                        {p.title}
-                      </h3>
-                      <div className="mt-8 flex justify-center">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.1] bg-white text-[#6e6e73] shadow-sm">
-                          <Plus className="h-4 w-4" strokeWidth={2} aria-hidden />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </FadeUp>
-              );
-            })}
+            {homeDesignPrinciples.map((p, i) => (
+              <FadeUp key={p.title} delay={reduce ? 0 : i * 0.06}>
+                <DesignPrincipleCard
+                  principle={p}
+                  expanded={openPrinciple === i}
+                  onToggle={() => setOpenPrinciple((prev) => (prev === i ? null : i))}
+                />
+              </FadeUp>
+            ))}
           </div>
         </Container>
       </section>

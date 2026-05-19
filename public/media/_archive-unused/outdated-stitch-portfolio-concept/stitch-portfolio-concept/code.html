@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sarthak Bankar | Level Designer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;800&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#353534",
+                        "outline-variant": "#3c494e",
+                        "on-background": "#e5e2e1",
+                        "outline": "#859399",
+                        "secondary-container": "#45464e",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary": "#2f3037",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "surface-container-lowest": "#0e0e0e",
+                        "primary-fixed": "#b7eaff",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-bright": "#3a3939",
+                        "secondary-fixed": "#e2e1eb",
+                        "secondary-fixed-dim": "#c6c6cf",
+                        "on-primary-fixed-variant": "#004e60",
+                        "on-secondary-fixed-variant": "#45464e",
+                        "on-primary-fixed": "#001f28",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary": "#2f3131",
+                        "on-primary-container": "#00566a",
+                        "inverse-on-surface": "#313030",
+                        "surface-tint": "#4cd6ff",
+                        "primary": "#a4e6ff",
+                        "tertiary-container": "#bfc0c0",
+                        "secondary": "#c6c6cf",
+                        "inverse-primary": "#00677f",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-tertiary-container": "#4d4e4f",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-primary": "#003543",
+                        "surface-container": "#201f1f",
+                        "on-error": "#690005",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-highest": "#353534",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#00d1ff",
+                        "background": "#131313",
+                        "tertiary": "#dcdcdc",
+                        "on-secondary-container": "#b4b4bd",
+                        "surface": "#131313",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#1a1b22",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1440px",
+                        "margin-desktop": "80px",
+                        "gutter": "24px",
+                        "section-gap": "160px",
+                        "unit": "8px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "display-lg-mobile": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "label-tech": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "1.5", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "display-lg-mobile": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-md": ["32px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "display-lg": ["72px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800" }],
+                        "label-tech": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            color: theme('colors.on-surface');
+            overflow-x: hidden;
+        }
+        
+        .glass-card {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(0, 209, 255, 0.5);
+        }
+
+        .ambient-glow {
+            position: absolute;
+            background: radial-gradient(circle, rgba(0,209,255,0.1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Smooth scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.outline-variant');
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.primary-container');
+        }
+
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: theme('colors.primary-container');
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary-container selection:text-on-primary-container relative">
+<div id="scroll-progress" style="width: 0%;"></div>
+<!-- Top Navigation (Generated from JSON) -->
+<nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-container-max rounded-full border border-white/10 backdrop-blur-xl bg-surface/60 flex justify-between items-center px-8 py-3 z-50 shadow-2xl">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface">
+            SARTHAK BANKAR
+        </div>
+<div class="hidden md:flex items-center space-x-gutter">
+<a class="text-primary font-bold border-b border-primary font-label-tech text-label-tech uppercase tracking-widest px-2 py-1 scale-95 active:scale-90 transition-transform" href="#work">Work</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-tech text-label-tech uppercase tracking-widest px-2 py-1 hover:bg-primary/10 transition-all duration-300 rounded scale-95 active:scale-90" href="#about">About</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-tech text-label-tech uppercase tracking-widest px-2 py-1 hover:bg-primary/10 transition-all duration-300 rounded scale-95 active:scale-90" href="#approach">Approach</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-label-tech text-label-tech uppercase tracking-widest px-2 py-1 hover:bg-primary/10 transition-all duration-300 rounded scale-95 active:scale-90" href="#contact">Contact</a>
+</div>
+<button class="bg-black border border-primary-container text-primary-container hover:bg-primary-container hover:text-black font-label-tech text-label-tech uppercase tracking-widest px-6 py-2 rounded-full transition-colors duration-300 scale-95 active:scale-90">
+            Connect
+        </button>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex flex-col justify-center items-center pt-24 pb-section-gap" id="work">
+<div class="ambient-glow w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+<div class="relative z-10 w-full flex flex-col items-center justify-center">
+<h1 class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface text-center w-full pointer-events-none mix-blend-difference">
+                    SARTHAK BANKAR
+                </h1>
+<div class="relative w-full max-w-4xl aspect-[1.79] my-12 group">
+<img alt="" class="w-full h-full object-cover rounded-xl shadow-2xl transition-transform duration-700 ease-out group-hover:scale-[1.02]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3R6c6HXlRYTWf0NmiODll8IUQFEojLzBCxckfZEDVE-lxWMHcvevSu6MSqFgfIHguP5NejxNyIMAipFzP0wIwdTNPneSdUhDwkhCH_gP_hH_vpAKioMt7g8JMiCKuCrrVWd5SpAj-F35F1lBG_lbU-S1MZbpC8Go2TAGWZrrpk1YImFPI3D5TV36MTCQgCeeDDfU0ETndDarivagMlKemHwTS4Z5iJN_V24roEvT16_GPcIX3mgXzRVLBn616PrCBrSeNvg3BWqA"/>
+<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+</div>
+<h2 class="absolute bottom-1/4 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface text-center w-full pointer-events-none mix-blend-difference">
+                    LEVEL DESIGNER
+                </h2>
+</div>
+<div class="flex flex-col md:flex-row gap-6 mt-16 z-20">
+<a class="bg-black border border-primary-container text-primary-container hover:bg-primary-container hover:text-black font-label-tech text-label-tech uppercase px-8 py-4 rounded-full transition-colors duration-300 text-center tracking-widest" href="#featured">
+                    View Featured Project
+                </a>
+<a class="font-label-tech text-label-tech uppercase text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2 px-8 py-4 transition-colors" href="#approach">
+<span class="material-symbols-outlined text-[16px]">add</span> About My Approach
+                </a>
+<a class="font-label-tech text-label-tech uppercase text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-2 px-8 py-4 transition-colors" href="#contact">
+                     Contact
+                </a>
+</div>
+</section>
+<!-- Design Principles Section -->
+<section class="py-section-gap relative" id="approach">
+<div class="mb-16">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Design Principles</h3>
+<div class="w-16 h-1 bg-primary-container"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="glass-card p-8 rounded-xl group cursor-pointer relative overflow-hidden transition-all duration-500 hover:bg-[#161616]">
+<div class="flex justify-between items-start mb-12">
+<h4 class="font-body-lg text-body-lg text-on-surface font-bold w-2/3">Player-Centric Design</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors duration-300">add</span>
+</div>
+<div class="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 font-body-sm text-body-sm text-on-surface-variant">
+                        Every spatial decision is rooted in guiding the player's eye and understanding their emotional journey through the environment.
+                    </div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-8 rounded-xl group cursor-pointer relative overflow-hidden transition-all duration-500 hover:bg-[#161616]">
+<div class="flex justify-between items-start mb-12">
+<h4 class="font-body-lg text-body-lg text-on-surface font-bold w-2/3">Readable Spaces</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors duration-300">add</span>
+</div>
+<div class="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 font-body-sm text-body-sm text-on-surface-variant">
+                        Utilizing architectural lighting, geometric language, and clear affordances to ensure immediate comprehension of navigational paths and combat arenas.
+                    </div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card p-8 rounded-xl group cursor-pointer relative overflow-hidden transition-all duration-500 hover:bg-[#161616]">
+<div class="flex justify-between items-start mb-12">
+<h4 class="font-body-lg text-body-lg text-on-surface font-bold w-2/3">Iterative Craft</h4>
+<span class="material-symbols-outlined text-outline group-hover:text-primary-container transition-colors duration-300">add</span>
+</div>
+<div class="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 font-body-sm text-body-sm text-on-surface-variant">
+                        From raw blockout to final polish, establishing robust pipelines that allow for rapid prototyping and continuous refinement based on playtesting data.
+                    </div>
+</div>
+</div>
+</section>
+<!-- Featured Project -->
+<section class="py-section-gap" id="featured">
+<div class="mb-16 flex justify-between items-end">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">Featured Project</h3>
+<div class="w-16 h-1 bg-primary-container"></div>
+</div>
+<div class="font-label-tech text-label-tech text-outline-variant uppercase tracking-widest hidden md:block">
+                    01 / 03
+                </div>
+</div>
+<div class="relative w-full aspect-[1.79] rounded-xl overflow-hidden group cursor-pointer">
+<img alt="" class="w-full h-full object-cover transition-transform duration-1000 ease-in-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqXZJEsnJvXp_u_yHB45ddHur0vfmYo4Cz5xMJmE6N6PabrygwwpwOLZSO4zkC9pfr2aDT3Q3PQs4ur5fzNRAYxEa0Z74je4IthIw4PHe79QWLoATtsSFLDfbAvwE7gysbB4O-FuTxSjg0-0xdP6RD7beR8u8n4NAReGxZ0tQ2bEymKt8UHRIMVL7AkL_DrMbnPwcNOnkR1oyGlgd1Z9yCYlB93QwvRo5mv5GBAthXSYl_Hj67Z5PfMsnU_fC9A_3QodIghiO1oHA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
+<div class="absolute bottom-8 left-8 md:bottom-12 md:left-12 z-10">
+<h4 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface mb-2">Escape Protocol</h4>
+<div class="flex gap-4 font-label-tech text-label-tech text-primary-container uppercase tracking-widest">
+<span>UE5</span>
+<span>Stealth Action</span>
+<span>Solo Project</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Skill Grid -->
+<section class="py-section-gap">
+<div class="mb-16">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4">How I Think in Space</h3>
+<div class="w-16 h-1 bg-primary-container"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-outline-variant/30 rounded-xl overflow-hidden">
+<div class="bg-surface-container-low p-8 flex flex-col items-center justify-center text-center hover:bg-surface-variant transition-colors duration-300 aspect-square">
+<span class="material-symbols-outlined text-[32px] text-primary-container mb-4">architecture</span>
+<span class="font-label-tech text-label-tech text-on-surface uppercase tracking-widest">3D Blockout</span>
+</div>
+<div class="bg-surface-container-low p-8 flex flex-col items-center justify-center text-center hover:bg-surface-variant transition-colors duration-300 aspect-square">
+<span class="material-symbols-outlined text-[32px] text-primary-container mb-4">route</span>
+<span class="font-label-tech text-label-tech text-on-surface uppercase tracking-widest">Pacing &amp; Flow</span>
+</div>
+<div class="bg-surface-container-low p-8 flex flex-col items-center justify-center text-center hover:bg-surface-variant transition-colors duration-300 aspect-square">
+<span class="material-symbols-outlined text-[32px] text-primary-container mb-4">account_tree</span>
+<span class="font-label-tech text-label-tech text-on-surface uppercase tracking-widest">Visual Scripting</span>
+</div>
+<div class="bg-surface-container-low p-8 flex flex-col items-center justify-center text-center hover:bg-surface-variant transition-colors duration-300 aspect-square">
+<span class="material-symbols-outlined text-[32px] text-primary-container mb-4">view_in_ar</span>
+<span class="font-label-tech text-label-tech text-on-surface uppercase tracking-widest">Unreal Engine</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Generated from JSON) -->
+<footer class="w-full py-section-gap border-t border-outline-variant/20 bg-surface-container-lowest flex flex-col items-center justify-center text-center px-margin-desktop mt-section-gap" id="contact">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-8">Let's Connect</h2>
+<div class="flex gap-8 mb-12">
+<a class="font-label-tech text-label-tech text-on-surface-variant uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-primary transition-colors duration-300" href="#">Email</a>
+<a class="font-label-tech text-label-tech text-on-surface-variant uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-primary transition-colors duration-300" href="#">LinkedIn</a>
+<a class="font-label-tech text-label-tech text-on-surface-variant uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-primary transition-colors duration-300" href="#">ArtStation</a>
+<a class="font-label-tech text-label-tech text-on-surface-variant uppercase tracking-widest opacity-80 hover:opacity-100 hover:text-primary transition-colors duration-300" href="#">Twitter</a>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+            © 2024 Sarthak Bankar. All Rights Reserved. Built for the next generation of play.
+        </p>
+</footer>
+<script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+    </script>
+</body></html>

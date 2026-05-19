@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sarthak Bankar - Level Design Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&amp;family=Hanken+Grotesk:wght@600;700;800&amp;family=Inter:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#323539",
+                      "surface-container-low": "#191c20",
+                      "error": "#ffb4ab",
+                      "primary-fixed": "#b7eaff",
+                      "inverse-on-surface": "#2e3135",
+                      "on-surface": "#e1e2e8",
+                      "outline-variant": "#3c494e",
+                      "inverse-surface": "#e1e2e8",
+                      "on-primary-container": "#00566a",
+                      "surface": "#111418",
+                      "secondary-fixed": "#d6e3ff",
+                      "primary-container": "#00d1ff",
+                      "on-primary-fixed": "#001f28",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-background": "#e1e2e8",
+                      "on-error": "#690005",
+                      "secondary": "#aac7ff",
+                      "surface-bright": "#36393e",
+                      "tertiary": "#ffd5aa",
+                      "primary": "#a4e6ff",
+                      "tertiary-fixed-dim": "#ffb868",
+                      "background": "#111418",
+                      "on-tertiary-fixed-variant": "#673d00",
+                      "on-tertiary": "#482900",
+                      "surface-container-high": "#272a2e",
+                      "outline": "#859399",
+                      "on-secondary-fixed-variant": "#00468d",
+                      "on-tertiary-fixed": "#2b1700",
+                      "on-secondary-container": "#002957",
+                      "inverse-primary": "#00677f",
+                      "surface-dim": "#111418",
+                      "on-surface-variant": "#bbc9cf",
+                      "on-primary-fixed-variant": "#004e60",
+                      "surface-container-lowest": "#0b0e12",
+                      "surface-container": "#1d2024",
+                      "tertiary-container": "#ffb051",
+                      "on-secondary-fixed": "#001b3e",
+                      "secondary-container": "#3e90ff",
+                      "on-primary": "#003543",
+                      "on-tertiary-container": "#724400",
+                      "surface-tint": "#4cd6ff",
+                      "tertiary-fixed": "#ffddbb",
+                      "surface-container-highest": "#323539",
+                      "secondary-fixed-dim": "#aac7ff",
+                      "on-secondary": "#003064"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "md": "16px",
+                      "unit": "4px",
+                      "sm": "8px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px",
+                      "margin-desktop": "64px",
+                      "xxl": "96px",
+                      "container-max": "1440px",
+                      "xl": "48px",
+                      "xs": "4px",
+                      "lg": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "display-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "code-sm": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "Geist"
+                      ],
+                      "headline-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "72px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.04em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "code-sm": [
+                              "13px",
+                              {
+                                      "lineHeight": "1.5",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "1",
+                                      "letterSpacing": "0.15em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        :root {
+            --scroll-progress: 0;
+        }
+
+        body {
+            background-color: #050607;
+            color: #e1e2e8;
+            overflow-x: hidden;
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 20px 0 rgba(0, 209, 255, 0.15);
+        }
+
+        .tech-chip {
+            background-color: rgba(255, 159, 10, 0.1);
+            color: #FF9F0A;
+        }
+
+        .hero-image-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, calc(-50% + (var(--scroll-progress) * 150px))) scale(calc(0.8 + (var(--scroll-progress) * 1.2)));
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            opacity: calc(0.3 - (var(--scroll-progress) * 0.15));
+            pointer-events: none;
+        }
+
+        .hero-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: rotate(calc(var(--scroll-progress) * 360deg));
+            will-change: transform;
+        }
+        
+        .parallax-layer {
+            transform: translateY(calc(var(--scroll-progress) * -100px));
+        }
+
+        .content-section {
+            position: relative;
+            z-index: 10;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nav-link-active {
+            text-shadow: 0 0 8px rgba(0, 209, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-[#050607] font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-xl docked full-width top-0 z-50 sticky border-b border-white/10 shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-on-surface dark:text-on-background">
+            Sarthak Bankar
+        </div>
+<!-- Desktop Nav -->
+<div class="hidden md:flex items-center gap-lg">
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b border-primary font-body-md text-body-md tracking-tight hover:bg-primary/5 transition-all duration-300 px-sm py-xs nav-link-active" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors font-body-md text-body-md tracking-tight hover:bg-primary/5 transition-all duration-300 px-sm py-xs" href="#about">About</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors font-body-md text-body-md tracking-tight hover:bg-primary/5 transition-all duration-300 px-sm py-xs" href="#projects">Featured Project</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant/70 hover:text-primary transition-colors font-body-md text-body-md tracking-tight hover:bg-primary/5 transition-all duration-300 px-sm py-xs" href="#contact">Contact</a>
+<button aria-label="dark_mode" class="text-on-surface-variant hover:text-primary transition-colors p-xs">
+<span class="material-symbols-outlined">dark_mode</span>
+</button>
+</div>
+<!-- Mobile Nav Toggle -->
+<button class="md:hidden text-on-surface p-xs">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</nav>
+<!-- Parallax Hero Background -->
+<div class="hero-image-container" id="heroImage">
+<img alt="Level Design Blockout" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrWGQ0eovJPdm4l6VDY1IaK40U-rip2I3yhHhP6fDbxWc5WKeRSJxn3gSJDObwnnoxladQmML3xaJGLA_-TAD8p0PWDMnWDsVEPk1ZFDfjYykyLCU3kVnaAKtL73qnsf4LdJZrn66L__9GZS5qdWqKTUeWmQHDHdQTdwFQox5v1BZCYSdGPtx5jwrFDLIb5Hw7dNBlW7xBh9z3rq6-69e1nXJJkvOlERTUI-zPZjnkC5M5h7zLUfk1lxe0blNpwL_uydRwJE7F6Z8D"/>
+<div class="absolute inset-0 bg-gradient-to-b from-[#050607]/80 via-transparent to-[#050607] parallax-layer"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10">
+<!-- Hero Section -->
+<section class="h-screen flex items-center justify-center flex-col px-margin-mobile md:px-margin-desktop text-center">
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tighter fade-in-up">
+                Sarthak Bankar
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-md max-w-2xl mx-auto fade-in-up" style="transition-delay: 0.1s;">
+                Crafting cinematic spatial experiences and engineering architectural precision for high-end interactive environments.
+            </p>
+<div class="mt-xl fade-in-up" style="transition-delay: 0.2s;">
+<span class="material-symbols-outlined text-on-surface-variant animate-bounce">arrow_downward</span>
+</div>
+</section>
+<!-- Design Principles -->
+<section class="py-xxl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto content-section" id="about">
+<div class="mb-xl text-center md:text-left fade-in-up">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Spatial Philosophy</h2>
+<div class="w-16 h-1 bg-primary-container mt-sm mx-auto md:mx-0"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-[#171A20] border border-white/10 rounded-lg p-lg hover:border-primary-container/50 transition-colors glow-hover fade-in-up" style="transition-delay: 0.1s;">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-md">architecture</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Structural Integrity</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Focusing on mathematical spacing and razor-sharp blockouts to ensure robust gameplay flow before art passes.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-[#171A20] border border-white/10 rounded-lg p-lg hover:border-primary-container/50 transition-colors glow-hover fade-in-up" style="transition-delay: 0.2s;">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-md">route</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Guiding the Eye</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Utilizing high-energy accents and lighting against void-like backgrounds to draw players to critical interactive paths.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-[#171A20] border border-white/10 rounded-lg p-lg hover:border-primary-container/50 transition-colors glow-hover fade-in-up" style="transition-delay: 0.3s;">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-md">landscape</span>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Atmospheric Depth</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Layering monochromatic foundations with subtle luminescence to create immersive, cinematic environments.</p>
+</div>
+</div>
+</section>
+<!-- Featured Project -->
+<section class="py-xxl w-full content-section bg-[#0B0D10]/80 backdrop-blur-sm border-y border-white/5 relative overflow-hidden" id="projects">
+<!-- Coord labels -->
+<div class="absolute top-sm left-sm font-code-sm text-code-sm text-outline-variant fade-in-up">X: 124.5 Y: 45.0 Z: -12.3</div>
+<div class="absolute bottom-sm right-sm font-code-sm text-code-sm text-outline-variant fade-in-up">ZONE_PRIME</div>
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex flex-col md:flex-row gap-xl items-center">
+<div class="w-full md:w-1/2 fade-in-up">
+<div class="flex gap-sm mb-md">
+<span class="font-label-caps text-label-caps tech-chip px-sm py-xs rounded">Geometry</span>
+<span class="font-label-caps text-label-caps tech-chip px-sm py-xs rounded">Scripting</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-md">Project Void</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg">A cinematic exploration of verticality and brutalist architecture within a highly constrained spatial volume. Engineered for seamless traversal and high-contrast visual storytelling.</p>
+<button class="bg-primary-container text-on-primary-fixed font-body-md text-body-md px-lg py-sm rounded glow-hover transition-all font-semibold inline-flex items-center gap-xs">
+                            Explore Level
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="w-full md:w-1/2 fade-in-up" style="transition-delay: 0.2s;">
+<div class="bg-[#171A20] rounded-xl border border-white/10 overflow-hidden aspect-[4/3] glow-hover relative">
+<img alt="Featured Project Gameplay" class="w-full h-full object-cover" data-alt="A moody, high-contrast screenshot of a brutalist video game level. The scene features massive, imposing concrete structures dominating the composition, bathed in deep shadows and illuminated by sharp, cool cyan accent lights. The perspective is dynamic, emphasizing verticality and a sense of scale. The visual style is sleek, cinematic, and slightly futuristic, adhering to a minimalist dark mode aesthetic with precise architectural lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ4MRkAO_wvBSdAN1kmjtBT8JYVsPj3PvsD5a9Z1n2WtweWp8E_EuU0qaMTW0M6X0OswGT6XBI0efwMLCEQs9j94kGB_roFAVGDN07TrzOrLjHiVQP8cT7z28iYpCDoLRSDwXg9gsliP6Eyezvqb0SBNW06aRWsLPlyt7Fi604JMyR3EmiEuSE1_u7p45uGEoO4q20mWvxIST49p7WJ5M1xhIuVJpUZ4yg_XtBRc7ElFeaO52sC5TisakRZHaGva_g6mBhgbB42jl2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-md">
+<div class="font-code-sm text-code-sm text-on-surface-variant">RENDER_PASS_ALPHA</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Skills / Organic Grid -->
+<section class="py-xxl px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto content-section">
+<div class="mb-xl text-center fade-in-up">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Technical Arsenal</h2>
+<div class="w-16 h-1 bg-primary-container mt-sm mx-auto"></div>
+</div>
+<div class="flex flex-wrap justify-center gap-md fade-in-up" style="transition-delay: 0.1s;">
+<!-- Skill Chips -->
+<div class="border border-white/10 bg-[#171A20] px-lg py-sm rounded-full text-on-surface font-body-md text-body-md hover:border-primary-container/50 hover:text-primary-container transition-colors cursor-default">Unreal Engine 5</div>
+<div class="border border-white/10 bg-[#171A20] px-lg py-sm rounded-full text-on-surface font-body-md text-body-md hover:border-primary-container/50 hover:text-primary-container transition-colors cursor-default">Blueprints</div>
+<div class="border border-white/10 bg-[#171A20] px-lg py-sm rounded-full text-on-surface font-body-md text-body-md hover:border-primary-container/50 hover:text-primary-container transition-colors cursor-default">Maya / Blender</div>
+<div class="border border-white/10 bg-[#171A20] px-lg py-sm rounded-full text-on-surface font-body-md text-body-md hover:border-primary-container/50 hover:text-primary-container transition-colors cursor-default">Level Blockout</div>
+<div class="border border-white/10 bg-[#171A20] px-lg py-sm rounded-full text-on-surface font-body-md text-body-md hover:border-primary-container/50 hover:text-primary-container transition-colors cursor-default">Lighting &amp; Composition</div>
+<div class="border border-white/10 bg-[#171A20] px-lg py-sm rounded-full text-on-surface font-body-md text-body-md hover:border-primary-container/50 hover:text-primary-container transition-colors cursor-default">Git / Perforce</div>
+</div>
+</section>
+<!-- Contact CTA -->
+<section class="py-xxl px-margin-mobile md:px-margin-desktop content-section text-center max-w-3xl mx-auto border-t border-white/5 mt-xl" id="contact">
+<h2 class="font-display-lg text-display-lg text-on-surface mb-md fade-in-up">Initiate Sequence</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-xl fade-in-up" style="transition-delay: 0.1s;">Currently open for level design roles and collaborative spatial projects.</p>
+<div class="flex justify-center gap-md fade-in-up" style="transition-delay: 0.2s;">
+<input class="bg-[#050607] border border-white/10 rounded px-md py-sm text-on-surface font-code-sm text-code-sm focus:border-primary-container focus:outline-none focus:ring-1 focus:ring-primary-container transition-colors w-64" placeholder="ENTER_COMM_LINK" type="email"/>
+<button class="bg-transparent border border-primary-container text-on-surface font-label-caps text-label-caps px-lg py-sm rounded hover:bg-primary-container/10 transition-colors">
+                     TRANSMIT
+                 </button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-container-lowest full-width py-xxl border-t border-white/5 flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop gap-lg relative z-20 mt-xxl fade-in-up">
+<div class="text-on-surface font-bold font-label-caps text-label-caps">
+            © 2024 Sarthak Bankar. Level Design Portfolio. Built for cinematic immersion.
+        </div>
+<div class="flex gap-md font-label-caps text-label-caps text-on-surface-variant/60">
+<a class="hover:text-primary transition-all relative group" href="#">
+                Email
+                <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="hover:text-primary transition-all relative group" href="#">
+                LinkedIn
+                <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="hover:text-primary transition-all relative group" href="#">
+                ArtStation
+                <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
+</a>
+<a class="hover:text-primary transition-all relative group" href="#">
+                GitHub
+                <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
+</a>
+</div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in-up');
+
+            function handleScroll() {
+                const scrollY = window.scrollY;
+                const maxScroll = document.body.scrollHeight - window.innerHeight;
+                // Calculate normalized scroll progress from 0 to 1
+                const scrollProgress = maxScroll > 0 ? Math.min(1, Math.max(0, scrollY / maxScroll)) : 0;
+                
+                // Update CSS variable for spatial flow
+                document.documentElement.style.setProperty('--scroll-progress', scrollProgress);
+
+                // Fade in/out elements based on viewport visibility
+                fadeElements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    
+                    // Element is visible when top is within 85% of viewport and bottom is not completely off top
+                    if (rect.top <= windowHeight * 0.85 && rect.bottom >= 0) {
+                        el.classList.add('visible');
+                    } else {
+                        // Fade out when scrolling past
+                        el.classList.remove('visible');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', () => {
+                window.requestAnimationFrame(handleScroll);
+            });
+            
+            // Initial call to set state
+            handleScroll();
+        });
+    </script>
+</body></html>

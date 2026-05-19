@@ -15,10 +15,15 @@ function isEditorialPath(pathname: string | null) {
   return pathname === "/" || pathname === "/case-study" || pathname?.startsWith("/case-study/");
 }
 
+function isCinematicHome(pathname: string | null) {
+  return pathname === "/";
+}
+
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const editorial = isEditorialPath(pathname);
+  const cinematicHome = isCinematicHome(pathname);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -35,14 +40,26 @@ export function Header() {
 
   if (editorial) {
     return (
-      <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-white/90 backdrop-blur-xl dark:border-black/[0.06] dark:bg-white/90">
+      <header
+        className={cn(
+          "sticky top-0 z-50 backdrop-blur-xl",
+          cinematicHome
+            ? "border-b border-white/[0.08] bg-[#0a0a0c]/85"
+            : "border-b border-black/[0.06] bg-white/90 dark:border-black/[0.06] dark:bg-white/90",
+        )}
+      >
         <Container className="flex min-h-[3.75rem] items-center justify-between gap-3 py-3 sm:min-h-[4rem] sm:py-4">
           <Link
             href="/"
-            className="min-w-0 shrink font-display text-[15px] font-semibold tracking-tight text-[#1d1d1f] sm:text-base"
+            className={cn(
+              "min-w-0 shrink font-display text-[15px] font-semibold tracking-tight sm:text-base",
+              cinematicHome ? "text-white" : "text-[#1d1d1f]",
+            )}
           >
             {homeHero.name.split(" ")[0]}{" "}
-            <span className="font-normal text-[#6e6e73]">Portfolio</span>
+            <span className={cn("font-normal", cinematicHome ? "text-[#86868b]" : "text-[#6e6e73]")}>
+              Portfolio
+            </span>
           </Link>
           <nav className="hidden min-w-0 items-center gap-0.5 sm:flex" aria-label="Primary">
             {mainNav.map((item) => {
@@ -55,8 +72,14 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-medium text-[#424245] transition sm:px-3 sm:text-[13px]",
-                    active ? "bg-black/[0.06] text-[#1d1d1f]" : "hover:bg-black/[0.04] hover:text-[#1d1d1f]",
+                    "whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-medium transition sm:px-3 sm:text-[13px]",
+                    cinematicHome
+                      ? active
+                        ? "bg-white/12 text-white"
+                        : "text-[#a1a1a6] hover:bg-white/[0.06] hover:text-white"
+                      : active
+                        ? "bg-black/[0.06] text-[#1d1d1f]"
+                        : "text-[#424245] hover:bg-black/[0.04] hover:text-[#1d1d1f]",
                   )}
                 >
                   {item.label}
@@ -65,12 +88,24 @@ export function Header() {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-2">
-            <span className="[&>button]:h-9 [&>button]:w-9 [&>button]:rounded-full [&>button]:border-black/[0.1] [&>button]:bg-white">
+            <span
+              className={cn(
+                "[&>button]:h-9 [&>button]:w-9 [&>button]:rounded-full",
+                cinematicHome
+                  ? "[&>button]:border-white/15 [&>button]:bg-white/10"
+                  : "[&>button]:border-black/[0.1] [&>button]:bg-white",
+              )}
+            >
               <ThemeToggle />
             </span>
             <button
               type="button"
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/[0.1] bg-white text-[#1d1d1f] shadow-sm transition hover:bg-black/[0.04] sm:hidden"
+              className={cn(
+                "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border shadow-sm transition sm:hidden",
+                cinematicHome
+                  ? "border-white/15 bg-white/10 text-white hover:bg-white/15"
+                  : "border-black/[0.1] bg-white text-[#1d1d1f] hover:bg-black/[0.04]",
+              )}
               aria-expanded={menuOpen}
               aria-controls="editorial-mobile-nav"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
