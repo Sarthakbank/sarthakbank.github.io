@@ -7,10 +7,13 @@ import { cn } from "@/lib/cn";
 export function FloatingSectionNav({
   items,
   editorial,
+  dark,
 }: {
   items: CaseStudyNavItem[];
-  /** Light editorial chrome (matches case study page tone) */
+  /** Editorial case study chrome */
   editorial?: boolean;
+  /** Stitch dark UI (cyan accent, graphite surfaces) */
+  dark?: boolean;
 }) {
   const [active, setActive] = useState(items[0]?.id ?? "");
   const detailsRef = useRef<HTMLDetailsElement>(null);
@@ -42,14 +45,15 @@ export function FloatingSectionNav({
   }, [items]);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: "smooth", block: "start" });
     if (detailsRef.current) {
       detailsRef.current.open = false;
     }
   };
 
   const activeLabel = items.find((i) => i.id === active)?.label ?? "";
+  const stitchDark = editorial && dark;
 
   return (
     <>
@@ -59,24 +63,21 @@ export function FloatingSectionNav({
       >
         <nav
           className={cn(
-            "pointer-events-auto flex max-h-[min(70dvh,26rem)] flex-col overflow-hidden rounded-2xl border shadow-md backdrop-blur-xl",
-            editorial
-              ? "border-white/[0.1] bg-[#141416]/95 text-ink ring-1 ring-inset ring-white/[0.06]"
-              : "border-hairline bg-elevated/92 shadow-lift ring-1 ring-inset ring-[var(--ring-inset)]",
+            "pointer-events-auto flex max-h-[min(70dvh,26rem)] flex-col overflow-hidden rounded-xl border shadow-md backdrop-blur-md",
+            stitchDark
+              ? "border-white/[0.08] bg-[#111418]/92 ring-1 ring-inset ring-white/[0.05]"
+              : editorial
+                ? "border-white/[0.1] bg-[#141416]/95 text-ink ring-1 ring-inset ring-white/[0.06]"
+                : "border-hairline bg-elevated/92 shadow-lift ring-1 ring-inset ring-[var(--ring-inset)]",
           )}
         >
           <div
             className={cn(
               "border-b px-3 py-2",
-              editorial ? "border-white/[0.08]" : "border-hairline",
+              stitchDark ? "border-white/[0.06]" : editorial ? "border-white/[0.08]" : "border-hairline",
             )}
           >
-            <p
-              className={cn(
-                "text-[10px] font-semibold uppercase tracking-[0.2em]",
-                "font-mono text-muted",
-              )}
-            >
+            <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-[#859399]">
               Chapters
             </p>
           </div>
@@ -87,21 +88,25 @@ export function FloatingSectionNav({
                   type="button"
                   onClick={() => scrollTo(item.id)}
                   className={cn(
-                    "relative w-full rounded-xl py-2 pl-3 pr-2 text-left text-[11px] font-semibold uppercase tracking-wide transition duration-200",
-                    editorial
+                    "relative w-full rounded-lg py-2 pl-3 pr-2 text-left font-mono text-[11px] font-semibold uppercase tracking-[0.12em] transition duration-200",
+                    stitchDark
                       ? active === item.id
-                        ? "bg-[#0071e3]/10 text-[#0071e3]"
-                        : "text-[#6e6e73] hover:bg-black/[0.04] hover:text-[#1d1d1f]"
-                      : active === item.id
-                        ? "bg-accent/10 text-accent"
-                        : "text-muted hover:bg-surface/80 hover:text-ink",
+                        ? "bg-[#00d1ff]/10 text-[#4cd6ff]"
+                        : "text-[#859399] hover:bg-white/[0.04] hover:text-[#e1e2e8]"
+                      : editorial
+                        ? active === item.id
+                          ? "bg-[#0071e3]/10 text-[#0071e3]"
+                          : "text-[#6e6e73] hover:bg-black/[0.04] hover:text-[#1d1d1f]"
+                        : active === item.id
+                          ? "bg-accent/10 text-accent"
+                          : "text-muted hover:bg-surface/80 hover:text-ink",
                   )}
                 >
                   {active === item.id ? (
                     <span
                       className={cn(
                         "absolute left-0 top-1/2 h-7 w-0.5 -translate-y-1/2 rounded-full",
-                        editorial ? "bg-[#0071e3]" : "bg-accent",
+                        stitchDark ? "bg-[#00d1ff]" : editorial ? "bg-[#0071e3]" : "bg-accent",
                       )}
                       aria-hidden
                     />
@@ -116,18 +121,20 @@ export function FloatingSectionNav({
 
       <nav
         className={cn(
-          "fixed left-1/2 z-40 flex w-[min(100vw-1.25rem,21.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-2xl border px-3.5 py-3 shadow-md backdrop-blur-xl sm:w-[min(100vw-1.5rem,22rem)] lg:hidden",
+          "fixed left-1/2 z-40 flex w-[min(100vw-1.25rem,21.5rem)] -translate-x-1/2 items-center gap-2.5 rounded-xl border px-3.5 py-3 shadow-md backdrop-blur-md sm:w-[min(100vw-1.5rem,22rem)] lg:hidden",
           "bottom-[max(0.65rem,env(safe-area-inset-bottom,0px))]",
-          editorial
-            ? "border-black/[0.08] bg-white/95 text-[#1d1d1f]"
-            : "border-hairline bg-elevated/95 shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] dark:bg-elevated/88",
+          stitchDark
+            ? "border-white/[0.08] bg-[#0b0d10]/95 text-[#e1e2e8]"
+            : editorial
+              ? "border-black/[0.08] bg-white/95 text-[#1d1d1f]"
+              : "border-hairline bg-elevated/95 shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] dark:bg-elevated/88",
         )}
         aria-label="Case study sections"
       >
         <p
           className={cn(
             "min-w-0 flex-1 truncate text-left text-[14px] font-semibold leading-snug tracking-tight",
-            editorial ? "text-[#1d1d1f]" : "text-ink",
+            stitchDark ? "text-[#e1e2e8]" : editorial ? "text-[#1d1d1f]" : "text-ink",
           )}
         >
           {activeLabel}
@@ -135,18 +142,24 @@ export function FloatingSectionNav({
         <details ref={detailsRef} className="relative shrink-0 [&_summary::-webkit-details-marker]:hidden">
           <summary
             className={cn(
-              "flex min-h-[2.5rem] cursor-pointer list-none items-center justify-center rounded-full border px-3.5 py-2 text-center text-[11px] font-semibold uppercase tracking-wide transition active:bg-surface/80",
-              editorial
-                ? "border-black/[0.1] bg-[#f5f5f7] text-[#424245] hover:border-black/[0.18]"
-                : "border-hairline bg-canvas/70 text-muted hover:border-accent/35 hover:text-ink dark:bg-canvas/50",
+              "flex min-h-[2.5rem] cursor-pointer list-none items-center justify-center rounded-full border px-3.5 py-2 text-center font-mono text-[11px] font-semibold uppercase tracking-wide transition",
+              stitchDark
+                ? "border-white/[0.1] bg-[#111418] text-[#bbc9cf] hover:border-[#00d1ff]/40 hover:text-[#e1e2e8]"
+                : editorial
+                  ? "border-black/[0.1] bg-[#f5f5f7] text-[#424245] hover:border-black/[0.18]"
+                  : "border-hairline bg-canvas/70 text-muted hover:border-accent/35 hover:text-ink dark:bg-canvas/50",
             )}
           >
             Jump
           </summary>
           <div
             className={cn(
-              "absolute bottom-[calc(100%+0.5rem)] right-0 z-50 max-h-[min(46vh,18rem)] w-[min(calc(100vw-1.5rem),16rem)] overflow-y-auto overscroll-contain rounded-2xl border p-1.5 shadow-xl",
-              editorial ? "border-black/[0.08] bg-white" : "border-hairline bg-canvas dark:bg-elevated",
+              "absolute bottom-[calc(100%+0.5rem)] right-0 z-50 max-h-[min(46vh,18rem)] w-[min(calc(100vw-1.5rem),16rem)] overflow-y-auto overscroll-contain rounded-xl border p-1.5 shadow-xl",
+              stitchDark
+                ? "border-white/[0.08] bg-[#111418]"
+                : editorial
+                  ? "border-black/[0.08] bg-white"
+                  : "border-hairline bg-canvas dark:bg-elevated",
             )}
           >
             {items.map((item) => (
@@ -155,14 +168,18 @@ export function FloatingSectionNav({
                 type="button"
                 onClick={() => scrollTo(item.id)}
                 className={cn(
-                  "flex w-full rounded-xl px-3 py-2.5 text-left text-[13px] font-medium transition",
-                  editorial
+                  "flex w-full rounded-lg px-3 py-2.5 text-left text-[13px] font-medium transition",
+                  stitchDark
                     ? active === item.id
-                      ? "bg-[#0071e3]/10 text-[#0071e3]"
-                      : "text-[#1d1d1f] hover:bg-black/[0.04]"
-                    : active === item.id
-                      ? "bg-accent/12 text-accent"
-                      : "text-ink hover:bg-surface/80",
+                      ? "bg-[#00d1ff]/10 text-[#4cd6ff]"
+                      : "text-[#bbc9cf] hover:bg-white/[0.04]"
+                    : editorial
+                      ? active === item.id
+                        ? "bg-[#0071e3]/10 text-[#0071e3]"
+                        : "text-[#1d1d1f] hover:bg-black/[0.04]"
+                      : active === item.id
+                        ? "bg-accent/12 text-accent"
+                        : "text-ink hover:bg-surface/80",
                 )}
               >
                 {item.label}

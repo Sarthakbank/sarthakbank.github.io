@@ -1,325 +1,374 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Mail } from "lucide-react";
-import { SiGithub } from "react-icons/si";
-import { motion, useReducedMotion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { FloatingSectionNav } from "./FloatingSectionNav";
-import { ButtonLink } from "@/components/ui/ButtonLink";
-import { SectionLabel } from "@/components/ui/SectionLabel";
-import { TempSceneImage } from "@/components/media/TempSceneImage";
-import { tempImagery } from "@/content/tempImagery";
+import { heroBlockoutStill } from "@/content/heroBlockoutManifest";
 import {
+  caseStudyBeats,
   caseStudyDemoLabel,
-  caseStudyEnvironmentFlow,
   caseStudyFactsLines,
-  caseStudyGameBrief,
-  caseStudyGallery,
+  caseStudyGoal,
   caseStudyMeta,
   caseStudyNav,
   caseStudyOutcome,
-  caseStudyPillars,
+  caseStudyOverview,
   caseStudyProcess,
-  caseStudyProjectContext,
-  caseStudySummary,
-  caseStudyTargetExperience,
+  caseStudyTechniques,
 } from "@/content/caseStudy";
 import { homeContactCta, homeFooter } from "@/content/home";
+import { homeFeaturedMedia } from "@/content/homeMedia";
 import { contactChannels } from "@/content/contact";
-import { Container } from "@/components/layout/Container";
 import {
-  elevatedSection,
-  glassCard,
-  glassCardHover,
-  glassCardInteractive,
-  labelCaps,
-  pageShell,
-  sectionBorder,
-  sectionPad,
-  surfaceSection,
-} from "@/lib/uiClasses";
+  stitchBody,
+  stitchBtnGhost,
+  stitchBtnPrimary,
+  stitchChip,
+  stitchContainer,
+  stitchGlass,
+  stitchGlassPanel,
+  stitchHeadlineLg,
+  stitchHome,
+  stitchLabel,
+  stitchSection,
+} from "@/lib/stitchTokens";
 import { cn } from "@/lib/cn";
 
-const shell = cn(
-  pageShell,
-  "pb-[calc(5.25rem+env(safe-area-inset-bottom,0px))] lg:pb-0",
-);
-
-function FadeUp({
-  children,
-  className,
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const reduce = useReducedMotion();
-  if (reduce) return <div className={className}>{children}</div>;
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -10% 0px", amount: 0.12 }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+const sectionAlt = "border-t border-white/[0.06] bg-[#0b0d10]";
+const sectionBase = "border-t border-white/[0.06] bg-[#050607]";
 
 export function CaseStudyView() {
   const year = new Date().getFullYear();
 
   return (
-    <div className={shell}>
-      <FloatingSectionNav items={caseStudyNav} editorial />
+    <div
+      className={cn(
+        stitchHome,
+        "overflow-x-hidden pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0",
+      )}
+    >
+      <FloatingSectionNav items={caseStudyNav} editorial dark />
 
       {/* 1. Hero */}
-      <section id="hero" className={cn("scroll-mt-28 border-b", sectionBorder, "bg-canvas pb-12 pt-8 sm:pb-14 sm:pt-10")}>
-        <Container>
-          <FadeUp>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-[14px] font-semibold text-accent transition hover:opacity-80"
-              >
-                <ArrowLeft className="h-4 w-4" aria-hidden />
-                Home
-              </Link>
-              <span className={cn("rounded-full border border-white/[0.1] bg-white/[0.06] px-3 py-1", labelCaps)}>
-                {caseStudyDemoLabel}
-              </span>
-            </div>
-            <p className={cn("mt-6", labelCaps)}>Featured Project</p>
-            <h1 className="mt-3 max-w-3xl font-display text-[clamp(2rem,4vw+1rem,3.1rem)] font-semibold leading-[1.06] tracking-tight text-ink">
-              {caseStudyMeta.name}
-            </h1>
-            <p className="mt-3 font-mono text-sm font-medium uppercase tracking-[0.14em] text-warn">{caseStudyMeta.genre}</p>
-            <p className="mt-5 max-w-2xl text-pretty text-[17px] leading-relaxed text-muted">{caseStudySummary}</p>
-          </FadeUp>
-          <FadeUp delay={0.06} className="mt-10">
-            <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-black/30 ring-1 ring-inset ring-white/[0.05]">
-              <TempSceneImage
-                src={tempImagery.featuredCaseHero}
-                alt="Escape Protocol — gameplay environment (temporary reference)"
-                className="aspect-[21/9] w-full object-cover object-center sm:aspect-[2.35/1]"
-                sizes="100vw"
-                priority
-                caption="Gameplay visual (temporary)"
-              />
-            </div>
-          </FadeUp>
-        </Container>
-      </section>
+      <section id="hero" className={cn("scroll-mt-28 pt-8 sm:pt-10", sectionBase)}>
+        <div className={stitchContainer}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#00d1ff] transition hover:text-[#4cd6ff]"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+              Home
+            </Link>
+            <span className="rounded border border-white/15 bg-black/40 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]">
+              {caseStudyDemoLabel}
+            </span>
+          </div>
 
-      {/* 2. Facts / metadata */}
-      <section id="facts" className={cn("scroll-mt-28 border-b", sectionBorder, surfaceSection, sectionPad)}>
-        <Container>
-          <FadeUp>
-            <p className={labelCaps}>Facts</p>
-            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              Project metadata
-            </h2>
-          </FadeUp>
-          <dl className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {caseStudyFactsLines.map((row, i) => (
-              <FadeUp key={row.label} delay={i * 0.04}>
-                <div className={cn("px-5 py-4", glassCardHover)}>
-                  <dt className={labelCaps}>{row.label}</dt>
-                  <dd className="mt-1.5 text-[15px] font-semibold text-ink">{row.value}</dd>
-                </div>
-              </FadeUp>
+          <p className={cn(stitchLabel, "mt-8 text-[#859399]")}>Featured project</p>
+          <h1 className="mt-3 font-display text-[clamp(2rem,4.5vw+1rem,3.5rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#e1e2e8]">
+            {caseStudyMeta.title}
+          </h1>
+          <span className={cn(stitchChip, "mt-4 inline-flex")}>{caseStudyMeta.subtitle}</span>
+          <p className={cn("mt-6 max-w-2xl text-pretty", stitchBody)}>{caseStudyMeta.summary}</p>
+
+          <dl className="mt-8 grid gap-3 border-t border-white/[0.06] pt-8 sm:grid-cols-2 lg:grid-cols-3">
+            {caseStudyFactsLines.map((row) => (
+              <div key={row.label} className="flex gap-2 font-mono text-[13px]">
+                <dt className="text-[#859399]">{row.label}</dt>
+                <dd className="text-[#e1e2e8]">{row.value}</dd>
+              </div>
             ))}
           </dl>
-        </Container>
+
+          <article className={cn(stitchGlass, "mt-10 overflow-hidden rounded-lg border-white/10 p-0")}>
+            <div className="relative h-[min(52vw,280px)] min-h-[220px] sm:h-72 md:h-80">
+              <span className="absolute left-3 top-3 z-20 rounded border border-white/15 bg-black/55 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]">
+                Environment reference
+              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={homeFeaturedMedia.hero}
+                alt="Facility Breach — portfolio sample environment reference"
+                className="absolute inset-0 h-full w-full object-cover object-[center_42%]"
+                decoding="async"
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#171a20] via-transparent to-transparent"
+                aria-hidden
+              />
+            </div>
+          </article>
+        </div>
       </section>
 
-      {/* 3. Overview / concept */}
-      <section id="brief" className={cn("scroll-mt-28 border-b", sectionBorder, elevatedSection, sectionPad)}>
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-14">
-            <FadeUp>
-              <SectionLabel>{caseStudyGameBrief.title}</SectionLabel>
-              <div className="mt-5 space-y-5 text-pretty text-[17px] leading-relaxed text-muted">
-                {caseStudyGameBrief.paragraphs.map((p) => (
-                  <p key={p}>{p}</p>
+      {/* 2. Goal */}
+      <section id="goal" className={cn("scroll-mt-28", stitchSection, sectionAlt)}>
+        <div className={stitchContainer}>
+          <p className={cn(stitchLabel, "text-[#859399]")}>Goal</p>
+          <h2 className={cn("mt-3", stitchHeadlineLg)}>Design intent</h2>
+          <p className={cn("mt-5 max-w-3xl text-pretty", stitchBody)}>{caseStudyGoal.intent}</p>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <div className={cn(stitchGlassPanel, "p-6 sm:p-8")}>
+              <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Player experience target</p>
+              <p className={cn("mt-4 text-pretty", stitchBody)}>{caseStudyGoal.experienceTarget}</p>
+            </div>
+            <div className={cn(stitchGlassPanel, "p-6 sm:p-8")}>
+              <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Design goals</p>
+              <ul className="mt-4 space-y-3">
+                {caseStudyGoal.designGoals.map((goal, i) => (
+                  <li key={goal} className="flex gap-3 text-[15px] leading-relaxed text-[#bbc9cf]">
+                    <span
+                      className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded border border-[#00d1ff]/25 bg-[#00d1ff]/[0.06] font-mono text-[11px] font-semibold text-[#00d1ff]"
+                      aria-hidden
+                    >
+                      {i + 1}
+                    </span>
+                    {goal}
+                  </li>
                 ))}
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.06}>
-              <div className={cn("p-7 sm:p-8", glassCard)}>
-                <h3 className="font-display text-lg font-semibold text-ink">Context</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-muted">{caseStudyProjectContext}</p>
-                <div className="mt-8 border-t border-white/[0.08] pt-7">
-                  <p className={labelCaps}>Player read</p>
-                  <p className="mt-2 text-[15px] leading-relaxed text-muted">{caseStudyTargetExperience}</p>
-                </div>
-              </div>
-            </FadeUp>
+              </ul>
+            </div>
           </div>
-        </Container>
+        </div>
       </section>
 
-      {/* 4. Pillars */}
-      <section id="pillars" className={cn("scroll-mt-28 border-b", sectionBorder, surfaceSection, sectionPad)}>
-        <Container>
-          <FadeUp className="text-center">
-            <p className={labelCaps}>Design principles</p>
-            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              Pillars
-            </h2>
-          </FadeUp>
-          <ul className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-3">
-            {caseStudyPillars.map((pillar, i) => (
-              <FadeUp key={pillar} delay={i * 0.05}>
-                <li className={cn("h-full px-5 py-6 text-center text-[15px] font-semibold leading-snug text-ink", glassCardHover)}>
-                  {pillar}
-                </li>
-              </FadeUp>
+      {/* 3. Level overview */}
+      <section id="overview" className={cn("scroll-mt-28", stitchSection, sectionBase)}>
+        <div className={stitchContainer}>
+          <p className={cn(stitchLabel, "text-[#859399]")}>Level overview</p>
+          <h2 className={cn("mt-3", stitchHeadlineLg)}>Setting & flow</h2>
+
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {(
+              [
+                { label: "Setting", body: caseStudyOverview.setting },
+                { label: "Player objective", body: caseStudyOverview.playerObjective },
+                { label: "Spatial flow", body: caseStudyOverview.spatialFlow },
+              ] as const
+            ).map((block) => (
+              <div key={block.label} className={cn(stitchGlassPanel, "flex flex-col p-6 sm:p-7")}>
+                <p className={cn(stitchLabel, "text-[#4cd6ff]")}>{block.label}</p>
+                <p className={cn("mt-4 flex-1 text-pretty text-[15px] leading-relaxed text-[#bbc9cf]")}>
+                  {block.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className={cn(stitchGlass, "mt-8 overflow-hidden rounded-lg p-0")}>
+            <div className="relative aspect-[21/9] min-h-[200px] sm:min-h-[240px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={homeFeaturedMedia.corridorDetail}
+                alt="Service corridor — spatial flow reference (placeholder)"
+                className="absolute inset-0 h-full w-full object-cover object-center"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#050607]/80 via-transparent to-[#050607]/40" aria-hidden />
+              <p className="absolute bottom-3 left-4 font-mono text-[11px] text-[#859399]">
+                Placeholder · corridor rhythm reference
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Technique highlights */}
+      <section id="techniques" className={cn("scroll-mt-28", stitchSection, sectionAlt)}>
+        <div className={stitchContainer}>
+          <p className={cn(stitchLabel, "text-[#859399]")}>Technique highlights</p>
+          <h2 className={cn("mt-3", stitchHeadlineLg)}>Level design craft</h2>
+          <ul className="mt-12 grid gap-5 md:grid-cols-3">
+            {caseStudyTechniques.map((t, i) => (
+              <li
+                key={t.title}
+                className={cn(
+                  stitchGlassPanel,
+                  "border-l-2 p-6 sm:p-7",
+                  i === 0 && "border-l-[#00d1ff]",
+                  i === 1 && "border-l-[#3e90ff]",
+                  i === 2 && "border-l-[#ffb051]",
+                )}
+              >
+                <h3 className="font-display text-lg font-semibold tracking-tight text-[#e1e2e8]">{t.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-[#bbc9cf]">{t.body}</p>
+              </li>
             ))}
           </ul>
-        </Container>
+        </div>
       </section>
 
-      {/* 5. Support visuals */}
-      <section id="world" className={cn("scroll-mt-28 border-b", sectionBorder, elevatedSection, sectionPad)}>
-        <Container>
-          <FadeUp>
-            <p className={labelCaps}>Support visuals</p>
-            <h2 className="mt-2 max-w-2xl font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              {caseStudyEnvironmentFlow.title}
-            </h2>
-            <div className="mt-5 max-w-3xl space-y-4 text-pretty text-[16px] leading-relaxed text-muted">
-              {caseStudyEnvironmentFlow.paragraphs.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-          </FadeUp>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {caseStudyGallery.map((g, i) => (
-              <FadeUp key={g.key} delay={i * 0.04}>
-                <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-black/20 ring-1 ring-inset ring-white/[0.05]">
-                  <TempSceneImage
-                    src={tempImagery[g.key]}
-                    alt={g.caption}
-                    className="aspect-[4/3] w-full"
-                    sizes="(min-width: 1024px) 30vw, 90vw"
-                    caption={g.caption}
+      {/* 5. Walkthrough / beats */}
+      <section id="beats" className={cn("scroll-mt-28", stitchSection, sectionBase)}>
+        <div className={stitchContainer}>
+          <p className={cn(stitchLabel, "text-[#859399]")}>Walkthrough</p>
+          <h2 className={cn("mt-3", stitchHeadlineLg)}>Mission beats</h2>
+          <p className={cn("mt-4 max-w-2xl text-pretty", stitchBody)}>
+            Five authored beats showing objective, player action, and design purpose — imagery is portfolio reference
+            until in-engine captures replace placeholders.
+          </p>
+
+          <ol className="mt-12 space-y-8">
+            {caseStudyBeats.map((beat, i) => (
+              <li
+                key={beat.id}
+                className={cn(
+                  stitchGlass,
+                  "overflow-hidden rounded-lg border-white/10",
+                  i % 2 === 1 && "lg:flex-row-reverse",
+                  "lg:flex lg:items-stretch",
+                )}
+              >
+                <div className="relative min-h-[200px] lg:min-h-0 lg:w-[42%] lg:shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={beat.image}
+                    alt={`${beat.title} — ${beat.imageNote}`}
+                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    decoding="async"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#171a20]/90 via-[#171a20]/20 to-transparent lg:bg-gradient-to-r" />
+                  <span className="absolute left-3 top-3 font-mono text-[11px] font-semibold text-[#00d1ff]">
+                    Beat {String(i + 1).padStart(2, "0")}
+                  </span>
                 </div>
-              </FadeUp>
+                <div className="flex flex-1 flex-col p-6 sm:p-8">
+                  <h3 className="font-display text-xl font-semibold tracking-tight text-[#e1e2e8]">{beat.title}</h3>
+                  <p className="mt-1 font-mono text-[11px] text-[#859399]">{beat.imageNote}</p>
+                  <dl className="mt-6 space-y-4">
+                    <div>
+                      <dt className={cn(stitchLabel, "text-[#859399]")}>Objective</dt>
+                      <dd className="mt-1.5 text-[15px] leading-relaxed text-[#bbc9cf]">{beat.objective}</dd>
+                    </div>
+                    <div>
+                      <dt className={cn(stitchLabel, "text-[#859399]")}>Player action</dt>
+                      <dd className="mt-1.5 text-[15px] leading-relaxed text-[#bbc9cf]">{beat.playerAction}</dd>
+                    </div>
+                    <div>
+                      <dt className={cn(stitchLabel, "text-[#859399]")}>Design purpose</dt>
+                      <dd className="mt-1.5 text-[15px] leading-relaxed text-[#e1e2e8]">{beat.designPurpose}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </li>
             ))}
-          </div>
-        </Container>
+          </ol>
+        </div>
       </section>
 
       {/* 6. Process */}
-      <section id="process" className={cn("scroll-mt-28 border-b", sectionBorder, surfaceSection, sectionPad)}>
-        <Container>
-          <FadeUp>
-            <p className={labelCaps}>Process</p>
-            <h2 className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-              Design thinking
-            </h2>
-            <ol className="mt-10 max-w-3xl space-y-6">
-              {caseStudyProcess.map((step, i) => (
-                <li key={step.title} className="flex gap-4">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.06] font-mono text-[13px] font-bold text-accent">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <p className="font-display text-lg font-semibold text-ink">{step.title}</p>
-                    <p className="mt-2 text-[15px] leading-relaxed text-muted">{step.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </FadeUp>
-        </Container>
+      <section id="process" className={cn("scroll-mt-28", stitchSection, sectionAlt)}>
+        <div className={stitchContainer}>
+          <p className={cn(stitchLabel, "text-[#859399]")}>Process</p>
+          <h2 className={cn("mt-3", stitchHeadlineLg)}>From research to polish</h2>
+
+          <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {caseStudyProcess.map((step, i) => (
+              <li key={step.title} className={cn(stitchGlassPanel, "flex flex-col p-5 sm:p-6")}>
+                <span className="font-mono text-[11px] font-semibold text-[#00d1ff]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-2 font-display text-base font-semibold text-[#e1e2e8]">{step.title}</p>
+                <p className="mt-2 flex-1 text-[14px] leading-relaxed text-[#859399]">{step.body}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className={cn(stitchGlassPanel, "mt-10 overflow-hidden rounded-xl p-4 sm:p-5")}>
+            <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#859399]">
+                Blockout pass
+              </span>
+              <span className="rounded border border-[#00d1ff]/25 bg-[#00d1ff]/[0.07] px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-[#4cd6ff]">
+                Greybox
+              </span>
+            </div>
+            <div className="relative mt-3 flex min-h-[240px] items-center justify-center rounded-lg border border-white/[0.06] bg-[#050607] sm:min-h-[320px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroBlockoutStill}
+                alt="Facility Breach greybox blockout — portfolio work in progress"
+                className="max-h-[min(60vh,420px)] w-full object-contain p-4"
+                decoding="async"
+              />
+            </div>
+            <p className="mt-3 font-mono text-[11px] text-[#859399]">
+              Portfolio blockout still · replaces placeholder beats when in-engine captures are ready
+            </p>
+          </div>
+        </div>
       </section>
 
-      {/* 7. Outcome / CTA */}
+      {/* 7. Outcome */}
       <section
         id="outcome"
-        className="scroll-mt-28 bg-canvas pb-[calc(6rem+env(safe-area-inset-bottom,0px))] pt-12 sm:pb-24 sm:pt-16 lg:pb-28"
+        className={cn(
+          "scroll-mt-28 border-t border-white/[0.06] bg-[#050607] pb-[calc(6rem+env(safe-area-inset-bottom,0px))] pt-16 sm:pb-24 sm:pt-20 lg:pb-28",
+        )}
       >
-        <Container>
-          <FadeUp>
-            <div className={cn("px-8 py-9 sm:px-10 sm:py-11", glassCardInteractive)}>
-              <p className={labelCaps}>Outcome</p>
-              <p className="mt-4 max-w-3xl text-pretty text-[17px] leading-relaxed text-muted">{caseStudyOutcome}</p>
-              <div className="mt-9 flex flex-wrap gap-3 border-t border-white/[0.08] pt-9">
-                <ButtonLink href={homeContactCta.href} variant="primary" icon={<Mail />}>
-                  {homeContactCta.label}
-                </ButtonLink>
-                <ButtonLink href="/" variant="secondary" icon={<ArrowUpRight />} iconPosition="end">
-                  Back home
-                </ButtonLink>
-                <ButtonLink href={contactChannels.github.href} variant="secondary" icon={<SiGithub />} external>
-                  GitHub
-                </ButtonLink>
-              </div>
-            </div>
-          </FadeUp>
-        </Container>
+        <div className={stitchContainer}>
+          <p className={cn(stitchLabel, "text-[#859399]")}>Outcome</p>
+          <h2 className={cn("mt-3", stitchHeadlineLg)}>What this demonstrates</h2>
+          <p className={cn("mt-5 max-w-3xl text-pretty", stitchBody)}>{caseStudyOutcome.summary}</p>
+          <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+            {caseStudyOutcome.demonstrates.map((item) => (
+              <li
+                key={item}
+                className="flex gap-2 rounded-lg border border-white/[0.08] bg-[#111418] px-4 py-3 text-[15px] text-[#bbc9cf]"
+              >
+                <span className="text-[#00d1ff]" aria-hidden>
+                  →
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10 flex flex-wrap gap-3 border-t border-white/[0.06] pt-10">
+            <Link href={homeContactCta.href} className={stitchBtnPrimary}>
+              {homeContactCta.label}
+            </Link>
+            <Link href="/" className={stitchBtnGhost}>
+              Back home
+            </Link>
+            <Link
+              href={contactChannels.github.href}
+              className={stitchBtnGhost}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </Link>
+          </div>
+        </div>
       </section>
 
-      <footer className={cn("border-t py-8 sm:py-9", sectionBorder, "bg-surface/50")}>
-        <Container>
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
-            <div>
-              <p className="font-display text-lg font-semibold text-ink">{homeFooter.name}</p>
-              <p className="mt-2 max-w-xs text-[14px] leading-relaxed text-muted">
-                Level Designer / Game Designer / 3D Artist — explore work and connect.
-              </p>
-            </div>
-            <div>
-              <p className={labelCaps}>Explore</p>
-              <ul className="mt-4 space-y-2">
-                {homeFooter.explore.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="text-[14px] font-medium text-muted transition hover:text-accent"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className={labelCaps}>Connect</p>
-              <ul className="mt-4 space-y-2">
-                {homeFooter.connect.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="text-[14px] font-medium text-muted transition hover:text-accent"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-                <li>
-                  <a
-                    href={contactChannels.github.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[14px] font-medium text-[#424245] transition hover:text-[#0071e3]"
-                  >
-                    GitHub
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <p className="mt-10 border-t border-white/[0.06] pt-6 text-center font-mono text-[11px] text-muted">
-            {homeFooter.legal.replace("{year}", String(year))}
+      <footer className="border-t border-white/[0.05] bg-[#0b0e12] py-12 md:py-16">
+        <div
+          className={cn(
+            stitchContainer,
+            "flex flex-col items-center justify-between gap-8 md:flex-row md:items-start",
+          )}
+        >
+          <p className="max-w-md text-center font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#e1e2e8] md:text-left">
+            © {year} {homeFooter.name}. Level Design Portfolio.
           </p>
-        </Container>
+          <nav className="flex flex-wrap justify-center gap-6 md:justify-end" aria-label="Footer">
+            <Link
+              href={contactChannels.email.href}
+              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
+            >
+              Email
+            </Link>
+            <Link
+              href="/"
+              className="font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#bbc9cf]/60 transition hover:border-b hover:border-[#00d1ff] hover:text-[#00d1ff] hover:pb-0.5"
+            >
+              Home
+            </Link>
+          </nav>
+        </div>
       </footer>
     </div>
   );

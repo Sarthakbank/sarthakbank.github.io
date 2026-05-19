@@ -1,173 +1,174 @@
 /**
- * Escape Protocol — featured level design case study (portfolio presentation).
- * Replace imagery keys / remote art with final in-engine captures when ready.
+ * Facility Breach — level design case study (portfolio vertical slice).
+ * Placeholder imagery is licensed reference only — not shipped-game marketing.
  */
 
+import { demoBeatImages } from "./demoMediaManifest";
+import { homeFeaturedMedia } from "./homeMedia";
 import type { CaseStudyNavItem } from "./types";
-import type { TempImageryKey } from "./tempImagery";
 
-export const caseStudyDemoLabel = "Portfolio case study";
+export const caseStudyDemoLabel = "Portfolio sample";
 
 export const caseStudyNav: CaseStudyNavItem[] = [
   { id: "hero", label: "Hero" },
-  { id: "facts", label: "Facts" },
-  { id: "brief", label: "Overview" },
-  { id: "pillars", label: "Pillars" },
-  { id: "world", label: "Visuals" },
+  { id: "goal", label: "Goal" },
+  { id: "overview", label: "Overview" },
+  { id: "techniques", label: "Techniques" },
+  { id: "beats", label: "Walkthrough" },
   { id: "process", label: "Process" },
   { id: "outcome", label: "Outcome" },
 ];
+
+export const caseStudyMeta = {
+  title: "Facility Breach",
+  subtitle: "Stealth Infiltration Slice",
+  summary:
+    "A vertical-slice concept built to prove infiltration flow, cover rhythm, and readable threat lanes in a single continuous facility run — presented as portfolio work, not a shipped title.",
+};
 
 export const caseStudyFactsLines = [
   { label: "Platform", value: "PC (Windows)" },
   { label: "Engine", value: "Unreal Engine 5" },
   { label: "Mode", value: "Single Player (PvE)" },
   { label: "Role", value: "Level Designer / Gameplay Designer" },
-  { label: "Duration", value: "9 weeks" },
-  { label: "Team", value: "Solo project" },
+  { label: "Status", value: "Vertical slice (demo)" },
+  { label: "Scope", value: "Solo academic / portfolio piece" },
 ] as const;
 
-export const caseStudyMeta = {
-  name: "Escape Protocol",
-  genre: "Stealth Action Level",
-  engine: "Unreal Engine 5, Blueprints, Blender, Miro, Photoshop",
-  duration: "9 weeks",
-  team: "Solo project",
-  role: "Level Designer / Gameplay Designer",
+export const caseStudyGoal = {
+  intent:
+    "Design a single-mission space that reads as a recruiter-friendly proof of craft: one location, one objective chain, and authored beats that escalate without losing spatial clarity.",
+  experienceTarget:
+    "Players start cautious — limited information, tight cover vocabulary — then gain confidence as routes open, landmarks clarify, and the exit read strengthens.",
+  designGoals: [
+    "Teach patrol and cover reads in the opening without UI hand-holding.",
+    "Offer layered routes that reward exploration without breaking the critical path.",
+    "Compress risk toward a vertical finale with a unmistakable exfil landmark.",
+  ] as const,
 };
 
-export const caseStudySummary =
-  "A tactical escape experience where clarity, tension, and player choice define every step.";
-
-/** High-level pitch */
-export const caseStudyGameBrief = {
-  title: "Overview",
-  paragraphs: [
-    "Escape Protocol frames a single mission space as a recruiter-readable proof of craft: one cohesive location, a clear objective chain, and authored beats that escalate without losing readability.",
-    "The slice prioritises spatial clarity — where to go next should be inferable from the environment, not from on-screen prompts.",
-  ],
+export const caseStudyOverview = {
+  setting:
+    "A hardened facility under alert: service corridors, maintenance volumes, and a beacon-like landmark that sells the escape payoff. Materials distinguish maintenance (metal, pipes) from commitment spaces (open air, vertical shafts).",
+  playerObjective:
+    "Infiltrate, complete light interactables along the critical path, and reach exfil — with fail-forward routing so first-time players are never hard-stopped.",
+  spatialFlow:
+    "Edge approach → interior pressure → compressed risk space → vertical ascent to landmark exit. Each transition is gated by a readable change in scale, materials, and audio.",
 };
 
-export const caseStudyProjectContext =
-  "Presented as a solo academic / portfolio piece, the level treats the facility as one continuous escape run: approach, interior pressure, risk space, and vertical exit. Placeholder imagery below stands in for final captures.";
-
-export const caseStudyWorldSetting = {
-  title: "World & setting",
-  paragraphs: [
-    "The environment reads as a hardened facility under alert — tight service corridors, sudden volumetric reads, and a beacon-like landmark that sells the finale.",
-    "Lighting and materials support navigation: metal reads as maintenance, open air signals commitment, verticality signals payoff.",
-  ],
+export type CaseStudyTechnique = {
+  title: string;
+  body: string;
 };
 
-export const caseStudyPlayerObjective =
-  "Navigate authored beats, complete light interactables, and reach exfil — with fail-forward routing so first-time players are never hard-stopped.";
-
-export const caseStudyGameplayLoop =
-  "Read space → choose route → resolve encounter beat → reposition → climb toward landmark exit.";
-
-export const caseStudyExperienceGoals = [
-  "Opening: low information, teach patrol and cover vocabulary.",
-  "Mid: multiple viable routes; reward landmark checks.",
-  "Finale: compressed risk and vertical clarity toward exfil.",
-] as const;
-
-export const caseStudyEnvironmentFlow = {
-  title: "Spatial flow",
-  paragraphs: [
-    "Flow moves from edge to core to vertical exit — each transition gated by a readable change in space, materials, and audio.",
-    "Alternate routes reward exploration without punishing the critical path.",
-  ],
-};
-
-/** Gallery still uses local demo plates until Escape Protocol shots exist */
-export const caseStudyGallery: readonly {
-  key: TempImageryKey;
-  caption: string;
-}[] = [
-  { key: "galleryStormCoast", caption: "Placeholder · atmosphere" },
-  { key: "galleryBrutalist", caption: "Placeholder · structure" },
-  { key: "galleryUrbanDepth", caption: "Placeholder · depth" },
+export const caseStudyTechniques: readonly CaseStudyTechnique[] = [
+  {
+    title: "Readability",
+    body: "Sightlines, silhouette, and lighting are authored so threat, cover, and objectives parse under pressure — before any art pass.",
+  },
+  {
+    title: "Route framing",
+    body: "Primary path stays legible; optional branches use landmark checks and material shifts so exploration feels intentional, not confusing.",
+  },
+  {
+    title: "Encounter pacing",
+    body: "Greybox iteration tightened the mid beat after playtests read too slow — compression restores tension without shrinking player agency.",
+  },
 ];
 
-export const caseStudyGoal =
-  "Deliver a readable, tense slice that showcases landmark navigation, layered routes, and deliberate pacing.";
+export type CaseStudyBeat = {
+  id: string;
+  title: string;
+  objective: string;
+  playerAction: string;
+  designPurpose: string;
+  image: string;
+  imageNote: string;
+};
 
-export const caseStudyTargetExperience =
-  "Cautious at first, then confident as the level opens into clearer choices and stronger sightlines toward the exit.";
-
-export const caseStudyPillars = [
-  "Landmark-driven navigation",
-  "Layered combat / traversal routes",
-  "Fail-forward structure",
-] as const;
-
-export const caseStudyBeats = [
-  "Perimeter approach and first stealth read",
-  "Interior infiltration and interactable beat",
-  "Compressed risk space — commitment required",
-  "Vertical ascent and escape sequence",
-] as const;
-
-export const caseStudyMechanics = [
-  "Patrol-aware navigation",
-  "Traversal and climb routing",
-  "Light environmental interactables",
-] as const;
-
-export const caseStudyTechniques = [
+export const caseStudyBeats: readonly CaseStudyBeat[] = [
   {
-    title: "Landmark legibility",
-    body: "Primary landmark visible across multiple beats so orientation survives weather and verticality.",
+    id: "beat-01",
+    title: "Perimeter approach",
+    objective: "Establish patrol vocabulary and first stealth read.",
+    playerAction: "Observe routes, identify cover rhythm, choose entry timing.",
+    designPurpose: "Low information density teaches systems before interior pressure.",
+    image: homeFeaturedMedia.hero,
+    imageNote: "Placeholder · environment reference (Pexels)",
   },
   {
-    title: "Layered routes",
-    body: "Stealth-forward paths plus optional risk/reward shortcuts for replay reads.",
+    id: "beat-02",
+    title: "Service infiltration",
+    objective: "Reach the first interactable without breaking stealth flow.",
+    playerAction: "Navigate corridor cover, use maintenance sightlines, trigger light interactable.",
+    designPurpose: "Corridor rhythm proves interior flow and encounter spacing.",
+    image: homeFeaturedMedia.corridorDetail,
+    imageNote: "Placeholder · corridor reference (Pexels)",
   },
   {
-    title: "Pacing compression",
-    body: "Mid-level beats tightened after playtests read too slow in early greybox.",
+    id: "beat-03",
+    title: "Risk compression",
+    objective: "Commit through a tighter volume with fewer outs.",
+    playerAction: "Cross exposed span or take optional flank with higher risk.",
+    designPurpose: "Mid-level compression restores tension after routes opened too wide.",
+    image: demoBeatImages[2],
+    imageNote: "Placeholder · spatial beat still",
   },
-] as const;
+  {
+    id: "beat-04",
+    title: "Landmark reorientation",
+    objective: "Re-establish orientation toward the exfil landmark.",
+    playerAction: "Gain height or vista check; read exit silhouette against sky/core light.",
+    designPurpose: "Landmark salience survives weather, verticality, and partial occlusion.",
+    image: homeFeaturedMedia.brutalistReference,
+    imageNote: "Placeholder · massing reference (Pexels)",
+  },
+  {
+    id: "beat-05",
+    title: "Vertical exfil",
+    objective: "Complete the escape sequence with clear final read.",
+    playerAction: "Climb or traverse vertical beat; reach exfil trigger.",
+    designPurpose: "Finale sells payoff — compressed risk, strong vertical clarity.",
+    image: demoBeatImages[3],
+    imageNote: "Placeholder · finale beat still",
+  },
+];
 
-export const caseStudyProcess = [
+export type CaseStudyProcessStep = {
+  title: string;
+  body: string;
+};
+
+export const caseStudyProcess: readonly CaseStudyProcessStep[] = [
   {
-    title: "Framing",
-    body: "Defined player fantasy, core loop, and slice length for a 12–15 minute experience.",
+    title: "Research",
+    body: "Framed player fantasy, core loop, and target slice length (~12–15 min) from reference missions and level-design frameworks.",
   },
   {
-    title: "Spatial blockout",
-    body: "Greybox focused on encounter order, stealth reads, and fail-forward objectives.",
+    title: "Blockout",
+    body: "Greybox focused on encounter order, stealth reads, and fail-forward objectives before any dressing.",
+  },
+  {
+    title: "Playtest",
+    body: "Recorded route choices, cover usage, and where players hesitated or misread threat lanes.",
   },
   {
     title: "Iteration",
-    body: "Playtests on route readability, cover rhythm, and landmark salience.",
-  },
-] as const;
-
-export const caseStudyIterations = [
-  {
-    title: "Risk space pacing",
-    body: "Compressed middle beat to restore tension after routes opened too wide.",
+    body: "Tightened mid-beat scale, strengthened optional-route landmarks, and adjusted patrol timing from feedback.",
   },
   {
-    title: "Alternate route clarity",
-    body: "Stronger landmark framing for optional paths without breaking the critical line.",
-  },
-] as const;
-
-export const caseStudyChallenges = [
-  {
-    title: "Middle section scale",
-    body: "Initial greybox over-scaled the mid beat and slowed the loop.",
-  },
-  {
-    title: "Side route readability",
-    body: "Optional path not salient enough in first playtests — addressed with silhouette and lighting.",
+    title: "Polish",
+    body: "Lighting passes, material reads, and documentation for portfolio presentation — in-engine captures replace placeholders when ready.",
   },
 ];
 
-export const caseStudyOutcome =
-  "A 12–15 minute vertical slice focused on escape fantasy, readable exploration, and authored progression.";
-
-export const caseStudyLessons =
-  "Sharpened pacing, sightline discipline, and how iteration feedback strengthens player guidance without extra UI.";
+export const caseStudyOutcome = {
+  summary:
+    "Demonstrates landmark-driven navigation, layered infiltration routes, deliberate pacing compression, and iteration discipline — packaged as an honest vertical-slice portfolio sample.",
+  demonstrates: [
+    "Spatial clarity under stealth pressure",
+    "Authored beat progression with fail-forward objectives",
+    "Playtest-driven greybox iteration",
+    "Documentation-ready level design thinking",
+  ] as const,
+};
