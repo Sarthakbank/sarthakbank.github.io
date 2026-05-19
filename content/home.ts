@@ -18,6 +18,8 @@ export type HomeDesignPrinciple = {
   icon: "users" | "eye" | "refresh";
   topGradient: string;
   border: string;
+  /** Collapsed card teaser — Stitch handoff */
+  summary: string;
   detail: string;
   bullets?: readonly string[];
 };
@@ -26,8 +28,10 @@ export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
   {
     title: "Player-Centric Design",
     icon: "users",
-    topGradient: "from-violet-400/90 via-fuchsia-400/75 to-indigo-400/85",
-    border: "border-violet-400/25",
+    topGradient: "from-[#7c3aed] via-[#a855f7] to-[#6366f1]",
+    border: "border-violet-500/30",
+    summary:
+      "Designing spaces that intuitively guide the player without explicit hand-holding.",
     detail:
       "Every route, vista, and encounter is judged by what players read under pressure—intent, risk, and reward stay legible before polish.",
     bullets: ["Flow-first greybox", "Readable objectives", "Playtest-driven iteration"],
@@ -35,8 +39,9 @@ export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
   {
     title: "Readable Spaces",
     icon: "eye",
-    topGradient: "from-sky-400/85 via-cyan-400/70 to-teal-400/80",
-    border: "border-sky-400/25",
+    topGradient: "from-[#0ea5e9] via-[#06b6d4] to-[#14b8a6]",
+    border: "border-cyan-500/30",
+    summary: "Ensuring combat arenas and puzzle rooms have clear affordances and sightlines.",
     detail:
       "Silhouette, lighting, and pacing work together so navigation feels intuitive—players always know where they are and what the space is asking.",
     bullets: ["Strong landmarks", "Clear encounter reads", "Rhythm across beats"],
@@ -44,13 +49,37 @@ export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
   {
     title: "Iterative Craft",
     icon: "refresh",
-    topGradient: "from-amber-400/85 via-orange-400/75 to-rose-400/70",
-    border: "border-amber-400/25",
+    topGradient: "from-[#f59e0b] via-[#f97316] to-[#f43f5e]",
+    border: "border-amber-500/30",
+    summary: "Rapid prototyping and playtesting to refine the core loop before committing to art.",
     detail:
       "Blockouts ship fast, feedback lands early, and each pass tightens mechanics, metrics, and mood without losing the core design intent.",
     bullets: ["Rapid blockout loops", "Cross-discipline reviews", "Ship-ready documentation"],
   },
 ] as const;
+
+export const homeBlockout = {
+  phaseLabel: "Level Design Process",
+  title: "The Blockout Phase",
+  description:
+    "Greybox first: prove routes, cover rhythm, and encounter reads before art pass. Every wall exists to test pacing, pressure, and player intent.",
+  figureCaption: "Greybox still · Unreal blockout · portfolio work-in-progress",
+  pillars: [
+    {
+      title: "Geometry & flow",
+      text: "Routes, choke points, and traversal beats are locked before dressing.",
+    },
+    {
+      title: "Sightlines & readability",
+      text: "Players read threat, cover, and objectives under pressure—not after polish.",
+    },
+    {
+      title: "Encounter pacing",
+      text: "Spacing and escalation are tuned in greybox, then validated in playtest.",
+    },
+  ] as const,
+  chips: ["Greybox", "Sightlines", "Encounter flow", "Playtest loop"] as const,
+};
 
 export const homeHighlights = [
   "Level flow & encounter framing",
@@ -77,18 +106,20 @@ export const homeCaseStudyCard = {
 
 export const homeFeaturedPreview = {
   sectionLabel: "Featured Project",
-  title: "Escape Protocol",
-  subtitle: "Stealth Action Level",
+  sampleLabel: "Portfolio sample",
+  title: "Facility Breach",
+  subtitle: "Stealth Infiltration Slice",
   description:
-    "A tactical escape experience where clarity, tension, and player choice define every step.",
+    "A vertical-slice concept focused on infiltration routes, cover rhythm, and readable threat lanes—built to prove level flow before a full art pass. Environment stills are licensed placeholders for presentation, not official shipped-game marketing.",
   metaLines: [
     { label: "Platform", value: "PC (Windows)" },
     { label: "Engine", value: "Unreal Engine 5" },
     { label: "Mode", value: "Single Player (PvE)" },
     { label: "Role", value: "Level Designer / Gameplay Designer" },
+    { label: "Status", value: "Vertical slice (demo)" },
   ] as const,
   href: "/case-study",
-  cta: "View More",
+  cta: "View case study",
 };
 
 /** “How I think in space” — icon keys match SkillIcon map in components/icons/SkillIcon.tsx */

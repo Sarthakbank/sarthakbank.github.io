@@ -42,8 +42,8 @@ function ContactChannelShell({
           "before:pointer-events-none before:absolute before:inset-0 before:rounded-2xl before:bg-[radial-gradient(ellipse_90%_60%_at_50%_-10%,color-mix(in_srgb,var(--color-accent)_16%,transparent),transparent_55%)] before:opacity-70 before:transition-opacity before:duration-500 group-hover:before:opacity-100",
         ] as const)
       : ([
-          "border border-black/[0.08] bg-white shadow-[0_8px_28px_-14px_rgba(0,0,0,0.08)]",
-          "transition-[transform,box-shadow,border-color] duration-300 motion-safe:hover:-translate-y-0.5 motion-safe:hover:border-black/[0.12] motion-safe:hover:shadow-md",
+          "glass-panel-hover",
+          "motion-safe:hover:-translate-y-0.5",
         ] as const)),
     className,
   );
@@ -100,13 +100,13 @@ export function ContactPage() {
           "relative mt-10 max-w-2xl rounded-2xl px-5 py-4 sm:px-6 sm:py-5",
           lab
             ? "border border-accent/20 bg-gradient-to-br from-accent/[0.08] via-transparent to-transparent backdrop-blur-sm"
-            : "border border-black/[0.08] bg-[#f5f5f7]",
+            : "glass-panel",
         )}
       >
         <p
           className={cn(
             "text-[11px] font-bold uppercase tracking-[0.22em]",
-            lab ? "text-accent" : "text-[#0071e3]",
+            "text-accent",
           )}
         >
           {contactOpportunity.eyebrow}
@@ -265,7 +265,7 @@ export function ContactPage() {
               "ring-1 ring-inset ring-accent/15 after:pointer-events-none after:absolute after:inset-x-8 after:bottom-6 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/25 after:to-transparent dark:after:via-white/12",
             ] as const)
           : ([
-              "border border-black/[0.08] bg-white shadow-[0_12px_40px_-24px_rgba(0,0,0,0.1)]",
+              "glass-panel",
               "motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-md",
             ] as const)),
       )}
@@ -301,7 +301,7 @@ export function ContactPage() {
   const continueRow = <div className="mt-12">{continueRowInner}</div>;
 
   return (
-    <Section className="relative overflow-x-hidden border-b border-black/[0.06] bg-[#fbfbfd] pb-16 pt-24 sm:pb-20 sm:pt-28">
+    <Section className="relative overflow-x-hidden border-b border-white/[0.06] bg-canvas pb-16 pt-24 sm:pb-20 sm:pt-28">
       <Container className="relative max-w-6xl pb-[max(5rem,calc(4.25rem+env(safe-area-inset-bottom)))] sm:pb-24">
         {lab ? (
           <>

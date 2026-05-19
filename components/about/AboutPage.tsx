@@ -69,8 +69,8 @@ export function AboutPage() {
   const [activeToolIdx, setActiveToolIdx] = useState(0);
 
   return (
-    <div className="min-h-dvh overflow-x-hidden bg-[#fbfbfd] text-[#1d1d1f] antialiased dark:bg-[#fbfbfd] dark:text-[#1d1d1f]">
-      <Section className="relative overflow-hidden border-b border-black/[0.06] bg-[#fbfbfd] pb-14 pt-24 sm:pb-16 sm:pt-28">
+    <div className="min-h-dvh overflow-x-hidden bg-canvas text-ink antialiased">
+      <Section className="relative overflow-hidden border-b border-white/[0.06] bg-canvas pb-14 pt-24 sm:pb-16 sm:pt-28">
         <Container className="relative">
           <div className="grid gap-10 sm:gap-12 md:gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)] lg:items-center lg:gap-16">
             <FadeIn className="min-w-0">
@@ -92,7 +92,7 @@ export function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
+      <Section className="border-b border-white/[0.06] bg-surface/40 py-14 sm:py-16 lg:py-20">
         <Container>
           <FadeIn>
             <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -161,7 +161,7 @@ export function AboutPage() {
 
       {lab ? <LabFlowBridge wash="strong" /> : null}
 
-      <Section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
+      <Section className="border-b border-white/[0.06] bg-surface/40 py-14 sm:py-16 lg:py-20">
         <Container>
           <FadeIn>
             <SectionLabel>Education</SectionLabel>
@@ -241,7 +241,7 @@ export function AboutPage() {
 
       {lab ? <LabFlowBridge /> : null}
 
-      <Section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
+      <Section className="border-b border-white/[0.06] bg-surface/40 py-14 sm:py-16 lg:py-20">
         <Container>
           {lab ? (
             <MotionSection>
@@ -578,7 +578,7 @@ export function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="border-b border-black/[0.06] bg-white py-14 sm:py-16 lg:py-20">
+      <Section className="border-b border-white/[0.06] bg-surface/40 py-14 sm:py-16 lg:py-20">
         <Container>
           <FadeIn>
             <SectionLabel>Approach</SectionLabel>
@@ -603,7 +603,7 @@ export function AboutPage() {
 
       {lab ? <LabFlowBridge /> : null}
 
-      <Section className="border-b border-black/[0.06] bg-[#fafafa] py-14 sm:py-16 lg:pb-20">
+      <Section className="border-b border-white/[0.06] bg-elevated/20 py-14 sm:py-16 lg:pb-20">
         <Container>
           <FadeIn>
             <motion.div
@@ -614,7 +614,7 @@ export function AboutPage() {
             >
               <Card
                 interactive={lab}
-                className="overflow-hidden border border-black/[0.08] bg-white shadow-sm"
+                className="glass-panel overflow-hidden"
               >
                 <h2 className="max-w-3xl text-balance font-display text-2xl font-semibold tracking-tight sm:text-3xl">
                   Explore the demo case study or reach out directly.

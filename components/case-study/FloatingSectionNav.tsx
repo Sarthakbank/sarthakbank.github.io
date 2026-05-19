@@ -61,20 +61,20 @@ export function FloatingSectionNav({
           className={cn(
             "pointer-events-auto flex max-h-[min(70dvh,26rem)] flex-col overflow-hidden rounded-2xl border shadow-md backdrop-blur-xl",
             editorial
-              ? "border-black/[0.08] bg-white/95 text-[#1d1d1f] ring-0"
-              : "border-hairline bg-elevated/92 shadow-lift ring-1 ring-inset ring-[var(--ring-inset)] dark:bg-elevated/78",
+              ? "border-white/[0.1] bg-[#141416]/95 text-ink ring-1 ring-inset ring-white/[0.06]"
+              : "border-hairline bg-elevated/92 shadow-lift ring-1 ring-inset ring-[var(--ring-inset)]",
           )}
         >
           <div
             className={cn(
               "border-b px-3 py-2",
-              editorial ? "border-black/[0.06]" : "border-hairline",
+              editorial ? "border-white/[0.08]" : "border-hairline",
             )}
           >
             <p
               className={cn(
                 "text-[10px] font-semibold uppercase tracking-[0.2em]",
-                editorial ? "text-[#86868b]" : "text-muted",
+                "font-mono text-muted",
               )}
             >
               Chapters

@@ -121,11 +121,13 @@ export function TempSceneImage({
         )}
         aria-hidden
       />
-      <figcaption className="pointer-events-none absolute bottom-0 left-0 right-0 z-[3] flex justify-center px-4 pb-3 pt-6 sm:pb-3.5">
-        <span className="max-w-[min(100%,42rem)] rounded-full border border-hairline/80 bg-elevated/95 px-3 py-1.5 text-center text-[10px] font-medium uppercase leading-snug tracking-[0.12em] text-muted shadow-panel backdrop-blur-md dark:bg-elevated/88">
-          {caption}
-        </span>
-      </figcaption>
+      {caption ? (
+        <figcaption className="pointer-events-none absolute bottom-0 left-0 right-0 z-[3] flex justify-center px-4 pb-3 pt-6 sm:pb-3.5">
+          <span className="max-w-[min(100%,42rem)] rounded-full border border-hairline/80 bg-elevated/95 px-3 py-1.5 text-center text-[10px] font-medium uppercase leading-snug tracking-[0.12em] text-muted shadow-panel backdrop-blur-md dark:bg-elevated/88">
+            {caption}
+          </span>
+        </figcaption>
+      ) : null}
     </>
     ),
     [alt, broken, caption, coarsePointer, lab, priority, sizes, src],

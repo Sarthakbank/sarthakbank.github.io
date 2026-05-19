@@ -1,15 +1,9 @@
 "use client";
 
-import { useId, useState } from "react";
-import { Eye, Plus, RefreshCw, Users, type LucideIcon } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import type { HomeDesignPrinciple } from "@/content/home";
+import { stitchGlassPanel } from "@/lib/stitchTokens";
 import { cn } from "@/lib/cn";
-
-const principleIcon = {
-  users: Users,
-  eye: Eye,
-  refresh: RefreshCw,
-} as const satisfies Record<HomeDesignPrinciple["icon"], LucideIcon>;
 
 type Props = {
   principle: HomeDesignPrinciple;
@@ -17,40 +11,56 @@ type Props = {
   onToggle: () => void;
 };
 
+/** Stitch glass principle card — header chevron expands detail. */
 export function DesignPrincipleCard({ principle, expanded, onToggle }: Props) {
-  const panelId = useId();
-  const Icon = principleIcon[principle.icon];
-
   return (
-    <div
+    <button
+      type="button"
+      onClick={onToggle}
       className={cn(
-        "flex min-h-[268px] h-full flex-col overflow-hidden rounded-2xl border bg-[#141416] shadow-[0_8px_32px_-12px_rgba(0,0,0,0.55)] transition-[border-color,box-shadow] duration-300 sm:min-h-[280px]",
-        principle.border,
-        expanded && "border-white/20 shadow-[0_12px_40px_-10px_rgba(10,132,255,0.15)]",
+        stitchGlassPanel,
+        "flex min-h-[220px] w-full flex-col p-6 text-left transition-[box-shadow,border-color] duration-300 md:min-h-[240px] md:p-8",
+        "hover:shadow-[0_0_20px_0_rgba(0,209,255,0.12)]",
+        expanded && "border-[#00d1ff]/30 shadow-[0_0_24px_0_rgba(0,209,255,0.14)]",
       )}
+      aria-expanded={expanded}
     >
-      <div className={cn("h-[5.25rem] shrink-0 bg-gradient-to-r sm:h-[5.5rem]", principle.topGradient)} />
-      <div className="flex flex-1 flex-col items-center px-5 pb-7 pt-8 text-center sm:px-6 sm:pb-8 sm:pt-9">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-[#1c1c1e] text-[#0a84ff] shadow-sm">
-          <Icon className="h-6 w-6" strokeWidth={1.65} aria-hidden />
-        </div>
-        <h3 className="mt-5 font-display text-lg font-semibold tracking-tight text-white sm:text-xl">
-          {principle.title}
+      <div
+        className={cn("mb-5 h-1 w-full rounded-full bg-gradient-to-r", principle.topGradient)}
+        aria-hidden
+      />
+      <div className="flex items-start justify-between gap-4">
+        <h3 className="font-display text-[clamp(1.25rem,2vw+0.5rem,1.75rem)] font-semibold leading-snug tracking-[-0.01em] text-[#e1e2e8]">
+          {principle.title.replace(" Design", "")}
         </h3>
-
-        <div
+        <ChevronDown
           className={cn(
-            "grid w-full transition-[grid-template-rows,opacity,margin] duration-300 ease-out",
-            expanded ? "mt-5 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0",
+            "mt-0.5 h-5 w-5 shrink-0 text-[#00d1ff] transition-transform duration-300",
+            expanded && "rotate-180",
           )}
-        >
-          <div className="overflow-hidden">
-            <p className="text-pretty text-[14px] leading-relaxed text-[#a1a1a6]">{principle.detail}</p>
+          strokeWidth={2}
+          aria-hidden
+        />
+      </div>
+      <p className="mt-4 text-[15px] leading-[1.6] text-[#bbc9cf] md:text-base">{principle.summary}</p>
+      <div
+        className={cn(
+          "grid transition-[grid-template-rows,opacity] duration-300 ease-out",
+          expanded ? "mt-5 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+        )}
+      >
+        <div className="overflow-hidden">
+          <div className="border-t border-white/[0.06] pt-5">
+            <p className="text-pretty text-[15px] leading-[1.65] text-[#bbc9cf]/90">
+              {principle.detail}
+            </p>
             {principle.bullets?.length ? (
-              <ul className="mt-4 space-y-2 text-left text-[13px] text-[#86868b]">
+              <ul className="mt-4 space-y-2.5 font-mono text-[12px] leading-relaxed text-[#859399]">
                 {principle.bullets.map((item) => (
                   <li key={item} className="flex gap-2">
-                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[#0a84ff]" aria-hidden />
+                    <span className="text-[#00d1ff]" aria-hidden>
+                      →
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -58,25 +68,7 @@ export function DesignPrincipleCard({ principle, expanded, onToggle }: Props) {
             ) : null}
           </div>
         </div>
-
-        <button
-          type="button"
-          className="mt-8 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-[#1c1c1e] text-[#a1a1a6] shadow-sm transition hover:border-white/25 hover:text-white"
-          aria-expanded={expanded}
-          aria-controls={panelId}
-          onClick={onToggle}
-        >
-          <Plus
-            className={cn("h-4 w-4 transition-transform duration-300", expanded && "rotate-45")}
-            strokeWidth={2}
-            aria-hidden
-          />
-          <span className="sr-only">{expanded ? "Collapse" : "Expand"} {principle.title}</span>
-        </button>
-        <span id={panelId} className="sr-only">
-          {principle.detail}
-        </span>
       </div>
-    </div>
+    </button>
   );
 }

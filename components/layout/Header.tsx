@@ -9,21 +9,14 @@ import { profileIdentity } from "@/content/profile";
 import { homeHero } from "@/content/home";
 import { cn } from "@/lib/cn";
 import { Container } from "./Container";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
-
 function isEditorialPath(pathname: string | null) {
   return pathname === "/" || pathname === "/case-study" || pathname?.startsWith("/case-study/");
-}
-
-function isCinematicHome(pathname: string | null) {
-  return pathname === "/";
 }
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const editorial = isEditorialPath(pathname);
-  const cinematicHome = isCinematicHome(pathname);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -38,30 +31,31 @@ export function Header() {
     };
   }, [menuOpen]);
 
+  const stitchHome = pathname === "/";
+
   if (editorial) {
     return (
       <header
         className={cn(
-          "sticky top-0 z-50 backdrop-blur-xl",
-          cinematicHome
-            ? "border-b border-white/[0.08] bg-[#0a0a0c]/85"
-            : "border-b border-black/[0.06] bg-white/90 dark:border-black/[0.06] dark:bg-white/90",
+          "sticky top-0 z-50 border-b border-white/[0.05] backdrop-blur-md",
+          stitchHome
+            ? "bg-[#050607]/75 supports-[backdrop-filter]:bg-[#050607]/65"
+            : "bg-[#0b0d10]/85 supports-[backdrop-filter]:bg-[#0b0d10]/75",
         )}
       >
-        <Container className="flex min-h-[3.75rem] items-center justify-between gap-3 py-3 sm:min-h-[4rem] sm:py-4">
+        <div
+          className={cn(
+            "mx-auto flex w-full max-w-[90rem] items-center justify-between gap-3 px-4 py-4 md:px-16",
+            stitchHome && "md:py-4",
+          )}
+        >
           <Link
             href="/"
-            className={cn(
-              "min-w-0 shrink font-display text-[15px] font-semibold tracking-tight sm:text-base",
-              cinematicHome ? "text-white" : "text-[#1d1d1f]",
-            )}
+            className="min-w-0 shrink font-display text-base font-bold tracking-tight text-[#e1e2e8] md:text-lg"
           >
-            {homeHero.name.split(" ")[0]}{" "}
-            <span className={cn("font-normal", cinematicHome ? "text-[#86868b]" : "text-[#6e6e73]")}>
-              Portfolio
-            </span>
+            {homeHero.name}
           </Link>
-          <nav className="hidden min-w-0 items-center gap-0.5 sm:flex" aria-label="Primary">
+          <nav className="hidden min-w-0 items-center gap-6 md:flex" aria-label="Primary">
             {mainNav.map((item) => {
               const active =
                 item.href === "/"
@@ -72,14 +66,10 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "whitespace-nowrap rounded-full px-2.5 py-1.5 text-[12px] font-medium transition sm:px-3 sm:text-[13px]",
-                    cinematicHome
-                      ? active
-                        ? "bg-white/12 text-white"
-                        : "text-[#a1a1a6] hover:bg-white/[0.06] hover:text-white"
-                      : active
-                        ? "bg-black/[0.06] text-[#1d1d1f]"
-                        : "text-[#424245] hover:bg-black/[0.04] hover:text-[#1d1d1f]",
+                    "whitespace-nowrap text-base tracking-tight transition-colors",
+                    active
+                      ? "border-b border-[#00d1ff] pb-0.5 font-bold text-[#4cd6ff] [text-shadow:0_0_10px_rgba(0,209,255,0.35)]"
+                      : "text-[#bbc9cf]/70 hover:bg-[#00d1ff]/5 hover:text-[#e1e2e8] px-1 py-0.5 rounded",
                   )}
                 >
                   {item.label}
@@ -87,24 +77,12 @@ export function Header() {
               );
             })}
           </nav>
-          <div className="flex shrink-0 items-center gap-2">
-            <span
-              className={cn(
-                "[&>button]:h-9 [&>button]:w-9 [&>button]:rounded-full",
-                cinematicHome
-                  ? "[&>button]:border-white/15 [&>button]:bg-white/10"
-                  : "[&>button]:border-black/[0.1] [&>button]:bg-white",
-              )}
-            >
-              <ThemeToggle />
-            </span>
+          <div className="flex shrink-0 items-center">
             <button
               type="button"
               className={cn(
                 "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border shadow-sm transition sm:hidden",
-                cinematicHome
-                  ? "border-white/15 bg-white/10 text-white hover:bg-white/15"
-                  : "border-black/[0.1] bg-white text-[#1d1d1f] hover:bg-black/[0.04]",
+                "border-white/[0.08] bg-[#111418]/80 text-[#e1e2e8] hover:border-white/15 hover:bg-[#171a20]",
               )}
               aria-expanded={menuOpen}
               aria-controls="editorial-mobile-nav"
@@ -114,7 +92,7 @@ export function Header() {
               {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
             </button>
           </div>
-        </Container>
+        </div>
 
         {menuOpen ? (
           <div
@@ -130,14 +108,14 @@ export function Header() {
               aria-label="Close menu"
               onClick={() => setMenuOpen(false)}
             />
-            <div className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col border-l border-black/[0.08] bg-white shadow-xl supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
-              <div className="flex items-center justify-between border-b border-black/[0.06] px-4 py-3.5">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#6e6e73]">
+            <div className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col border-l border-white/[0.08] bg-[#0b0d10] shadow-xl supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
+              <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-3.5">
+                <span className="font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted">
                   Menu
                 </span>
                 <button
                   type="button"
-                  className="rounded-full p-2 text-[#6e6e73] transition hover:bg-black/[0.05]"
+                  className="rounded-full p-2 text-muted transition hover:bg-white/[0.06]"
                   aria-label="Close menu"
                   onClick={() => setMenuOpen(false)}
                 >
@@ -157,7 +135,7 @@ export function Header() {
                       onClick={() => setMenuOpen(false)}
                       className={cn(
                         "rounded-xl px-4 py-3.5 text-[15px] font-semibold tracking-tight transition",
-                        active ? "bg-[#0071e3] text-white" : "text-[#1d1d1f] hover:bg-[#f5f5f7]",
+                        active ? "bg-accent text-white" : "text-ink hover:bg-white/[0.06]",
                       )}
                     >
                       {item.label}
@@ -210,10 +188,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-          <span className="inline-flex shrink-0 [&>button]:h-9 [&>button]:w-9 sm:[&>button]:h-10 sm:[&>button]:w-10">
-            <ThemeToggle />
-          </span>
+        <div className="flex shrink-0 items-center">
           <button
             type="button"
             className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-hairline bg-elevated/80 text-ink shadow-panel ring-1 ring-inset ring-[var(--ring-inset)] transition hover:border-accent/30 hover:bg-elevated sm:h-10 sm:w-10 md:hidden"

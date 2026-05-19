@@ -18,7 +18,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-border bg-surface/50 py-14">
+    <footer className="border-t border-white/[0.06] bg-surface/50 py-12 sm:py-14">
       <Container className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-md space-y-3">
           <p className="font-display text-xl font-semibold text-ink">
@@ -32,7 +32,7 @@ export function Footer() {
 
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+            <p className="label-caps mb-3">
               Explore
             </p>
             <ul className="space-y-2 text-sm">
@@ -49,7 +49,7 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-muted">
+            <p className="label-caps mb-3">
               Connect
             </p>
             <ul className="space-y-2.5 text-sm">

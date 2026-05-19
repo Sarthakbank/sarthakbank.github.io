@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader } from "next/font/google";
+import { Hanken_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -14,9 +14,15 @@ const inter = Inter({
   display: "swap",
 });
 
-const newsreader = Newsreader({
+const hanken = Hanken_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -37,10 +43,8 @@ const themeScript = `
     var d = document.documentElement;
     if (t === 'light' || t === 'dark') {
       d.classList.toggle('dark', t === 'dark');
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      d.classList.add('dark');
     } else {
-      d.classList.remove('dark');
+      d.classList.add('dark');
     }
   } catch (e) {}
 })();
@@ -54,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${newsreader.variable}`}
+      className={`${inter.variable} ${hanken.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body className="flex min-h-dvh flex-col bg-canvas font-sans text-base">
