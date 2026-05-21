@@ -4,8 +4,8 @@
  */
 
 export const homeFeaturedMedia = {
-  /** Primary featured card — wide industrial interior depth */
-  hero: "/media/featured/industrial-depth-hero-alt.jpg",
+  /** Escape Protocol — project thumbnail (moved from repo root) */
+  hero: "/media/escape-protocol-thumbnail.png",
   /** Alternate interior corridor (optional secondary / future use) */
   corridorDetail: "/media/featured/facility-corridor-hero.jpg",
   brutalistReference: "/media/featured/brutalist-massing-reference.jpg",

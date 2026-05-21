@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { mainNav } from "@/content/nav";
+import { homeNav } from "@/content/homeNav";
 import { profileIdentity } from "@/content/profile";
 import { homeHero } from "@/content/home";
+import { appleNavLink } from "@/lib/appleHomeTokens";
 import { cn } from "@/lib/cn";
 import { Container } from "./Container";
 function isStitchEditorialPath(pathname: string | null) {
@@ -37,16 +39,90 @@ export function Header() {
     };
   }, [menuOpen]);
 
-  const stitchHome = pathname === "/";
+  const isHome = pathname === "/";
+
+  if (isHome) {
+    return (
+      <header className="sticky top-0 z-50 border-b border-black/[0.06] bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/72">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-5 py-3.5 sm:px-8 sm:py-4">
+          <Link
+            href="/"
+            className="min-w-0 shrink font-display text-base font-semibold tracking-tight text-[#1d1d1f] md:text-lg"
+          >
+            {homeHero.name}
+          </Link>
+          <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+            {homeNav.map((item) => (
+              <Link key={item.href} href={item.href} className={appleNavLink}>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex shrink-0 items-center">
+            <button
+              type="button"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-black/[0.08] bg-[#f5f5f7] text-[#1d1d1f] transition hover:bg-[#e8e8ed] lg:hidden"
+              aria-expanded={menuOpen}
+              aria-controls="home-mobile-nav"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
+            </button>
+          </div>
+        </div>
+
+        {menuOpen ? (
+          <div
+            id="home-mobile-nav"
+            className="fixed inset-0 z-[60] lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
+          >
+            <button
+              type="button"
+              className="absolute inset-0 bg-black/20 backdrop-blur-[2px]"
+              aria-label="Close menu"
+              onClick={() => setMenuOpen(false)}
+            />
+            <div className="absolute right-0 top-0 flex h-full w-[min(100%,20rem)] flex-col border-l border-black/[0.06] bg-white shadow-xl supports-[padding:max(0px)]:pt-[env(safe-area-inset-top)]">
+              <div className="flex items-center justify-between border-b border-black/[0.06] px-4 py-3.5">
+                <span className="text-[13px] font-medium text-[#6e6e73]">Menu</span>
+                <button
+                  type="button"
+                  className="rounded-full p-2 text-[#6e6e73] transition hover:bg-[#f5f5f7]"
+                  aria-label="Close menu"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <X className="h-5 w-5" aria-hidden />
+                </button>
+              </div>
+              <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="Primary mobile">
+                {homeNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="rounded-xl px-4 py-3 text-[15px] font-semibold text-[#1d1d1f] transition hover:bg-[#f5f5f7]"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          </div>
+        ) : null}
+      </header>
+    );
+  }
 
   if (editorial) {
     return (
       <header
         className={cn(
           "sticky top-0 z-50 border-b border-white/[0.05] backdrop-blur-md",
-          stitchHome
-            ? "bg-[#050607]/75 supports-[backdrop-filter]:bg-[#050607]/65"
-            : "bg-[#0b0d10]/85 supports-[backdrop-filter]:bg-[#0b0d10]/75",
+          "bg-[#0b0d10]/85 supports-[backdrop-filter]:bg-[#0b0d10]/75",
         )}
       >
         <div

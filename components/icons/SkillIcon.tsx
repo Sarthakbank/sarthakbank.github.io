@@ -2,11 +2,15 @@
 
 import type { LucideIcon } from "lucide-react";
 import {
+  Box,
   Code2,
+  Compass,
   Cpu,
+  Globe2,
   LayoutGrid,
   Map,
   MousePointer2,
+  Network,
   Paintbrush,
   Palette,
   Shapes,
@@ -23,8 +27,14 @@ const map: Record<string, LucideIcon> = {
   Texturing: Paintbrush,
   Sculpting: Shapes,
   "Mechanic Prototyping": Cpu,
+  "Mechanical Prototyping": Cpu,
   "Gameplay UX": MousePointer2,
   "Agile Workflow": Workflow,
+  Worldbuilding: Globe2,
+  Navigation: Compass,
+  "Systems Thinking": Network,
+  "Unity Workflow": Box,
+  "Unreal Workflow": LayoutGrid,
 };
 
 export function SkillIcon({

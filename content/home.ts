@@ -1,4 +1,7 @@
-/** Home page copy — PDF-aligned (Group 8 / 10 / 2) editorial presentation. */
+/** Home page copy — Group 13.pdf light editorial (Home only). */
+
+import type { SkillAccentKey } from "@/lib/appleHomeTokens";
+import { principleAccents } from "@/lib/appleHomeTokens";
 
 export const homeHero = {
   name: "Sarthak Bankar",
@@ -6,58 +9,139 @@ export const homeHero = {
   tagline: "Designing gameplay spaces that guide, challenge, and immerse players.",
 };
 
+export const homeHeroChips = [
+  "Player Flow",
+  "Readable Routes",
+  "Encounter Rhythm",
+] as const;
+
 export const homeCtas = {
-  primary: { href: "/case-study", label: "View Featured Project" },
+  primary: { href: "#featured", label: "View Featured Project" },
+  contact: { href: "/contact", label: "Contact" },
+  /** Legacy scroll/static heroes — not used on Apple Home */
   secondary: { href: "/about", label: "About My Approach" },
   tertiary: { href: "/contact", label: "Contact" },
 };
 
+export type PrincipleAccentKey = keyof typeof principleAccents;
+
+export type HeadlineHighlight = {
+  text: string;
+  colorClass: string;
+};
+
 export type HomeDesignPrinciple = {
   title: string;
-  /** Lucide-style label for icon slot */
   icon: "users" | "eye" | "refresh";
-  topGradient: string;
-  border: string;
-  /** Collapsed card teaser — Stitch handoff */
-  summary: string;
-  detail: string;
-  bullets?: readonly string[];
+  accent: PrincipleAccentKey;
+  headline: string;
+  headlineHighlights: readonly HeadlineHighlight[];
+  body: string;
 };
 
 export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
   {
-    title: "Player-Centric Design",
+    title: "Player Centric",
     icon: "users",
-    topGradient: "from-[#7c3aed] via-[#a855f7] to-[#6366f1]",
-    border: "border-violet-500/30",
-    summary:
-      "Designing spaces that intuitively guide the player without explicit hand-holding.",
-    detail:
-      "Every route, vista, and encounter is judged by what players read under pressure—intent, risk, and reward stay legible before polish.",
-    bullets: ["Flow-first greybox", "Readable objectives", "Playtest-driven iteration"],
+    accent: "playerCentric",
+    headline: "Designing spaces that react to the player.",
+    headlineHighlights: [
+      { text: "react", colorClass: principleAccents.playerCentric.highlightTeal },
+      { text: "player", colorClass: principleAccents.playerCentric.highlightBlue },
+    ],
+    body: "I build spaces that react to the player, not the other way around. Every route, encounter, and decision point is crafted to support agency whether the player slips through unseen or storms the room head-on. The level bends to their intent, making every playstyle feel deliberate and rewarding.",
   },
   {
     title: "Readable Spaces",
     icon: "eye",
-    topGradient: "from-[#0ea5e9] via-[#06b6d4] to-[#14b8a6]",
-    border: "border-cyan-500/30",
-    summary: "Ensuring combat arenas and puzzle rooms have clear affordances and sightlines.",
-    detail:
-      "Silhouette, lighting, and pacing work together so navigation feels intuitive—players always know where they are and what the space is asking.",
-    bullets: ["Strong landmarks", "Clear encounter reads", "Rhythm across beats"],
+    accent: "readableSpaces",
+    headline: "Readable layouts without hand-holding.",
+    headlineHighlights: [
+      { text: "Readable", colorClass: principleAccents.readableSpaces.highlightPurple },
+      { text: "hand-holding", colorClass: principleAccents.readableSpaces.highlightBlue },
+    ],
+    body: "Clarity drives every layout choice I make. Sightlines, lighting, and spatial hierarchy work together to guide the player without UI markers or hand-holding. The environment quietly teaches the player how to move, where to look, and what to fear all through pure visual language.",
   },
   {
     title: "Iterative Craft",
     icon: "refresh",
-    topGradient: "from-[#f59e0b] via-[#f97316] to-[#f43f5e]",
-    border: "border-amber-500/30",
-    summary: "Rapid prototyping and playtesting to refine the core loop before committing to art.",
-    detail:
-      "Blockouts ship fast, feedback lands early, and each pass tightens mechanics, metrics, and mood without losing the core design intent.",
-    bullets: ["Rapid blockout loops", "Cross-discipline reviews", "Ship-ready documentation"],
+    accent: "iterativeCraft",
+    headline: "Iteration turns raw blockouts into polished gameplay.",
+    headlineHighlights: [
+      { text: "Iteration", colorClass: principleAccents.iterativeCraft.highlightOrange },
+      { text: "polished", colorClass: principleAccents.iterativeCraft.highlightPink },
+    ],
+    body: "Every space goes through rigorous testing and refinement before it earns its place in the level. I iterate relentlessly testing, refining, and rebuilding until the space feels intuitive, challenging, and satisfying. Every encounter, route, and beat is shaped by player feedback, turning raw ideas into polished, purposeful gameplay.",
   },
 ] as const;
 
+export const homeAboutPreview = {
+  title: "About",
+  accent: "from-[#0071e3] to-[#5ac8fa]",
+  summary:
+    "Spatial clarity under pressure. Focused on immersive, player-centered spaces that guide through pacing, layout, and encounter design.",
+  href: "/about",
+  cta: "View More",
+};
+
+export const homeCaseStudyCard = {
+  title: "Case Study",
+  accent: "from-[#af52de] to-[#ff9500]",
+  summary:
+    "Researching how AI tools reshape creativity and production workflows in game design.",
+  href: "/case-study",
+  cta: "View More",
+};
+
+export const homeFeaturedPreview = {
+  sectionLabel: "Featured Project",
+  title: "Escape Protocol",
+  subtitle: "Stealth Action Level",
+  description:
+    "A tactical escape experience where clarity, tension, and player choice define every step.",
+  chip: "Gameplay",
+  chipColor: "#0071e3",
+  metaLines: [
+    { label: "Platform", value: "PC (Windows)" },
+    { label: "Engine", value: "Unreal Engine 5" },
+    { label: "Mode", value: "Single Player (PvE)" },
+    { label: "Role", value: "Level Designer / Gameplay Designer" },
+  ] as const,
+  href: "/case-study",
+  cta: "View More",
+};
+
+export const homeSkillGrid: readonly {
+  skill: string;
+  subtitle: string;
+  accent: SkillAccentKey;
+}[] = [
+  { skill: "Level Design", subtitle: "Core space crafting", accent: "blue" },
+  { skill: "Gameplay Scripting", subtitle: "Bringing mechanics alive", accent: "indigo" },
+  { skill: "Blockouts", subtitle: "First-playable spaces", accent: "green" },
+  { skill: "Encounter Design", subtitle: "Player challenge", accent: "orange" },
+  { skill: "Environment Art Basics", subtitle: "Visual readability", accent: "purple" },
+  { skill: "Worldbuilding", subtitle: "Player context", accent: "cyan" },
+  { skill: "Navigation", subtitle: "Natural paths", accent: "teal" },
+  { skill: "Systems Thinking", subtitle: "Player behavior", accent: "violet" },
+  { skill: "Mechanical Prototyping", subtitle: "Fast idea tests", accent: "pink" },
+  { skill: "Gameplay UX", subtitle: "Readable feedback", accent: "rose" },
+  { skill: "Unity Workflow", subtitle: "Scene iteration", accent: "amber" },
+  { skill: "Unreal Workflow", subtitle: "Engine-ready spaces", accent: "slate" },
+] as const;
+
+export const homeThinkInSpace = {
+  title: "How I Think in Space",
+  subtitle: "Designing gameplay spaces through clarity, rhythm, and player intuition.",
+};
+
+/** Shared by About / Case Study — unchanged for non-Home pages */
+export const homeContactCta = {
+  href: "/contact",
+  label: "Contact Me",
+};
+
+/** Legacy blockout copy — used by StaticFrameHero only (not Home redesign) */
 export const homeBlockout = {
   phaseLabel: "Level Design Process",
   title: "The Blockout Phase",
@@ -81,85 +165,30 @@ export const homeBlockout = {
   chips: ["Greybox", "Sightlines", "Encounter flow", "Playtest loop"] as const,
 };
 
-export const homeHighlights = [
-  "Level flow & encounter framing",
-  "Blockouts to readable spaces",
-  "Gameplay scripting & prototyping",
-  "Collaboration across art & design",
-] as const;
-
-export const homeAboutPreview = {
-  title: "About",
-  summary:
-    "I’m a Level Designer focused on creating intuitive, immersive gameplay spaces. I build levels that guide players naturally through flow, pacing, and smart encounter design.",
-  href: "/about",
-  cta: "View More",
-};
-
-export const homeCaseStudyCard = {
-  title: "Case Study",
-  summary:
-    "My research explored how AI tools impact modern game design workflows, evaluating whether they genuinely improve creativity, efficiency, and production quality.",
-  href: "/case-study",
-  cta: "View More",
-};
-
-export const homeFeaturedPreview = {
-  sectionLabel: "Featured Project",
-  sampleLabel: "Portfolio sample",
-  title: "Facility Breach",
-  subtitle: "Stealth Infiltration Slice",
-  description:
-    "A vertical-slice concept focused on infiltration routes, cover rhythm, and readable threat lanes—built to prove level flow before a full art pass. Environment stills are licensed placeholders for presentation, not official shipped-game marketing.",
-  metaLines: [
-    { label: "Platform", value: "PC (Windows)" },
-    { label: "Engine", value: "Unreal Engine 5" },
-    { label: "Mode", value: "Single Player (PvE)" },
-    { label: "Role", value: "Level Designer / Gameplay Designer" },
-    { label: "Status", value: "Vertical slice (demo)" },
-  ] as const,
-  href: "/case-study",
-  cta: "View case study",
-};
-
-/** “How I think in space” — icon keys match SkillIcon map in components/icons/SkillIcon.tsx */
-export const homeSkillGrid = [
-  { skill: "Level Design", descriptor: "Flow, beats, and spatial storytelling." },
-  { skill: "Gameplay Scripting", descriptor: "Blueprint logic and prototype interactions." },
-  { skill: "Blockouts", descriptor: "Fast greybox to prove routes and reads." },
-  { skill: "Encounter Design", descriptor: "Pressure, cover rhythm, and escalation." },
-  { skill: "Environment Art Basics", descriptor: "Composition support without losing gameplay." },
-  { skill: "Texturing", descriptor: "Material reads that reinforce navigation." },
-  { skill: "Sculpting", descriptor: "Forms that sell scale and silhouette." },
-  { skill: "Mechanic Prototyping", descriptor: "Test verbs early in greybox." },
-  { skill: "Gameplay UX", descriptor: "What the player can parse under stress." },
-  { skill: "Agile Workflow", descriptor: "Iteration loops with clear priorities." },
-] as const;
-
-export const homeThinkInSpace = {
-  title: "How I Think in Space",
-  subtitle: "Designing gameplay spaces through clarity, rhythm, and player intuition.",
-};
-
 export const homeConnectSection = {
-  title: "LET’S CONNECT",
-};
-
-export const homeContactCta = {
-  href: "/contact",
-  label: "Contact Me",
+  title: "Let's Connect",
+  buttons: [
+    { href: "/contact", label: "Contact Me", variant: "primary" as const },
+    {
+      href: "mailto:sarthakbankar647@gmail.com?subject=Resume%20request",
+      label: "Download Resume",
+      variant: "secondary" as const,
+    },
+    {
+      href: "https://www.linkedin.com/in/sarthak-bankar-755652229",
+      label: "LinkedIn",
+      variant: "ghost" as const,
+      external: true,
+    },
+  ],
 };
 
 export const homeFooter = {
   name: "Sarthak Bankar",
+  tagline: "Level Design Portfolio",
   explore: [
     { href: "/", label: "Home" },
     { href: "/case-study", label: "Featured Project" },
     { href: "/about", label: "About" },
   ],
-  connect: [
-    { href: "/contact", label: "Contact" },
-    { href: "/case-study", label: "Case study" },
-  ],
-  legal: "© {year} Sarthak Bankar. Portfolio & case study materials for presentation.",
 };
