@@ -15,13 +15,9 @@ import {
 } from "@/content/home";
 import { contactChannels } from "@/content/contact";
 import {
-  appleBody,
-  appleCardHover,
   appleContainer,
-  applePreviewCard,
   appleHeadlineLg,
   appleHomePage,
-  appleLink,
   appleSection,
   appleSectionMuted,
   appleBtnGhost,
@@ -37,52 +33,7 @@ const fadeUp = {
   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
 };
 
-function PreviewCard({
-  title,
-  accent,
-  summary,
-  href,
-  cta,
-}: {
-  title: string;
-  accent: string;
-  summary: string;
-  href: string;
-  cta: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        applePreviewCard,
-        appleCardHover,
-        "group relative flex min-h-[240px] flex-col overflow-hidden p-8 transition duration-300 md:min-h-[260px] md:p-10",
-      )}
-    >
-      <div
-        className={cn("absolute inset-x-0 top-0 h-1 bg-gradient-to-r", accent)}
-        aria-hidden
-      />
-      <h3
-        className={cn(
-          "text-pretty font-display text-[1.4rem] font-semibold leading-tight tracking-[-0.02em] md:text-[1.65rem]",
-          "bg-gradient-to-r bg-clip-text text-transparent",
-          accent,
-        )}
-      >
-        {title}
-      </h3>
-      <p className={cn("mt-5 flex-1 text-pretty", appleBody)}>{summary}</p>
-      <span className={cn(appleLink, "mt-8 shrink-0")}>
-        {cta}
-        <ArrowUpRight
-          className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          aria-hidden
-        />
-      </span>
-    </Link>
-  );
-}
+/* ── No PreviewCard — About + Case Study cards are inlined below ── */
 
 export function HomePage() {
   const year = new Date().getFullYear();
@@ -104,26 +55,79 @@ export function HomePage() {
       <AppleSkillsSection />
 
       {/* About + Case Study — Group 15.pdf */}
-      <section className={cn(appleSection, appleSectionMuted)}>
-        <div className={appleContainer}>
-          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-7">
-            <motion.div {...fadeUp}>
-              <PreviewCard
-                title={homeAboutPreview.title}
-                accent={homeAboutPreview.accent}
-                summary={homeAboutPreview.summary}
+      <section
+        className={cn(appleSection)}
+        style={{ background: "linear-gradient(180deg, #E8EFF8 0%, #F0F4FA 50%, #E8EFF8 100%)" }}
+      >
+        <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12">
+          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-5">
+            {/* ── About card (dark) ──────────────────────── */}
+            <motion.div {...fadeUp} className="flex">
+              <Link
                 href={homeAboutPreview.href}
-                cta={homeAboutPreview.cta}
-              />
+                className="group flex h-full w-full flex-col overflow-hidden rounded-[36px] transition-all duration-300 ease-out hover:-translate-y-[2px]"
+                style={{
+                  background: "#1d1d1f",
+                  padding: "44px 40px 40px",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.16)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.12), 0 20px 56px rgba(0,0,0,0.22)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.16)"; }}
+              >
+                <h3
+                  className="font-display leading-[1.1] tracking-[-0.025em] text-white"
+                  style={{ fontSize: "34px", fontWeight: 700 }}
+                >
+                  {homeAboutPreview.title}
+                </h3>
+                <p
+                  className="mt-6 flex-1 text-pretty leading-[1.65]"
+                  style={{ fontSize: "17px", color: "rgba(255,255,255,0.72)" }}
+                >
+                  {homeAboutPreview.summary}
+                </p>
+                <span className="mt-10 inline-flex shrink-0 items-center gap-1.5 text-[15px] font-semibold text-[#5ac8fa] transition-colors group-hover:text-[#7dd3fc]">
+                  {homeAboutPreview.cta}
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
+                </span>
+              </Link>
             </motion.div>
-            <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.05 }}>
-              <PreviewCard
-                title={homeCaseStudyCard.title}
-                accent={homeCaseStudyCard.accent}
-                summary={homeCaseStudyCard.summary}
+
+            {/* ── Case Study card (white) ─────────────────── */}
+            <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.06 }} className="flex">
+              <Link
                 href={homeCaseStudyCard.href}
-                cta={homeCaseStudyCard.cta}
-              />
+                className="group flex h-full w-full flex-col overflow-hidden rounded-[36px] border border-black/[0.04] bg-white transition-all duration-300 ease-out hover:-translate-y-[2px]"
+                style={{
+                  padding: "44px 40px 40px",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.06), 0 20px 56px rgba(0,0,0,0.12)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08)"; }}
+              >
+                <h3
+                  className="font-display leading-[1.1] tracking-[-0.025em] text-[#1d1d1f]"
+                  style={{ fontSize: "34px", fontWeight: 700 }}
+                >
+                  {homeCaseStudyCard.title}
+                </h3>
+                <p
+                  className="mt-6 flex-1 text-pretty leading-[1.65] text-[#6e6e73]"
+                  style={{ fontSize: "17px" }}
+                >
+                  {homeCaseStudyCard.summary}
+                </p>
+                <span className="mt-10 inline-flex shrink-0 items-center gap-1.5 text-[15px] font-semibold text-[#0071e3] transition-colors group-hover:text-[#0077ed]">
+                  {homeCaseStudyCard.cta}
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
+                </span>
+              </Link>
             </motion.div>
           </div>
         </div>
