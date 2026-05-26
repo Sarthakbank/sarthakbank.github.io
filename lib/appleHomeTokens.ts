@@ -1,4 +1,4 @@
-/** Apple-style light UI tokens — Home page only (Group 13.pdf). */
+/** Light UI tokens — Home page only (reference-aligned). */
 
 export const apple = {
   bg: "#f5f5f7",
@@ -17,7 +17,6 @@ export const appleHomePage =
 
 export const appleContainer = "mx-auto w-full max-w-6xl px-5 sm:px-8";
 
-/** Generous Apple-like vertical rhythm between sections */
 export const appleSection = "py-16 sm:py-20 lg:py-24";
 
 export const appleSectionMuted = "bg-[#f5f5f7]";
@@ -42,20 +41,6 @@ export const appleCardHover =
 export const applePreviewCard =
   "rounded-[32px] border border-black/[0.06] bg-white shadow-[0_4px_28px_rgba(0,0,0,0.08)]";
 
-/** ~1.1 mobile · ~1.9 tablet · ~2.75 desktop (2.5–3 visible), capped width */
-export const carouselPrincipleSlide =
-  "flex-none snap-start w-[min(91%,360px)] sm:w-[min(48%,360px)] lg:w-[min(36%,360px)]";
-
-/** ~1.1 mobile · 2 tablet · ~3.5 desktop */
-export const carouselSkillSlide =
-  "flex-none snap-start w-[min(91%,280px)] sm:w-[min(48%,280px)] lg:w-[min(27.5%,280px)]";
-
-export const appleCarouselShell =
-  "relative flex min-h-[300px] flex-col overflow-visible rounded-[32px] border border-black/[0.06] bg-[#f5f5f7] p-7 shadow-[0_4px_28px_rgba(0,0,0,0.07)] sm:min-h-[320px] sm:p-8";
-
-export const appleCarouselArrow =
-  "inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#e8e8ed] text-[#1d1d1f] shadow-sm transition hover:bg-[#d2d2d7] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-[#e8e8ed]";
-
 export const appleProductCard =
   "overflow-hidden rounded-[32px] border border-black/[0.06] bg-white shadow-[0_4px_32px_rgba(0,0,0,0.09)] transition-[transform,box-shadow] duration-300 ease-out hover:shadow-[0_16px_48px_rgba(0,0,0,0.11)]";
 
@@ -78,7 +63,7 @@ export const appleMetaLabel = "text-[13px] font-medium text-[#6e6e73]";
 
 export const appleMetaValue = "text-[13px] font-semibold text-[#1d1d1f]";
 
-/** Title gradient + icon badge + plus button — text accents only (not card bg). */
+/** Title gradient + icon badge — used by Design Principles cards. */
 export const principleAccents = {
   playerCentric: {
     titleGradient: "from-[#0071e3] via-[#5ac8fa] to-[#34c759]",
@@ -103,7 +88,17 @@ export const principleAccents = {
   },
 } as const;
 
-/** Dark circular plus — Apple card reference */
+/** Legacy carousel tokens — kept so unused files still compile. */
+export const carouselPrincipleSlide =
+  "flex-none snap-start w-[min(91%,360px)] sm:w-[min(48%,360px)] lg:w-[min(36%,360px)]";
+export const carouselSkillSlide =
+  "flex-none snap-start w-[min(91%,280px)] sm:w-[min(48%,280px)] lg:w-[min(27.5%,280px)]";
+export const appleCarouselShell =
+  "relative flex min-h-[300px] flex-col overflow-visible rounded-[32px] border border-black/[0.06] bg-[#f5f5f7] p-7 shadow-[0_4px_28px_rgba(0,0,0,0.07)] sm:min-h-[320px] sm:p-8";
+export const appleCarouselArrow =
+  "inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#e8e8ed] text-[#1d1d1f] shadow-sm transition hover:bg-[#d2d2d7] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-[#e8e8ed]";
+
+/** Dark circular plus — principle card detail trigger */
 export const applePlusButton =
   "flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1d1d1f] text-white shadow-[0_4px_14px_rgba(0,0,0,0.18)] transition hover:scale-105 hover:bg-[#333336] active:scale-95";
 

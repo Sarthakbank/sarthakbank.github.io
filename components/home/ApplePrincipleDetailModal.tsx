@@ -65,18 +65,15 @@ export function ApplePrincipleDetailModal({ principle, onClose }: Props) {
             >
               <X className="h-5 w-5" strokeWidth={2} aria-hidden />
             </button>
-            <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#6e6e73]">
-              {principle.title}
-            </p>
             <h2
               id="principle-modal-title"
               className={cn(
-                "mt-3 pr-10 font-display text-[clamp(1.5rem,3vw,2rem)] font-semibold leading-tight tracking-[-0.02em]",
-                "bg-gradient-to-r bg-clip-text text-transparent",
+                "pr-10 font-display text-[clamp(1.35rem,3vw,1.85rem)] font-bold uppercase leading-tight tracking-[-0.02em]",
+                "bg-gradient-to-br bg-clip-text text-transparent",
                 accent.titleGradient,
               )}
             >
-              {principle.headline}
+              {principle.title}
             </h2>
             <p className="mt-6 text-pretty text-[16px] leading-[1.65] text-[#6e6e73] md:text-[17px]">
               {principle.body}

@@ -1,97 +1,42 @@
 "use client";
 
-import { Eye, Plus, RefreshCw, Users } from "lucide-react";
-import type { HeadlineHighlight, HomeDesignPrinciple } from "@/content/home";
-import {
-  appleCarouselShell,
-  applePlusButton,
-  carouselPrincipleSlide,
-  principleAccents,
-} from "@/lib/appleHomeTokens";
+import { Plus } from "lucide-react";
+import type { HomeDesignPrinciple } from "@/content/home";
+import { applePlusButton, principleAccents } from "@/lib/appleHomeTokens";
 import { cn } from "@/lib/cn";
-
-const icons = {
-  users: Users,
-  eye: Eye,
-  refresh: RefreshCw,
-} as const;
-
-function escapeRegex(s: string) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
-function HeadlineWithHighlights({
-  headline,
-  highlights,
-}: {
-  headline: string;
-  highlights: readonly HeadlineHighlight[];
-}) {
-  if (!highlights.length) {
-    return (
-      <p className="font-display text-[clamp(1.2rem,1.75vw+0.35rem,1.6rem)] font-semibold leading-[1.22] tracking-[-0.02em] text-[#1d1d1f]">
-        {headline}
-      </p>
-    );
-  }
-
-  const sorted = [...highlights].sort((a, b) => b.text.length - a.text.length);
-  const pattern = sorted.map((h) => escapeRegex(h.text)).join("|");
-  const parts = headline.split(new RegExp(`(${pattern})`, "gi"));
-
-  return (
-    <p className="text-pretty break-words font-display text-[clamp(1.2rem,1.75vw+0.35rem,1.6rem)] font-semibold leading-[1.22] tracking-[-0.02em] text-[#1d1d1f]">
-      {parts.map((part, i) => {
-        if (!part) return null;
-        const match = sorted.find((h) => h.text.toLowerCase() === part.toLowerCase());
-        if (match) {
-          return (
-            <span key={`${part}-${i}`} className={match.colorClass}>
-              {part}
-            </span>
-          );
-        }
-        return <span key={`${part}-${i}`}>{part}</span>;
-      })}
-    </p>
-  );
-}
 
 type Props = {
   principle: HomeDesignPrinciple;
   onOpenDetail: () => void;
 };
 
-export function ApplePrincipleCarouselCard({ principle, onOpenDetail }: Props) {
-  const Icon = icons[principle.icon];
+export function PrincipleCard({ principle, onOpenDetail }: Props) {
   const accent = principleAccents[principle.accent];
 
   return (
-    <article data-carousel-card className={cn(carouselPrincipleSlide, "shrink-0")}>
-      <div className={cn(appleCarouselShell, "h-[320px] sm:h-[340px]", "overflow-hidden")}>
-        <p className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6e6e73]">
-          {principle.title}
-        </p>
-        <div
-          className={cn(
-            "mt-4 flex h-11 w-11 shrink-0 items-center justify-center rounded-full",
-            accent.iconBadge,
-          )}
-        >
-          <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-        </div>
-        <div className="mt-5 min-h-0 min-w-0 flex-1 pr-12">
-          <HeadlineWithHighlights headline={principle.headline} highlights={principle.headlineHighlights} />
-        </div>
-        <button
-          type="button"
-          onClick={onOpenDetail}
-          className={cn(applePlusButton, "absolute bottom-7 right-7 sm:bottom-8 sm:right-8")}
-          aria-label={`More about ${principle.title}`}
-        >
-          <Plus className="h-4 w-4" strokeWidth={2.5} aria-hidden />
-        </button>
-      </div>
+    <article className="relative flex h-full min-h-[320px] flex-col overflow-hidden rounded-2xl border border-black/[0.06] bg-white p-7 shadow-[0_2px_20px_rgba(0,0,0,0.06)] sm:min-h-[380px] sm:rounded-3xl sm:p-8 lg:min-h-[440px]">
+      <h3
+        className={cn(
+          "font-display text-[clamp(1.15rem,1.6vw+0.3rem,1.45rem)] font-bold uppercase leading-[1.18] tracking-[-0.01em]",
+          "bg-gradient-to-br bg-clip-text text-transparent",
+          accent.titleGradient,
+        )}
+      >
+        {principle.title}
+      </h3>
+
+      <p className="mt-5 flex-1 text-[14px] leading-[1.6] text-[#6e6e73] sm:text-[15px] sm:leading-[1.65]">
+        {principle.body}
+      </p>
+
+      <button
+        type="button"
+        onClick={onOpenDetail}
+        className={cn(applePlusButton, "absolute bottom-6 right-6 sm:bottom-7 sm:right-7")}
+        aria-label={`More about ${principle.title}`}
+      >
+        <Plus className="h-4 w-4" strokeWidth={2.5} aria-hidden />
+      </button>
     </article>
   );
 }

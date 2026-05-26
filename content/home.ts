@@ -1,4 +1,4 @@
-/** Home page copy — Group 13.pdf light editorial (Home only). */
+/** Home page copy — reference-aligned (Group 15/18/22 PDFs). */
 
 import type { SkillAccentKey } from "@/lib/appleHomeTokens";
 import { principleAccents } from "@/lib/appleHomeTokens";
@@ -16,70 +16,69 @@ export const homeHeroChips = [
 ] as const;
 
 export const homeCtas = {
-  primary: { href: "#featured", label: "View Featured Project" },
+  primary: { href: "#projects", label: "View Projects" },
   contact: { href: "/contact", label: "Contact" },
-  /** Legacy scroll/static heroes — not used on Apple Home */
   secondary: { href: "/about", label: "About My Approach" },
   tertiary: { href: "/contact", label: "Contact" },
 };
 
-export type PrincipleAccentKey = keyof typeof principleAccents;
+/* ── Design Principles (Group 18.pdf) ─────────────────────────── */
 
-export type HeadlineHighlight = {
-  text: string;
-  colorClass: string;
-};
+export type PrincipleAccentKey = keyof typeof principleAccents;
 
 export type HomeDesignPrinciple = {
   title: string;
   icon: "users" | "eye" | "refresh";
   accent: PrincipleAccentKey;
-  headline: string;
-  headlineHighlights: readonly HeadlineHighlight[];
   body: string;
 };
 
 export const homeDesignPrinciples: readonly HomeDesignPrinciple[] = [
   {
-    title: "Player Centric",
+    title: "Player Centric, Intent Driven Design",
     icon: "users",
     accent: "playerCentric",
-    headline: "Designing spaces that react to the player.",
-    headlineHighlights: [
-      { text: "react", colorClass: principleAccents.playerCentric.highlightTeal },
-      { text: "player", colorClass: principleAccents.playerCentric.highlightBlue },
-    ],
-    body: "I build spaces that react to the player, not the other way around. Every route, encounter, and decision point is crafted to support agency whether the player slips through unseen or storms the room head-on. The level bends to their intent, making every playstyle feel deliberate and rewarding.",
+    body: "I build spaces that react to the player, not the other way around. Every route, encounter, and decision point is crafted to support agency — whether the player slips through unseen or storms the room head‑on. The level bends to their intent, making every playstyle feel deliberate and rewarding.",
   },
   {
-    title: "Readable Spaces",
+    title: "Clear, Readable, Guided Spaces",
     icon: "eye",
     accent: "readableSpaces",
-    headline: "Readable layouts without hand-holding.",
-    headlineHighlights: [
-      { text: "Readable", colorClass: principleAccents.readableSpaces.highlightPurple },
-      { text: "hand-holding", colorClass: principleAccents.readableSpaces.highlightBlue },
-    ],
-    body: "Clarity drives every layout choice I make. Sightlines, lighting, and spatial hierarchy work together to guide the player without UI markers or hand-holding. The environment quietly teaches the player how to move, where to look, and what to fear all through pure visual language.",
+    body: "Clarity drives every layout choice I make. Sightlines, lighting, and spatial hierarchy work together to guide the player without UI markers or hand‑holding. The environment quietly teaches the player how to move, where to look, and what to fear — all through pure visual language.",
   },
   {
-    title: "Iterative Craft",
+    title: "Iterative, Playtest Led Craft",
     icon: "refresh",
     accent: "iterativeCraft",
-    headline: "Iteration turns raw blockouts into polished gameplay.",
-    headlineHighlights: [
-      { text: "Iteration", colorClass: principleAccents.iterativeCraft.highlightOrange },
-      { text: "polished", colorClass: principleAccents.iterativeCraft.highlightPink },
-    ],
-    body: "Every space goes through rigorous testing and refinement before it earns its place in the level. I iterate relentlessly testing, refining, and rebuilding until the space feels intuitive, challenging, and satisfying. Every encounter, route, and beat is shaped by player feedback, turning raw ideas into polished, purposeful gameplay.",
+    body: "Every space goes through rigorous testing and refinement before it earns its place in the level. I iterate relentlessly — testing, refining, and rebuilding until the space feels intuitive, challenging, and satisfying. Every encounter, route, and beat is shaped by player feedback, turning raw ideas into polished, purposeful gameplay.",
   },
 ] as const;
+
+/* ── Projects section (WhatsApp reference) ────────────────────── */
+
+export const homeProjectsSection = {
+  sectionLabel: "Projects",
+  items: [
+    {
+      label: "Project",
+      title: "Escape Protocol",
+      href: "/case-study",
+    },
+    {
+      label: "Case Study",
+      title: "",
+      href: "/case-study",
+    },
+  ],
+} as const;
+
+/* ── About + Case Study cards (Group 15.pdf — verbatim) ───────── */
 
 export const homeAboutPreview = {
   title: "About",
   accent: "from-[#0071e3] to-[#5ac8fa]",
   summary:
-    "Spatial clarity under pressure. Focused on immersive, player-centered spaces that guide through pacing, layout, and encounter design.",
+    "Designing clear, readable spaces under pressure. Focused on player‑driven flow, pacing, and encounters that feel intuitive. Crafting environments that guide through design, not instructions.",
   href: "/about",
   cta: "View More",
 };
@@ -88,13 +87,15 @@ export const homeCaseStudyCard = {
   title: "Case Study",
   accent: "from-[#af52de] to-[#ff9500]",
   summary:
-    "Researching how AI tools reshape creativity and production workflows in game design.",
+    "Exploring how AI reshapes game‑development workflows. A focused study on creativity, iteration, and production efficiency with modern AI tools. Breaking down where AI helps — and where it still falls short.",
   href: "/case-study",
   cta: "View More",
 };
 
+/* ── Legacy featured preview (kept for backward compat) ───────── */
+
 export const homeFeaturedPreview = {
-  sectionLabel: "Featured Project",
+  sectionLabel: "Projects",
   title: "Escape Protocol",
   subtitle: "Stealth Action Level",
   description:
@@ -111,28 +112,28 @@ export const homeFeaturedPreview = {
   cta: "View More",
 };
 
+/* ── Skills / How I Think in Space (Group 22.pdf) ─────────────── */
+
 export const homeSkillGrid: readonly {
   skill: string;
   subtitle: string;
   accent: SkillAccentKey;
 }[] = [
-  { skill: "Level Design", subtitle: "Core space crafting", accent: "blue" },
-  { skill: "Gameplay Scripting", subtitle: "Bringing mechanics alive", accent: "indigo" },
-  { skill: "Blockouts", subtitle: "First-playable spaces", accent: "green" },
-  { skill: "Encounter Design", subtitle: "Player challenge", accent: "orange" },
-  { skill: "Environment Art Basics", subtitle: "Visual readability", accent: "purple" },
-  { skill: "Worldbuilding", subtitle: "Player context", accent: "cyan" },
-  { skill: "Navigation", subtitle: "Natural paths", accent: "teal" },
-  { skill: "Systems Thinking", subtitle: "Player behavior", accent: "violet" },
-  { skill: "Mechanical Prototyping", subtitle: "Fast idea tests", accent: "pink" },
-  { skill: "Gameplay UX", subtitle: "Readable feedback", accent: "rose" },
-  { skill: "Unity Workflow", subtitle: "Scene iteration", accent: "amber" },
-  { skill: "Unreal Workflow", subtitle: "Engine-ready spaces", accent: "slate" },
+  { skill: "Level Design", subtitle: "Designing spaces that guide, challenge, and communicate through pure spatial storytelling.", accent: "blue" },
+  { skill: "Texturing", subtitle: "Adding material definition that enhances clarity, tone, and mood.", accent: "amber" },
+  { skill: "Gameplay Scripting", subtitle: "Bringing mechanics to life through logic, triggers, and responsive interactions.", accent: "indigo" },
+  { skill: "Sculpting", subtitle: "Shaping believable forms that support the world's visual identity.", accent: "purple" },
+  { skill: "Blockouts", subtitle: "Building early shapes that define flow, pacing, and player movement.", accent: "green" },
+  { skill: "Mechanic Prototyping", subtitle: "Testing ideas fast to validate gameplay feel and player interaction.", accent: "pink" },
+  { skill: "Encounter Design", subtitle: "Building early shapes that define flow, pacing, and player movement.", accent: "orange" },
+  { skill: "Gameplay UX", subtitle: "Designing feedback that feels intuitive, readable, and responsive.", accent: "rose" },
+  { skill: "Environment Art Basics", subtitle: "Supporting gameplay with forms, silhouettes, and visual clarity.", accent: "cyan" },
+  { skill: "Agile Workflow", subtitle: "Iterating quickly through cycles of testing, feedback, and refinement.", accent: "slate" },
 ] as const;
 
 export const homeThinkInSpace = {
-  title: "How I Think in Space",
-  subtitle: "Designing gameplay spaces through clarity, rhythm, and player intuition.",
+  title: "How I Think In Space",
+  subtitle: "Designing gameplay spaces through clarity, rhythm and player intuition.",
 };
 
 /** Shared by About / Case Study — unchanged for non-Home pages */

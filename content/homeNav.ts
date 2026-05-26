@@ -1,9 +1,11 @@
 import { contactChannels } from "@/content/contact";
 import type { NavItem } from "./types";
 
-/** Home page header only — Group 13.pdf nav (Projects / Resume / Contact). */
+/** Home page header nav — matches WhatsApp reference screenshot. */
 export const homeNav: readonly NavItem[] = [
-  { href: "#featured", label: "Projects" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "#projects", label: "Projects" },
   {
     href: `${contactChannels.email.href}?subject=Resume%20request`,
     label: "Resume",

@@ -4,14 +4,13 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { AppleDesignPrinciplesSection } from "@/components/home/AppleDesignPrinciplesSection";
-import { AppleFeaturedCard } from "@/components/home/AppleFeaturedCard";
 import { AppleHomeHero } from "@/components/home/AppleHomeHero";
 import { AppleSkillsSection } from "@/components/home/AppleSkillsSection";
+import { ProjectsSection } from "@/components/home/ProjectsSection";
 import {
   homeAboutPreview,
   homeCaseStudyCard,
   homeConnectSection,
-  homeFeaturedPreview,
   homeFooter,
 } from "@/content/home";
 import { contactChannels } from "@/content/contact";
@@ -20,13 +19,11 @@ import {
   appleCardHover,
   appleContainer,
   applePreviewCard,
-  appleEyebrow,
   appleHeadlineLg,
   appleHomePage,
   appleLink,
   appleSection,
   appleSectionMuted,
-  appleSectionWhite,
   appleBtnGhost,
   appleBtnPrimary,
   appleBtnSecondary,
@@ -100,20 +97,13 @@ export function HomePage() {
     >
       <AppleHomeHero />
 
+      <ProjectsSection />
+
       <AppleDesignPrinciplesSection />
 
-      <section id="featured" className={cn(appleSection, appleSectionWhite, "scroll-mt-24")}>
-        <div className={appleContainer}>
-          <motion.h2
-            {...fadeUp}
-            className={cn(appleHeadlineLg, "mb-8 pt-2 lg:mb-10 lg:pt-4")}
-          >
-            {homeFeaturedPreview.sectionLabel}
-          </motion.h2>
-          <AppleFeaturedCard />
-        </div>
-      </section>
+      <AppleSkillsSection />
 
+      {/* About + Case Study — Group 15.pdf */}
       <section className={cn(appleSection, appleSectionMuted)}>
         <div className={appleContainer}>
           <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-7">
@@ -138,8 +128,6 @@ export function HomePage() {
           </div>
         </div>
       </section>
-
-      <AppleSkillsSection />
 
       <section className={cn(appleSection, appleSectionMuted)}>
         <div className={cn(appleContainer, "flex flex-col items-center py-4 text-center sm:py-6")}>
