@@ -57,7 +57,7 @@ export function HomePage() {
       {/* About + Case Study — Group 15.pdf */}
       <section
         className={cn(appleSection)}
-        style={{ background: "linear-gradient(180deg, #E8EFF8 0%, #F0F4FA 50%, #E8EFF8 100%)" }}
+        style={{ background: "#f5f5f7" }}
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12">
           <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-5">

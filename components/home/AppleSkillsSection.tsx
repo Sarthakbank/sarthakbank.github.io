@@ -83,7 +83,7 @@ export function AppleSkillsSection() {
   const row2 = homeSkillGrid.slice(5, 10);
 
   return (
-    <section className={cn(appleSection)} style={{ background: "#F0F0F3" }}>
+    <section className={cn(appleSection)} style={{ background: "#f5f5f7" }}>
       <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12">
         <motion.div {...fadeUp}>
           {/* CSS Grid: intro col 270px + 5 × 1fr, 2 rows, intro spans both */}

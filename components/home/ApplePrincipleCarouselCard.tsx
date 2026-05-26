@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import { Plus, X } from "lucide-react";
 import type { HomeDesignPrinciple } from "@/content/home";
 
@@ -12,21 +11,12 @@ const titleGradients: Record<string, string> = {
 
 type Props = {
   principle: HomeDesignPrinciple;
+  isActive: boolean;
+  onOpen: () => void;
+  onClose: () => void;
 };
 
-export function PrincipleCard({ principle }: Props) {
-  const [flipped, setFlipped] = useState(false);
-
-  const openBack = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setFlipped(true);
-  }, []);
-
-  const closeback = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setFlipped(false);
-  }, []);
-
+export function PrincipleCard({ principle, isActive, onOpen, onClose }: Props) {
   const gradient = titleGradients[principle.accent] ?? titleGradients.playerCentric;
 
   return (
@@ -38,7 +28,7 @@ export function PrincipleCard({ principle }: Props) {
         className="relative h-full transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
         style={{
           transformStyle: "preserve-3d",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transform: isActive ? "rotateY(180deg)" : "rotateY(0deg)",
         }}
       >
         {/* ── Front face ────────────────────────────────── */}
@@ -68,7 +58,7 @@ export function PrincipleCard({ principle }: Props) {
           <div className="mt-auto flex items-end justify-end pt-6">
             <button
               type="button"
-              onClick={openBack}
+              onClick={(e) => { e.stopPropagation(); onOpen(); }}
               className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#1d1d1f] text-white shadow-[0_2px_8px_rgba(0,0,0,0.15)] transition-transform duration-200 hover:scale-110 active:scale-95"
               aria-label={`Read more about ${principle.title}`}
             >
@@ -98,7 +88,7 @@ export function PrincipleCard({ principle }: Props) {
           <div className="mt-auto flex items-end justify-end pt-4">
             <button
               type="button"
-              onClick={closeback}
+              onClick={(e) => { e.stopPropagation(); onClose(); }}
               className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-[#e8e8ed] text-[#1d1d1f] shadow-sm transition-transform duration-200 hover:scale-110 active:scale-95"
               aria-label="Close"
             >
