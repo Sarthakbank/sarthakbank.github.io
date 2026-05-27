@@ -5,7 +5,7 @@ import type { NavItem } from "./types";
 export const homeNav: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "#projects", label: "Projects" },
+  { href: "#featured-project", label: "Projects" },
   {
     href: `${contactChannels.email.href}?subject=Resume%20request`,
     label: "Resume",

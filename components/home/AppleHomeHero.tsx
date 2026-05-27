@@ -10,7 +10,7 @@ import { cn } from "@/lib/cn";
 export function AppleHomeHero() {
   return (
     <section
-      className="relative overflow-hidden bg-white pt-[5.25rem] pb-16 sm:pt-24 sm:pb-20 lg:pt-28 lg:pb-24"
+      className="relative min-h-[calc(100vh-64px)] overflow-hidden bg-white pt-[5.25rem] pb-12 sm:pt-24 sm:pb-16 lg:pt-28 lg:pb-20"
       aria-label="Hero"
     >
       <div className={cn(appleContainer, "grid items-center gap-10 lg:grid-cols-2 lg:gap-14")}>

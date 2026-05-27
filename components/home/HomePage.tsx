@@ -4,9 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { AppleDesignPrinciplesSection } from "@/components/home/AppleDesignPrinciplesSection";
+import { AppleFeaturedProjectsSection } from "@/components/home/AppleFeaturedProjectsSection";
 import { AppleHomeHero } from "@/components/home/AppleHomeHero";
 import { AppleSkillsSection } from "@/components/home/AppleSkillsSection";
-import { ProjectsSection } from "@/components/home/ProjectsSection";
+import { MotionReveal } from "@/components/home/MotionReveal";
 import {
   homeAboutPreview,
   homeCaseStudyCard,
@@ -48,15 +49,17 @@ export function HomePage() {
     >
       <AppleHomeHero />
 
-      <ProjectsSection />
+      <MotionReveal>
+        <AppleDesignPrinciplesSection />
+      </MotionReveal>
 
-      <AppleDesignPrinciplesSection />
-
-      <AppleSkillsSection />
+      <MotionReveal delay={0.02}>
+        <AppleFeaturedProjectsSection />
+      </MotionReveal>
 
       {/* About + Case Study — Group 15.pdf */}
       <section
-        className={cn(appleSection)}
+        className={cn(appleSection, "py-20 sm:py-24 lg:py-28")}
         style={{ background: "#f5f5f7" }}
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12">
@@ -133,8 +136,12 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className={cn(appleSection, appleSectionMuted)}>
-        <div className={cn(appleContainer, "flex flex-col items-center py-4 text-center sm:py-6")}>
+      <MotionReveal delay={0.02}>
+        <AppleSkillsSection />
+      </MotionReveal>
+
+      <section className={cn(appleSection, appleSectionMuted, "py-20 sm:py-24 lg:py-28")}>
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-5 py-2 text-center sm:px-8 sm:py-4 lg:px-10 xl:px-12">
           <motion.h2 {...fadeUp} className={appleHeadlineLg}>
             {homeConnectSection.title}
           </motion.h2>
@@ -170,7 +177,7 @@ export function HomePage() {
       <footer className="border-t border-black/[0.06] bg-white py-10 sm:py-12">
         <div
           className={cn(
-            appleContainer,
+            "mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12",
             "flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between",
           )}
         >
