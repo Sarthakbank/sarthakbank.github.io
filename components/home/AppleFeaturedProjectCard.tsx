@@ -2,113 +2,122 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import {
-  appleBody,
-  appleLink,
-  appleMetaLabel,
-  appleMetaValue,
-  appleProductCard,
-} from "@/lib/appleHomeTokens";
 import { cn } from "@/lib/cn";
 
 export type FeaturedProject = {
-  kind?: "featured" | "comingSoon";
+  id: string;
+  kind: "featured" | "comingSoon";
   chip: string;
   chipColor: string;
   title: string;
   label: string;
   description: string;
   imageSrc?: string;
+  gradient?: string;
   href?: string;
-  cta?: string;
-  meta: readonly { label: string; value: string }[];
+  cta: string;
+  meta?: readonly { label: string; value: string }[];
 };
 
-export function AppleFeaturedProjectCard({ project }: { project: FeaturedProject }) {
+type Props = {
+  project: FeaturedProject;
+  isActive?: boolean;
+};
+
+export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
   const comingSoon = project.kind === "comingSoon";
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+    <article
       className={cn(
-        appleProductCard,
-        "group flex h-full flex-col",
-        comingSoon && "hover:shadow-[0_16px_48px_rgba(0,0,0,0.10)]",
+        "group relative isolate min-h-[420px] w-full overflow-hidden rounded-[32px] sm:min-h-[480px] lg:min-h-[520px]",
+        "transition-all duration-500 ease-out",
+        isActive
+          ? "shadow-[0_12px_40px_rgba(0,0,0,0.14),0_32px_80px_rgba(0,0,0,0.12)]"
+          : "shadow-[0_6px_24px_rgba(0,0,0,0.08),0_16px_48px_rgba(0,0,0,0.06)]",
+        !isActive && "brightness-[0.97]",
       )}
     >
-      <div className="relative w-full overflow-hidden rounded-t-[32px] bg-[#f5f5f7]">
+      {/* ── Full-bleed visual (entire card) ───────────────── */}
+      <div className="absolute inset-0 bg-[#1d1d1f]">
         {comingSoon ? (
           <div
-            className="h-[190px] sm:h-[210px]"
+            className="absolute inset-0"
             style={{
               background:
-                project.title.includes("02")
-                  ? "linear-gradient(135deg, rgba(90,200,250,0.55) 0%, rgba(0,113,227,0.25) 40%, rgba(175,82,222,0.22) 100%)"
-                  : "linear-gradient(135deg, rgba(255,149,0,0.35) 0%, rgba(255,45,85,0.22) 45%, rgba(88,86,214,0.25) 100%)",
+                project.gradient ??
+                "linear-gradient(135deg, #5ac8fa 0%, #0071e3 40%, #5856d6 75%, #af52de 100%)",
             }}
             aria-hidden
           />
         ) : (
-          // Keep the approved image-based header for the real featured card.
           <Image
             src={project.imageSrc!}
-            alt={`${project.title} — thumbnail`}
+            alt=""
             fill
-            className="object-cover object-center transition duration-500 group-hover:scale-[1.02]"
-            sizes="(max-width: 768px) 86vw, (max-width: 1200px) 33vw, 520px"
+            className="object-cover object-center transition duration-700 ease-out group-hover:scale-[1.02]"
+            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 82vw, 1000px"
             priority
           />
         )}
+        {/* Scrim for readable overlay text */}
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10"
+          aria-hidden
+        />
+        {comingSoon && (
+          <div
+            className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-3xl"
+            aria-hidden
+          />
+        )}
+      </div>
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-black/5 to-transparent" aria-hidden />
+      {/* ── Overlay content ───────────────────────────────── */}
+      <div className="relative z-10 flex min-h-[420px] flex-col justify-end p-7 sm:min-h-[480px] sm:p-9 lg:min-h-[520px] lg:p-10">
         <span
-          className="absolute left-5 top-5 z-10 rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white shadow-[0_4px_14px_rgba(0,113,227,0.4)] sm:left-6 sm:top-6"
-          style={{ backgroundColor: project.chipColor }}
+          className="mb-4 inline-flex w-fit rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+          style={{
+            backgroundColor: project.chipColor,
+            boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
+          }}
         >
           {project.chip}
         </span>
-      </div>
 
-      <div className="flex flex-1 flex-col p-7 sm:p-8">
-        <p className="text-[13px] font-semibold uppercase tracking-[0.06em] text-[#6e6e73]">
+        <p className="text-[13px] font-semibold uppercase tracking-[0.1em] text-white/70">
           {project.label}
         </p>
-        <h3 className="mt-1.5 font-display text-[clamp(1.55rem,1.6vw+0.6rem,2.05rem)] font-semibold tracking-[-0.02em] text-[#1d1d1f]">
+
+        <h3 className="mt-2 max-w-[14ch] font-display text-[clamp(2rem,4vw+0.5rem,3.25rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-white">
           {project.title}
         </h3>
-        <p className={cn("mt-3 text-pretty", appleBody)}>{project.description}</p>
 
-        {project.meta.length ? (
-          <dl className="mt-7 grid gap-x-10 gap-y-4 border-t border-black/[0.06] pt-7 sm:grid-cols-2">
-            {project.meta.map((row) => (
-              <div key={row.label} className="flex flex-col gap-0.5 sm:flex-row sm:gap-2">
-                <dt className={appleMetaLabel}>{row.label}</dt>
-                <dd className={appleMetaValue}>{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        ) : (
-          <div className="mt-6 flex-1 border-t border-black/[0.06]" aria-hidden />
-        )}
+        <p className="mt-4 max-w-xl text-pretty text-[16px] leading-[1.55] text-white/85 sm:text-[17px]">
+          {project.description}
+        </p>
 
-        {comingSoon ? (
-          <span className={cn(appleLink, "mt-7 inline-flex opacity-60")} aria-hidden>
-            Coming soon
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </span>
-        ) : (
-          <Link href={project.href!} className={cn(appleLink, "mt-7 inline-flex")}>
-            {project.cta}
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
-        )}
+        <div className="mt-8">
+          {comingSoon ? (
+            <span className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-white/55">
+              {project.cta}
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </span>
+          ) : (
+            <Link
+              href={project.href!}
+              className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-[#2997ff] transition hover:text-[#5ac8fa]"
+            >
+              {project.cta}
+              <ArrowRight
+                className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                aria-hidden
+              />
+            </Link>
+          )}
+        </div>
       </div>
-    </motion.article>
+    </article>
   );
 }
-
