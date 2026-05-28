@@ -31,7 +31,7 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
   return (
     <article
       className={cn(
-        "group relative isolate min-h-[420px] w-full overflow-hidden rounded-[32px] sm:min-h-[480px] lg:min-h-[520px]",
+        "group relative isolate min-h-[360px] w-full overflow-hidden rounded-[28px] sm:min-h-[420px] lg:min-h-[460px]",
         "transition-all duration-500 ease-out",
         isActive
           ? "shadow-[0_12px_40px_rgba(0,0,0,0.14),0_32px_80px_rgba(0,0,0,0.12)]"
@@ -75,7 +75,7 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
       </div>
 
       {/* ── Overlay content ───────────────────────────────── */}
-      <div className="relative z-10 flex min-h-[420px] flex-col justify-end p-7 sm:min-h-[480px] sm:p-9 lg:min-h-[520px] lg:p-10">
+      <div className="relative z-10 flex min-h-[360px] flex-col justify-end p-6 sm:min-h-[420px] sm:p-8 lg:min-h-[460px] lg:p-9">
         <span
           className="mb-4 inline-flex w-fit rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
           style={{
@@ -90,7 +90,7 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
           {project.label}
         </p>
 
-        <h3 className="mt-2 max-w-[14ch] font-display text-[clamp(2rem,4vw+0.5rem,3.25rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-white">
+        <h3 className="mt-2 max-w-[14ch] font-display text-[clamp(1.75rem,3.5vw+0.5rem,2.85rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-white">
           {project.title}
         </h3>
 

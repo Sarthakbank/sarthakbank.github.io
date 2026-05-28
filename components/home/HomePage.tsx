@@ -49,17 +49,24 @@ export function HomePage() {
     >
       <AppleHomeHero />
 
-      <MotionReveal>
-        <AppleDesignPrinciplesSection />
-      </MotionReveal>
+      <div className="pt-6 sm:pt-8 lg:pt-10">
+        <MotionReveal>
+          <AppleDesignPrinciplesSection />
+        </MotionReveal>
+      </div>
 
-      <MotionReveal delay={0.02}>
-        <AppleFeaturedProjectsSection />
-      </MotionReveal>
+      <div className="pt-6 sm:pt-8 lg:pt-10">
+        <MotionReveal delay={0.02}>
+          <AppleFeaturedProjectsSection />
+        </MotionReveal>
+      </div>
 
       {/* About + Case Study — Group 15.pdf */}
       <section
-        className={cn(appleSection, "py-20 sm:py-24 lg:py-28")}
+        className={cn(
+          appleSection,
+          "mt-6 py-20 sm:mt-8 sm:py-24 lg:mt-10 lg:py-28",
+        )}
         style={{ background: "#f5f5f7" }}
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12">
@@ -136,11 +143,19 @@ export function HomePage() {
         </div>
       </section>
 
-      <MotionReveal delay={0.02}>
-        <AppleSkillsSection />
-      </MotionReveal>
+      <div className="pt-6 sm:pt-8 lg:pt-10">
+        <MotionReveal delay={0.02}>
+          <AppleSkillsSection />
+        </MotionReveal>
+      </div>
 
-      <section className={cn(appleSection, appleSectionMuted, "py-20 sm:py-24 lg:py-28")}>
+      <section
+        className={cn(
+          appleSection,
+          appleSectionMuted,
+          "mt-6 py-20 sm:mt-8 sm:py-24 lg:mt-10 lg:py-28",
+        )}
+      >
         <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center px-5 py-2 text-center sm:px-8 sm:py-4 lg:px-10 xl:px-12">
           <motion.h2 {...fadeUp} className={appleHeadlineLg}>
             {homeConnectSection.title}

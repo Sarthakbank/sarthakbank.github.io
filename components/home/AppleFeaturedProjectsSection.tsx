@@ -56,7 +56,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 
 /** Card width: ~82vw so the next card peeks on the right (Apple highlights pattern). */
 const CARD_CLASS =
-  "w-[min(90vw,340px)] shrink-0 snap-start sm:w-[min(82vw,720px)] lg:w-[min(78vw,980px)]";
+  "w-[min(88vw,320px)] shrink-0 snap-start sm:w-[min(76vw,640px)] lg:w-[min(70vw,860px)]";
 
 export function AppleFeaturedProjectsSection() {
   const reduce = useReducedMotion();
