@@ -8,13 +8,56 @@ import { contactChannels } from "@/content/contact";
 import { stitchContainer, stitchFooterInner, stitchFooterLink, stitchFooterShell } from "@/lib/stitchTokens";
 import { cn } from "@/lib/cn";
 
-/** Home & case study render inline Stitch footers — avoid duplicate chrome. */
+/** Home & case study render inline footers — avoid duplicate chrome. */
 export function Footer() {
   const pathname = usePathname();
   const year = new Date().getFullYear();
 
-  if (pathname === "/" || pathname === "/case-study") {
+  if (pathname === "/") {
     return null;
+  }
+
+  // Inner pages migrated to the light Apple style.
+  if (
+    pathname === "/contact" ||
+    pathname === "/about" ||
+    pathname === "/case-study" ||
+    pathname?.startsWith("/case-study/")
+  ) {
+    return (
+      <footer className="border-t border-black/[0.06] bg-white py-10 sm:py-12">
+        <div
+          className={cn(
+            "mx-auto w-full max-w-6xl px-5 sm:px-8",
+            "flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between",
+          )}
+        >
+          <p className="text-center text-[13px] leading-relaxed text-[#6e6e73] sm:text-left">
+            © {year} {homeFooter.name}. Level Design Portfolio.
+          </p>
+          <nav
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 sm:justify-end"
+            aria-label="Footer"
+          >
+            {mainNav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-[13px] font-medium text-[#6e6e73] transition hover:text-[#0071e3]"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link
+              href={contactChannels.email.href}
+              className="text-[13px] font-medium text-[#6e6e73] transition hover:text-[#0071e3]"
+            >
+              Email
+            </Link>
+          </nav>
+        </div>
+      </footer>
+    );
   }
 
   return (

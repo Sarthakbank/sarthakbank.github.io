@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowUpRight, Briefcase } from "lucide-react";
-import { ProfilePortrait } from "@/components/media/ProfilePortrait";
+import Image from "next/image";
+import { Briefcase, GraduationCap } from "lucide-react";
 import { SkillIcon } from "@/components/icons/SkillIcon";
 import { ToolIcon } from "@/components/icons/ToolIcon";
 import { aboutHero, aboutIntro, aboutPhilosophy } from "@/content/about";
@@ -14,290 +13,293 @@ import {
   profileTools,
 } from "@/content/profile";
 import { skillGroups } from "@/content/skillGroups";
-import { homeContactCta } from "@/content/home";
-import { StitchReveal, StitchRevealItem } from "@/components/motion/StitchReveal";
-import {
-  stitchBody,
-  stitchBtnGhost,
-  stitchBtnPrimary,
-  stitchContainer,
-  stitchGlass,
-  stitchGlassInteractive,
-  stitchGlassPanel,
-  stitchHeadlineLg,
-  stitchHome,
-  stitchLabel,
-  stitchSection,
-} from "@/lib/stitchTokens";
+import { contactChannels } from "@/content/contact";
+import { AppleInnerShell } from "@/components/shared/AppleInnerShell";
+import { AppleReveal } from "@/components/shared/AppleReveal";
+import { AppleCTASection } from "@/components/shared/AppleCTASection";
 import { cn } from "@/lib/cn";
 
-const sectionAlt = "border-t border-white/[0.06] bg-[#0b0d10]";
-const sectionBase = "border-t border-white/[0.06] bg-[#050607]";
+const PORTRAIT_SRC = "/media/profile/portrait.png";
 
-const skillAccent = [
-  "border-l-[#00d1ff]",
-  "border-l-[#3e90ff]",
-  "border-l-[#ffb051]",
-  "border-l-[#4cd6ff]",
+const EYEBROW = "text-[12px] font-semibold uppercase tracking-[0.14em] text-[#6e6e73]";
+const HEADLINE =
+  "font-display text-[clamp(1.75rem,2.5vw+1rem,2.75rem)] font-semibold leading-[1.12] tracking-[-0.025em] text-[#1d1d1f]";
+const BODY = "text-[16px] leading-[1.6] text-[#6e6e73] md:text-[17px]";
+const CONTAINER = "mx-auto w-full max-w-[1100px] px-5 sm:px-8 lg:px-10";
+
+const cardBase =
+  "rounded-[28px] border border-black/[0.05] bg-white shadow-[0_2px_18px_rgba(0,0,0,0.05)]";
+const cardHover =
+  "transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.09)]";
+
+const accentBadges = [
+  "bg-[#0071e3]/10 text-[#0071e3] ring-1 ring-[#0071e3]/15",
+  "bg-[#5856d6]/10 text-[#5856d6] ring-1 ring-[#5856d6]/15",
+  "bg-[#ff9500]/12 text-[#c93400] ring-1 ring-[#ff9500]/20",
+  "bg-[#34c759]/12 text-[#248a3d] ring-1 ring-[#34c759]/18",
 ] as const;
 
 export function AboutPage() {
   return (
-    <div className={cn(stitchHome, "overflow-x-hidden")}>
+    <AppleInnerShell>
       {/* 1. Hero */}
-      <section id="about-hero" className="relative scroll-mt-28 overflow-hidden bg-[#050607] pt-[5.5rem] sm:pt-20">
+      <section className="relative overflow-hidden bg-[#f5f5f7] pt-[6.5rem] pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24">
         <div
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(0,209,255,0.07)_0%,transparent_45%)]"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white to-[#f5f5f7]"
           aria-hidden
         />
-        <div className={cn(stitchContainer, "relative")}>
-          <StitchReveal>
-          <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:items-center lg:gap-14">
-            <div className="min-w-0">
-              <p className={cn(stitchLabel, "text-[#4cd6ff]")}>About</p>
-              <h1 className="mt-4 font-display text-[clamp(2rem,4.5vw+1rem,3.25rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-[#e1e2e8]">
-                {profileIdentity.name}
-              </h1>
-              <p className="mt-4 font-mono text-[13px] font-semibold uppercase tracking-[0.14em] text-[#bbc9cf]">
-                {aboutHero.roles}
-              </p>
-              <p className={cn("mt-6 max-w-xl text-pretty", stitchBody)}>{aboutHero.statement}</p>
-              <p className="mt-4 font-mono text-[12px] text-[#859399]">{profileIdentity.location}</p>
+        <div className={cn(CONTAINER, "relative")}>
+          <AppleReveal>
+            <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
+              <div className="min-w-0">
+                <p className={EYEBROW}>{aboutHero.roles}</p>
+                <h1 className="mt-4 font-display text-[clamp(2.25rem,5vw+0.5rem,3.75rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-[#1d1d1f]">
+                  About {profileIdentity.name}
+                </h1>
+                <p className="mt-5 max-w-xl text-pretty text-[18px] leading-[1.55] text-[#6e6e73] sm:text-[20px]">
+                  {aboutHero.statement}
+                </p>
+                <p className="mt-5 text-[14px] font-medium text-[#86868b]">
+                  {profileIdentity.location}
+                </p>
+              </div>
+
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] border border-black/[0.06] bg-white shadow-[0_10px_44px_rgba(0,0,0,0.12)] lg:mx-0 lg:max-w-md">
+                <div className="relative aspect-[3/4] w-full">
+                  <Image
+                    src={PORTRAIT_SRC}
+                    alt={profileIdentity.name}
+                    fill
+                    priority
+                    className="object-cover object-[50%_14%]"
+                    sizes="(min-width: 1024px) 440px, 90vw"
+                  />
+                </div>
+              </div>
             </div>
-            <ProfilePortrait className="mx-auto w-full max-w-sm lg:mx-0 lg:max-w-md" priority />
-          </div>
-          </StitchReveal>
+          </AppleReveal>
         </div>
       </section>
 
-      {/* 2. Intro */}
-      <section className={cn(stitchSection, sectionAlt)}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <p className={cn(stitchLabel, "text-[#859399]")}>Intro</p>
-          <h2 className={cn("mt-3", stitchHeadlineLg)}>Background</h2>
+      {/* 2. Background */}
+      <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <AppleReveal>
+            <p className={EYEBROW}>Intro</p>
+            <h2 className={cn("mt-3", HEADLINE)}>Background</h2>
+          </AppleReveal>
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-            <div className="space-y-5">
+            <AppleReveal className="space-y-5">
               {aboutIntro.paragraphs.map((p) => (
-                <p key={p} className={cn("text-pretty", stitchBody)}>
+                <p key={p} className={cn("text-pretty", BODY)}>
                   {p}
                 </p>
               ))}
-            </div>
-            <div className={cn(stitchGlassPanel, "p-6 sm:p-7")}>
-              <p className={cn(stitchLabel, "text-[#4cd6ff]")}>Summary</p>
-              <p className={cn("mt-4 text-pretty text-[15px] leading-relaxed text-[#bbc9cf]")}>
-                {profileSummary}
-              </p>
-            </div>
+            </AppleReveal>
+            <AppleReveal delay={0.06}>
+              <div className={cn(cardBase, "h-full p-7 sm:p-8")}>
+                <p className={EYEBROW}>Summary</p>
+                <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#6e6e73]">
+                  {profileSummary}
+                </p>
+              </div>
+            </AppleReveal>
           </div>
-          </StitchReveal>
         </div>
       </section>
 
       {/* 3. Design philosophy */}
-      <section className={cn(stitchSection, sectionBase)}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <p className={cn(stitchLabel, "text-[#859399]")}>Design philosophy</p>
-          <h2 className={cn("mt-3", stitchHeadlineLg)}>How I design spaces</h2>
-          <ul className="mt-12 grid gap-5 md:grid-cols-3">
+      <section className="bg-[#f5f5f7] py-16 sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <AppleReveal>
+            <p className={EYEBROW}>Design philosophy</p>
+            <h2 className={cn("mt-3", HEADLINE)}>How I design spaces</h2>
+          </AppleReveal>
+          <div className="mt-12 grid gap-5 sm:gap-6 md:grid-cols-3">
             {aboutPhilosophy.map((item, i) => (
-              <li key={item.title}>
-                <StitchRevealItem index={i} className="h-full">
-                <div
-                  className={cn(
-                    stitchGlassInteractive,
-                    "h-full border-l-2 p-6 sm:p-7",
-                    skillAccent[i % skillAccent.length],
-                  )}
-                >
-                <h3 className="font-display text-lg font-semibold tracking-tight text-[#e1e2e8]">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-[#859399]">{item.body}</p>
+              <AppleReveal key={item.title} delay={i * 0.06} className="h-full">
+                <div className={cn(cardBase, cardHover, "flex h-full flex-col p-7")}>
+                  <h3 className="font-display text-[19px] font-semibold tracking-tight text-[#1d1d1f]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
+                    {item.body}
+                  </p>
                 </div>
-                </StitchRevealItem>
-              </li>
+              </AppleReveal>
             ))}
-          </ul>
-          </StitchReveal>
+          </div>
         </div>
       </section>
 
       {/* 4. Education */}
-      <section className={cn(stitchSection, sectionAlt)}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <p className={cn(stitchLabel, "text-[#859399]")}>Education</p>
-          <h2 className={cn("mt-3", stitchHeadlineLg)}>Timeline</h2>
-          <ol className="relative mt-10 space-y-0 border-l border-white/[0.08] pl-6 sm:pl-8">
+      <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <AppleReveal>
+            <p className={EYEBROW}>Education</p>
+            <h2 className={cn("mt-3", HEADLINE)}>Timeline</h2>
+          </AppleReveal>
+          <ol className="mt-12 space-y-4 sm:space-y-5">
             {profileEducation.map((edu, i) => (
-              <StitchRevealItem key={edu.institution} index={i}>
-              <li
-                className={cn(
-                  "relative pb-8 last:pb-0",
-                  i < profileEducation.length - 1 && "mb-0",
-                )}
-              >
-                <span
-                  className="absolute -left-[calc(1.5rem+1px)] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#050607] bg-[#00d1ff] sm:-left-[calc(2rem+1px)]"
-                  aria-hidden
-                />
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-                  <div className="min-w-0">
-                    <p className="font-display text-base font-semibold leading-snug text-[#e1e2e8] sm:text-lg">
-                      {edu.institution}
-                    </p>
-                    <p className="mt-1 text-[14px] leading-relaxed text-[#bbc9cf]">{edu.credential}</p>
+              <AppleReveal key={edu.institution} delay={Math.min(i * 0.05, 0.2)}>
+                <li
+                  className={cn(
+                    cardBase,
+                    "flex flex-col gap-4 p-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:p-7",
+                  )}
+                >
+                  <div className="flex gap-4">
+                    <div
+                      className={cn(
+                        "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
+                        accentBadges[i % accentBadges.length],
+                      )}
+                    >
+                      <GraduationCap className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-display text-[17px] font-semibold leading-snug text-[#1d1d1f] sm:text-[18px]">
+                        {edu.institution}
+                      </p>
+                      <p className="mt-1 text-[14px] leading-relaxed text-[#6e6e73]">
+                        {edu.credential}
+                      </p>
+                    </div>
                   </div>
-                  <p className="shrink-0 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-[#00d1ff]/90 sm:text-right">
+                  <span className="shrink-0 self-start rounded-full bg-[#f5f5f7] px-3 py-1 text-[12px] font-semibold tracking-[0.02em] text-[#6e6e73] sm:self-center">
                     {edu.dates}
-                  </p>
-                </div>
-              </li>
-              </StitchRevealItem>
+                  </span>
+                </li>
+              </AppleReveal>
             ))}
           </ol>
-          </StitchReveal>
         </div>
       </section>
 
       {/* 5. Experience */}
-      <section className={cn(stitchSection, sectionBase)}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <p className={cn(stitchLabel, "text-[#859399]")}>Experience</p>
-          <h2 className={cn("mt-3", stitchHeadlineLg)}>Roles to date</h2>
-          <ul className="mt-10 space-y-5">
+      <section className="bg-[#f5f5f7] py-16 sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <AppleReveal>
+            <p className={EYEBROW}>Experience</p>
+            <h2 className={cn("mt-3", HEADLINE)}>Roles to date</h2>
+          </AppleReveal>
+          <ul className="mt-12 space-y-5">
             {profileExperience.map((job, i) => (
-              <StitchRevealItem key={`${job.company}-${job.duration}`} index={i}>
-              <li className={cn(stitchGlassInteractive, "p-6 sm:p-8")}>
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-[#111418] text-[#00d1ff]">
-                      <Briefcase className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+              <AppleReveal key={`${job.company}-${job.duration}`} delay={i * 0.06}>
+                <li className={cn(cardBase, cardHover, "p-6 sm:p-8")}>
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex gap-4">
+                      <div
+                        className={cn(
+                          "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
+                          accentBadges[i % accentBadges.length],
+                        )}
+                      >
+                        <Briefcase className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                      </div>
+                      <div>
+                        <p className="font-display text-[20px] font-semibold text-[#1d1d1f]">
+                          {job.company}
+                        </p>
+                        <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.1em] text-[#0071e3]">
+                          {job.role}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-display text-xl font-semibold text-[#e1e2e8]">{job.company}</p>
-                      <p className="mt-1 font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#4cd6ff]">
-                        {job.role}
-                      </p>
-                    </div>
+                    <p className="text-[13px] text-[#86868b] sm:text-right">
+                      {job.duration}
+                      <span className="mx-1.5 text-black/20">·</span>
+                      {job.location}
+                    </p>
                   </div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-[#859399] sm:text-right">
-                    {job.duration}
-                    <span className="mx-1.5 text-white/20">·</span>
-                    {job.location}
+                  <p className="mt-5 border-t border-black/[0.06] pt-5 text-[15px] leading-relaxed text-[#6e6e73]">
+                    {job.summary}
                   </p>
-                </div>
-                <p className="mt-5 border-t border-white/[0.06] pt-5 text-[15px] leading-relaxed text-[#bbc9cf]">
-                  {job.summary}
-                </p>
-              </li>
-              </StitchRevealItem>
+                </li>
+              </AppleReveal>
             ))}
           </ul>
-          </StitchReveal>
         </div>
       </section>
 
       {/* 6. Skills by focus */}
-      <section className={cn(stitchSection, sectionAlt)}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <p className={cn(stitchLabel, "text-[#859399]")}>Skills</p>
-          <h2 className={cn("mt-3", stitchHeadlineLg)}>By focus</h2>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2">
+      <section className="bg-white py-16 sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <AppleReveal>
+            <p className={EYEBROW}>Skills</p>
+            <h2 className={cn("mt-3", HEADLINE)}>By focus</h2>
+          </AppleReveal>
+          <div className="mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2">
             {skillGroups.map((group, i) => (
-              <StitchRevealItem key={group.title} index={i}>
-              <div
-                className={cn(
-                  stitchGlassInteractive,
-                  "h-full border-l-2 p-6 sm:p-7",
-                  skillAccent[i % skillAccent.length],
-                )}
-              >
-                <h3 className="font-display text-lg font-semibold text-[#e1e2e8]">{group.title}</h3>
-                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[#859399]">
-                  {group.subtitle}
-                </p>
-                <ul className="mt-5 space-y-2">
-                  {group.skills.map((skill) => (
-                    <li
-                      key={skill}
-                      className="flex items-center gap-3 rounded-md border border-white/[0.06] bg-[#111418]/80 px-3 py-2.5 text-[14px] font-medium text-[#e1e2e8]"
-                    >
-                      <SkillIcon skill={skill} className="h-4 w-4 shrink-0 text-[#00d1ff]" />
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              </StitchRevealItem>
+              <AppleReveal key={group.title} delay={i * 0.06} className="h-full">
+                <div className={cn(cardBase, cardHover, "flex h-full flex-col p-7")}>
+                  <h3 className="font-display text-[19px] font-semibold text-[#1d1d1f]">
+                    {group.title}
+                  </h3>
+                  <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
+                    {group.subtitle}
+                  </p>
+                  <ul className="mt-5 flex flex-wrap gap-2">
+                    {group.skills.map((skill) => (
+                      <li
+                        key={skill}
+                        className="inline-flex items-center gap-2 rounded-full border border-black/[0.06] bg-[#f5f5f7] px-3.5 py-2 text-[14px] font-medium text-[#1d1d1f]"
+                      >
+                        <SkillIcon skill={skill} className="h-4 w-4 shrink-0 text-[#0071e3]" />
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AppleReveal>
             ))}
           </div>
-          </StitchReveal>
         </div>
       </section>
 
       {/* 7. Tools */}
-      <section className={cn(stitchSection, sectionBase)}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <p className={cn(stitchLabel, "text-[#859399]")}>Tools</p>
-          <h2 className={cn("mt-3", stitchHeadlineLg)}>Production stack</h2>
-          <p className={cn("mt-4 max-w-2xl text-pretty", stitchBody)}>
-            Engines, DCC, and collaboration tools used across level design, 3D art, and studio workflow.
-          </p>
-          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <section className="bg-[#f5f5f7] py-16 sm:py-20 lg:py-24">
+        <div className={CONTAINER}>
+          <AppleReveal>
+            <p className={EYEBROW}>Tools</p>
+            <h2 className={cn("mt-3", HEADLINE)}>Production stack</h2>
+            <p className={cn("mt-4 max-w-2xl text-pretty", BODY)}>
+              Engines, DCC, and collaboration tools used across level design, 3D art, and studio
+              workflow.
+            </p>
+          </AppleReveal>
+          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-6">
             {profileTools.map((tool, i) => (
-              <StitchRevealItem key={tool} index={i % 6}>
-              <li
-                className="flex flex-col items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-[#111418] px-3 py-5 text-center transition hover:border-[#00d1ff]/25 hover:bg-[#171a20]"
-              >
-                <ToolIcon tool={tool} className="h-7 w-7 text-[#00d1ff]" />
-                <span className="text-[12px] font-semibold leading-tight text-[#bbc9cf]">{tool}</span>
-              </li>
-              </StitchRevealItem>
+              <AppleReveal key={tool} delay={Math.min((i % 6) * 0.04, 0.2)} className="h-full">
+                <li
+                  className={cn(
+                    cardBase,
+                    cardHover,
+                    "flex h-full flex-col items-center justify-center gap-2.5 px-3 py-6 text-center",
+                  )}
+                >
+                  <ToolIcon tool={tool} className="h-7 w-7 text-[#1d1d1f]" />
+                  <span className="text-[12.5px] font-semibold leading-tight text-[#6e6e73]">
+                    {tool}
+                  </span>
+                </li>
+              </AppleReveal>
             ))}
           </ul>
-          </StitchReveal>
         </div>
       </section>
 
       {/* 8. CTA */}
-      <section className={cn(stitchSection, sectionAlt, "pb-20 sm:pb-24")}>
-        <div className={stitchContainer}>
-          <StitchReveal>
-          <div className={cn(stitchGlass, "px-6 py-10 text-center sm:px-10 sm:py-12 md:text-left")}>
-            <p className={cn(stitchLabel, "text-[#859399]")}>Next step</p>
-            <h2 className="mt-3 font-display text-[clamp(1.5rem,2vw+0.75rem,2rem)] font-semibold tracking-tight text-[#e1e2e8]">
-              Explore the featured project or get in touch.
-            </h2>
-            <p className={cn("mx-auto mt-4 max-w-xl text-pretty md:mx-0", stitchBody)}>
-              See how spatial flow, beats, and iteration show up in a vertical-slice case study — or reach out for
-              level design conversations.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 md:justify-start">
-              <Link href="/case-study" className={stitchBtnPrimary}>
-                Featured project
-              </Link>
-              <Link href={homeContactCta.href} className={stitchBtnGhost}>
-                {homeContactCta.label}
-              </Link>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-1 font-mono text-[12px] font-semibold uppercase tracking-[0.12em] text-[#00d1ff] transition hover:text-[#4cd6ff]"
-              >
-                Home
-                <ArrowUpRight className="h-4 w-4" aria-hidden />
-              </Link>
-            </div>
-          </div>
-          </StitchReveal>
-        </div>
-      </section>
-    </div>
+      <AppleCTASection
+        eyebrow="Next step"
+        title="Explore the featured project or get in touch."
+        body="See how spatial flow, beats, and iteration show up in a vertical-slice case study — or reach out for level design conversations."
+        buttons={[
+          { label: "Featured project", href: "/case-study", variant: "primary" },
+          { label: "Contact", href: "/contact", variant: "secondary" },
+          { label: "Email directly", href: contactChannels.email.href, variant: "ghost" },
+        ]}
+      />
+    </AppleInnerShell>
   );
 }
