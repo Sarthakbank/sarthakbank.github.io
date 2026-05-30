@@ -32,8 +32,8 @@ export function AppleHomeHero() {
 
       <div
         className={cn(
-          "relative mx-auto grid w-full max-w-[1440px] flex-1 items-center gap-12 px-5 sm:gap-14 sm:px-8",
-          "lg:grid-cols-[minmax(0,44%)_minmax(0,56%)] lg:gap-8 lg:px-10 xl:gap-10 xl:px-12",
+          "relative mx-auto grid w-full max-w-[1440px] flex-1 items-center gap-12 px-5 sm:gap-16 sm:px-8",
+          "lg:grid-cols-[minmax(0,41%)_minmax(0,59%)] lg:gap-6 lg:px-10 xl:gap-8 xl:px-12",
         )}
       >
         <motion.div

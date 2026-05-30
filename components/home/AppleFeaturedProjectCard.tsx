@@ -31,12 +31,13 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
   return (
     <article
       className={cn(
-        "group relative isolate min-h-[360px] w-full overflow-hidden rounded-[28px] sm:min-h-[420px] lg:min-h-[460px]",
+        "group relative isolate min-h-[440px] w-full overflow-hidden rounded-[32px] sm:min-h-[520px] lg:min-h-[580px]",
         "transition-all duration-500 ease-out",
+        "hover:shadow-[0_14px_42px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)]",
         isActive
-          ? "shadow-[0_12px_40px_rgba(0,0,0,0.14),0_32px_80px_rgba(0,0,0,0.12)]"
-          : "shadow-[0_6px_24px_rgba(0,0,0,0.08),0_16px_48px_rgba(0,0,0,0.06)]",
-        !isActive && "brightness-[0.97]",
+          ? "shadow-[0_14px_42px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)]"
+          : "shadow-[0_8px_28px_rgba(0,0,0,0.08),0_1px_3px_rgba(0,0,0,0.04)]",
+        !isActive && "brightness-[0.99]",
       )}
     >
       {/* ── Full-bleed visual (entire card) ───────────────── */}
@@ -61,9 +62,13 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
             priority
           />
         )}
-        {/* Scrim for readable overlay text */}
+        {/* Scrim for readable overlay text — heavier toward bottom-left */}
         <div
-          className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10"
+          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-transparent"
           aria-hidden
         />
         {comingSoon && (
@@ -75,9 +80,9 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
       </div>
 
       {/* ── Overlay content ───────────────────────────────── */}
-      <div className="relative z-10 flex min-h-[360px] flex-col justify-end p-6 sm:min-h-[420px] sm:p-8 lg:min-h-[460px] lg:p-9">
+      <div className="relative z-10 flex min-h-[440px] flex-col justify-end p-7 sm:min-h-[520px] sm:p-10 lg:min-h-[580px] lg:p-12">
         <span
-          className="mb-4 inline-flex w-fit rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
+          className="mb-5 inline-flex w-fit rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
           style={{
             backgroundColor: project.chipColor,
             boxShadow: "0 4px 14px rgba(0,0,0,0.25)",
@@ -86,19 +91,19 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
           {project.chip}
         </span>
 
-        <p className="text-[13px] font-semibold uppercase tracking-[0.1em] text-white/70">
+        <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-white/65">
           {project.label}
         </p>
 
-        <h3 className="mt-2 max-w-[14ch] font-display text-[clamp(1.75rem,3.5vw+0.5rem,2.85rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-white">
+        <h3 className="mt-2.5 max-w-[14ch] font-display text-[clamp(1.75rem,3.5vw+0.5rem,2.85rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-white">
           {project.title}
         </h3>
 
-        <p className="mt-4 max-w-xl text-pretty text-[16px] leading-[1.55] text-white/85 sm:text-[17px]">
+        <p className="mt-4 max-w-xl text-pretty text-[16px] leading-[1.6] text-white/85 sm:text-[17px]">
           {project.description}
         </p>
 
-        <div className="mt-8">
+        <div className="mt-9">
           {comingSoon ? (
             <span className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-white/55">
               {project.cta}
