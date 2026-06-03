@@ -31,7 +31,7 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
   return (
     <article
       className={cn(
-        "group relative isolate min-h-[440px] w-full overflow-hidden rounded-[32px] sm:min-h-[520px] lg:min-h-[580px]",
+        "group relative isolate min-h-[460px] w-full overflow-hidden rounded-[32px] sm:min-h-[540px] lg:min-h-[620px]",
         "transition-all duration-500 ease-out",
         "hover:shadow-[0_14px_42px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.06)]",
         isActive
@@ -80,7 +80,7 @@ export function AppleFeaturedProjectCard({ project, isActive = false }: Props) {
       </div>
 
       {/* ── Overlay content ───────────────────────────────── */}
-      <div className="relative z-10 flex min-h-[440px] flex-col justify-end p-7 sm:min-h-[520px] sm:p-10 lg:min-h-[580px] lg:p-12">
+      <div className="relative z-10 flex min-h-[460px] flex-col justify-end p-7 sm:min-h-[540px] sm:p-10 lg:min-h-[620px] lg:p-12">
         <span
           className="mb-5 inline-flex w-fit rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white"
           style={{

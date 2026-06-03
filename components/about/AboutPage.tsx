@@ -1,77 +1,166 @@
 "use client";
 
 import Image from "next/image";
-import { Briefcase, GraduationCap } from "lucide-react";
-import { SkillIcon } from "@/components/icons/SkillIcon";
+import type { LucideIcon } from "lucide-react";
+import {
+  Box,
+  Briefcase,
+  Code2,
+  Compass,
+  Cpu,
+  GraduationCap,
+  Layers,
+  LayoutGrid,
+  Map,
+  MapPin,
+  MousePointer2,
+  Network,
+  Paintbrush,
+  Palette,
+  Shapes,
+  Sparkles,
+  Swords,
+  Workflow,
+} from "lucide-react";
+import { SiJira } from "react-icons/si";
 import { ToolIcon } from "@/components/icons/ToolIcon";
 import { aboutHero, aboutIntro, aboutPhilosophy } from "@/content/about";
 import {
   profileEducation,
   profileExperience,
   profileIdentity,
-  profileSummary,
   profileTools,
 } from "@/content/profile";
-import { skillGroups } from "@/content/skillGroups";
 import { contactChannels } from "@/content/contact";
 import { AppleInnerShell } from "@/components/shared/AppleInnerShell";
 import { AppleReveal } from "@/components/shared/AppleReveal";
 import { AppleCTASection } from "@/components/shared/AppleCTASection";
+import {
+  innerAccents,
+  innerBody,
+  innerCard,
+  innerCardHover,
+  innerContainer,
+  innerEyebrow,
+  innerHeadline,
+  type InnerAccentKey,
+} from "@/lib/appleInnerTokens";
 import { cn } from "@/lib/cn";
 
-const PORTRAIT_SRC = "/media/profile/portrait.png";
+const PORTRAIT_SRC = "/media/profile/sarthak-potrait.png";
 
-const EYEBROW = "text-[12px] font-semibold uppercase tracking-[0.14em] text-[#6e6e73]";
-const HEADLINE =
-  "font-display text-[clamp(1.75rem,2.5vw+1rem,2.75rem)] font-semibold leading-[1.12] tracking-[-0.025em] text-[#1d1d1f]";
-const BODY = "text-[16px] leading-[1.6] text-[#6e6e73] md:text-[17px]";
-const CONTAINER = "mx-auto w-full max-w-[1100px] px-5 sm:px-8 lg:px-10";
+/** Accent rotation for the timeline/experience badges. */
+const accentCycle: InnerAccentKey[] = ["blue", "indigo", "orange", "green", "graphite"];
+const accentAt = (i: number) => innerAccents[accentCycle[i % accentCycle.length]];
 
-const cardBase =
-  "rounded-[28px] border border-black/[0.05] bg-white shadow-[0_2px_18px_rgba(0,0,0,0.05)]";
-const cardHover =
-  "transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_36px_rgba(0,0,0,0.09)]";
+/** Bright gradient treatment for the design-philosophy cards (title, top bar, soft glow). */
+const philosophyStyles: Record<string, { title: string; bar: string; glow: string }> = {
+  // Readable Flow — orange → coral → pink
+  warm: {
+    title: "bg-gradient-to-r from-[#ff9500] via-[#ff5e3a] to-[#ff2d55]",
+    bar: "from-[#ff9500] via-[#ff5e3a] to-[#ff2d55]",
+    glow: "bg-[#ff5e3a]",
+  },
+  // Spatial Signals — teal → green → cyan
+  teal: {
+    title: "bg-gradient-to-r from-[#2ad0c0] via-[#34c759] to-[#5ac8fa]",
+    bar: "from-[#2ad0c0] via-[#34c759] to-[#5ac8fa]",
+    glow: "bg-[#30d158]",
+  },
+  // Iterative Craft — pink → purple → rose
+  pink: {
+    title: "bg-gradient-to-r from-[#ff2d92] via-[#bf5af2] to-[#ff375f]",
+    bar: "from-[#ff2d92] via-[#bf5af2] to-[#ff375f]",
+    glow: "bg-[#bf5af2]",
+  },
+};
 
-const accentBadges = [
-  "bg-[#0071e3]/10 text-[#0071e3] ring-1 ring-[#0071e3]/15",
-  "bg-[#5856d6]/10 text-[#5856d6] ring-1 ring-[#5856d6]/15",
-  "bg-[#ff9500]/12 text-[#c93400] ring-1 ring-[#ff9500]/20",
-  "bg-[#34c759]/12 text-[#248a3d] ring-1 ring-[#34c759]/18",
-] as const;
+type IconComponent = LucideIcon | typeof SiJira;
+
+/** Skill cards — colorful icon + title grid (reference layout). */
+const skillCards: { label: string; Icon: IconComponent; color: string }[] = [
+  { label: "Level Design", Icon: Map, color: "#bf5af2" },
+  { label: "Blockouts", Icon: LayoutGrid, color: "#30b0c7" },
+  { label: "Encounter Design", Icon: Swords, color: "#ff6b5e" },
+  { label: "Pacing & Sightlines", Icon: Compass, color: "#3a4f7a" },
+  { label: "Gameplay / Systems", Icon: Network, color: "#5856d6" },
+  { label: "Gameplay Scripting", Icon: Code2, color: "#0071e3" },
+  { label: "Mechanic Prototyping", Icon: Cpu, color: "#3a3a3c" },
+  { label: "Gameplay UX", Icon: MousePointer2, color: "#1d1d1f" },
+  { label: "3D / Visual Craft", Icon: Shapes, color: "#ff9f0a" },
+  { label: "Environment Art Basics", Icon: Palette, color: "#2da44e" },
+  { label: "Sculpting", Icon: Box, color: "#ff9500" },
+  { label: "Texturing", Icon: Paintbrush, color: "#0071e3" },
+  { label: "Workflow", Icon: Workflow, color: "#5856d6" },
+  { label: "Iterative Design", Icon: Sparkles, color: "#30b0c7" },
+  { label: "Agile Workflow", Icon: Layers, color: "#af52de" },
+  { label: "Jira", Icon: SiJira, color: "#1d1d1f" },
+];
+
+/** Per-tool accent colors for the production stack. */
+const toolColors: Record<string, string> = {
+  "Adobe Suite": "#ff3b30",
+  Maya: "#37a5cc",
+  Blender: "#ea7600",
+  ZBrush: "#c2410c",
+  "Unreal Engine": "#1d1d1f",
+  Unity: "#3a3a3c",
+  "Substance Painter": "#d35f3a",
+  SpeedTree: "#34c759",
+  "After Effects": "#5856d6",
+  Figma: "#af52de",
+  Miro: "#ff9500",
+};
+const toolColor = (tool: string) => toolColors[tool] ?? "#0071e3";
+
+/** Soft tint background derived from an accent hex (~10% alpha). */
+const tint = (hex: string) => `${hex}1a`;
 
 export function AboutPage() {
   return (
     <AppleInnerShell>
-      {/* 1. Hero */}
+      {/* 1. Hero / About intro */}
       <section className="relative overflow-hidden bg-[#f5f5f7] pt-[6.5rem] pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24">
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white to-[#f5f5f7]"
           aria-hidden
         />
-        <div className={cn(CONTAINER, "relative")}>
+        <div
+          className="pointer-events-none absolute -top-24 left-[-10%] h-[420px] w-[420px] rounded-full bg-[#0071e3]/[0.09] blur-[120px]"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute top-8 right-[-12%] h-[380px] w-[380px] rounded-full bg-[#af52de]/[0.07] blur-[120px]"
+          aria-hidden
+        />
+        <div className={cn(innerContainer, "relative")}>
           <AppleReveal>
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
               <div className="min-w-0">
-                <p className={EYEBROW}>{aboutHero.roles}</p>
-                <h1 className="mt-4 font-display text-[clamp(2.25rem,5vw+0.5rem,3.75rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-[#1d1d1f]">
-                  About {profileIdentity.name}
+                <p className={innerEyebrow}>About</p>
+                <h1 className="mt-4 font-display text-[clamp(2.5rem,5.5vw+0.5rem,4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-[#1d1d1f]">
+                  {profileIdentity.name}
                 </h1>
-                <p className="mt-5 max-w-xl text-pretty text-[18px] leading-[1.55] text-[#6e6e73] sm:text-[20px]">
+                <p className="mt-3 text-[18px] font-semibold text-[#0071e3] sm:text-[20px]">
+                  {aboutHero.primaryRole}
+                </p>
+                <p className="mt-6 max-w-xl text-pretty text-[17px] leading-[1.6] text-[#6e6e73] sm:text-[18px]">
                   {aboutHero.statement}
                 </p>
-                <p className="mt-5 text-[14px] font-medium text-[#86868b]">
-                  {profileIdentity.location}
+                <p className="mt-6 inline-flex items-center gap-2 text-[14px] font-medium text-[#86868b]">
+                  <MapPin className="h-4 w-4" strokeWidth={1.75} aria-hidden />
+                  {aboutHero.location}
                 </p>
               </div>
 
-              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] border border-black/[0.06] bg-white shadow-[0_10px_44px_rgba(0,0,0,0.12)] lg:mx-0 lg:max-w-md">
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] border border-black/[0.06] bg-[#0b1020] shadow-[0_10px_44px_rgba(0,0,0,0.18)] lg:mx-0 lg:max-w-md">
                 <div className="relative aspect-[3/4] w-full">
                   <Image
                     src={PORTRAIT_SRC}
                     alt={profileIdentity.name}
                     fill
                     priority
-                    className="object-cover object-[50%_14%]"
+                    className="object-cover object-top"
                     sizes="(min-width: 1024px) 440px, 90vw"
                   />
                 </div>
@@ -81,27 +170,42 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 2. Background */}
-      <section className="bg-white py-16 sm:py-20 lg:py-24">
-        <div className={CONTAINER}>
+      {/* 2. Intro — Background (white) + Approach (dark) */}
+      <section className="bg-white py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
           <AppleReveal>
-            <p className={EYEBROW}>Intro</p>
-            <h2 className={cn("mt-3", HEADLINE)}>Background</h2>
+            <p className={innerEyebrow}>Intro</p>
+            <h2 className={cn("mt-3", innerHeadline)}>Background &amp; approach</h2>
           </AppleReveal>
-          <div className="mt-10 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-            <AppleReveal className="space-y-5">
-              {aboutIntro.paragraphs.map((p) => (
-                <p key={p} className={cn("text-pretty", BODY)}>
-                  {p}
-                </p>
-              ))}
+
+          <div className="mt-12 grid gap-5 sm:gap-6 lg:grid-cols-2">
+            <AppleReveal className="h-full">
+              <div className={cn(innerCard, innerCardHover, "flex h-full flex-col p-8 sm:p-10")}>
+                <h3 className="font-display text-[22px] font-semibold tracking-tight text-[#1d1d1f]">
+                  {aboutIntro.background.title}
+                </h3>
+                <div className="mt-5 space-y-4">
+                  {aboutIntro.background.paragraphs.map((p) => (
+                    <p key={p} className="text-pretty text-[16px] leading-[1.6] text-[#6e6e73] sm:text-[17px]">
+                      {p}
+                    </p>
+                  ))}
+                </div>
+              </div>
             </AppleReveal>
-            <AppleReveal delay={0.06}>
-              <div className={cn(cardBase, "h-full p-7 sm:p-8")}>
-                <p className={EYEBROW}>Summary</p>
-                <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#6e6e73]">
-                  {profileSummary}
-                </p>
+
+            <AppleReveal delay={0.06} className="h-full">
+              <div className="flex h-full flex-col rounded-[28px] bg-[#1d1d1f] p-8 shadow-[0_10px_44px_rgba(0,0,0,0.22)] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_18px_56px_rgba(0,0,0,0.28)] sm:p-10">
+                <h3 className="font-display text-[22px] font-semibold tracking-tight text-white">
+                  {aboutIntro.approach.title}
+                </h3>
+                <div className="mt-5 space-y-4">
+                  {aboutIntro.approach.paragraphs.map((p) => (
+                    <p key={p} className="text-pretty text-[16px] leading-[1.6] text-white/70 sm:text-[17px]">
+                      {p}
+                    </p>
+                  ))}
+                </div>
               </div>
             </AppleReveal>
           </div>
@@ -109,22 +213,87 @@ export function AboutPage() {
       </section>
 
       {/* 3. Design philosophy */}
-      <section className="bg-[#f5f5f7] py-16 sm:py-20 lg:py-24">
-        <div className={CONTAINER}>
+      <section className="bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
           <AppleReveal>
-            <p className={EYEBROW}>Design philosophy</p>
-            <h2 className={cn("mt-3", HEADLINE)}>How I design spaces</h2>
+            <p className={innerEyebrow}>Design philosophy</p>
+            <h2 className={cn("mt-3", innerHeadline)}>How I design spaces</h2>
           </AppleReveal>
           <div className="mt-12 grid gap-5 sm:gap-6 md:grid-cols-3">
-            {aboutPhilosophy.map((item, i) => (
-              <AppleReveal key={item.title} delay={i * 0.06} className="h-full">
-                <div className={cn(cardBase, cardHover, "flex h-full flex-col p-7")}>
-                  <h3 className="font-display text-[19px] font-semibold tracking-tight text-[#1d1d1f]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
-                    {item.body}
-                  </p>
+            {aboutPhilosophy.map((item, i) => {
+              const style = philosophyStyles[item.gradient] ?? philosophyStyles.warm;
+              return (
+                <AppleReveal key={item.title} delay={i * 0.06} className="h-full">
+                  <div
+                    className={cn(
+                      innerCard,
+                      innerCardHover,
+                      "group relative flex h-full flex-col overflow-hidden p-7 sm:p-8",
+                    )}
+                  >
+                    {/* Thin top gradient accent bar */}
+                    <div
+                      className={cn("absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r", style.bar)}
+                      aria-hidden
+                    />
+                    {/* Soft colored glow wash inside the card */}
+                    <div
+                      className={cn(
+                        "pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full opacity-[0.14] blur-3xl transition-opacity duration-500 group-hover:opacity-[0.22]",
+                        style.glow,
+                      )}
+                      aria-hidden
+                    />
+                    <h3
+                      className={cn(
+                        "relative font-display text-[26px] font-bold leading-tight tracking-tight sm:text-[28px]",
+                        style.title,
+                        "bg-clip-text text-transparent",
+                      )}
+                    >
+                      {item.title}
+                    </h3>
+                    <p className="relative mt-2.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-[#86868b]">
+                      {item.subtitle}
+                    </p>
+                    <p className="relative mt-4 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
+                      {item.body}
+                    </p>
+                  </div>
+                </AppleReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Skills */}
+      <section className="bg-white py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
+          <AppleReveal>
+            <p className={innerEyebrow}>Skills</p>
+            <h2 className={cn("mt-3", innerHeadline)}>By discipline</h2>
+          </AppleReveal>
+          <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
+            {skillCards.map(({ label, Icon, color }, i) => (
+              <AppleReveal key={label} delay={Math.min((i % 4) * 0.05, 0.2)} className="h-full">
+                <div
+                  className={cn(
+                    innerCard,
+                    innerCardHover,
+                    "flex h-full flex-col items-center gap-4 p-6 text-center sm:p-7",
+                  )}
+                >
+                  <span
+                    className="flex h-12 w-12 items-center justify-center rounded-2xl"
+                    style={{ backgroundColor: tint(color), color }}
+                    aria-hidden
+                  >
+                    <Icon className="h-6 w-6" strokeWidth={1.75} />
+                  </span>
+                  <span className="text-[14px] font-semibold leading-snug text-[#1d1d1f] sm:text-[15px]">
+                    {label}
+                  </span>
                 </div>
               </AppleReveal>
             ))}
@@ -132,159 +301,158 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 4. Education */}
-      <section className="bg-white py-16 sm:py-20 lg:py-24">
-        <div className={CONTAINER}>
+      {/* 5. Timeline (Education) */}
+      <section className="bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
           <AppleReveal>
-            <p className={EYEBROW}>Education</p>
-            <h2 className={cn("mt-3", HEADLINE)}>Timeline</h2>
+            <p className={innerEyebrow}>Education</p>
+            <h2 className={cn("mt-3", innerHeadline)}>Timeline</h2>
           </AppleReveal>
           <ol className="mt-12 space-y-4 sm:space-y-5">
-            {profileEducation.map((edu, i) => (
-              <AppleReveal key={edu.institution} delay={Math.min(i * 0.05, 0.2)}>
-                <li
-                  className={cn(
-                    cardBase,
-                    "flex flex-col gap-4 p-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:p-7",
-                  )}
-                >
-                  <div className="flex gap-4">
-                    <div
-                      className={cn(
-                        "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
-                        accentBadges[i % accentBadges.length],
-                      )}
-                    >
-                      <GraduationCap className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-display text-[17px] font-semibold leading-snug text-[#1d1d1f] sm:text-[18px]">
-                        {edu.institution}
-                      </p>
-                      <p className="mt-1 text-[14px] leading-relaxed text-[#6e6e73]">
-                        {edu.credential}
-                      </p>
-                    </div>
-                  </div>
-                  <span className="shrink-0 self-start rounded-full bg-[#f5f5f7] px-3 py-1 text-[12px] font-semibold tracking-[0.02em] text-[#6e6e73] sm:self-center">
-                    {edu.dates}
-                  </span>
-                </li>
-              </AppleReveal>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* 5. Experience */}
-      <section className="bg-[#f5f5f7] py-16 sm:py-20 lg:py-24">
-        <div className={CONTAINER}>
-          <AppleReveal>
-            <p className={EYEBROW}>Experience</p>
-            <h2 className={cn("mt-3", HEADLINE)}>Roles to date</h2>
-          </AppleReveal>
-          <ul className="mt-12 space-y-5">
-            {profileExperience.map((job, i) => (
-              <AppleReveal key={`${job.company}-${job.duration}`} delay={i * 0.06}>
-                <li className={cn(cardBase, cardHover, "p-6 sm:p-8")}>
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            {profileEducation.map((edu, i) => {
+              const accent = accentAt(i);
+              return (
+                <AppleReveal key={edu.institution} delay={Math.min(i * 0.05, 0.2)}>
+                  <li
+                    className={cn(
+                      innerCard,
+                      innerCardHover,
+                      "flex flex-col gap-4 p-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:p-7",
+                    )}
+                  >
                     <div className="flex gap-4">
                       <div
                         className={cn(
                           "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
-                          accentBadges[i % accentBadges.length],
+                          accent.badge,
                         )}
                       >
-                        <Briefcase className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                        <GraduationCap className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                       </div>
-                      <div>
-                        <p className="font-display text-[20px] font-semibold text-[#1d1d1f]">
-                          {job.company}
+                      <div className="min-w-0">
+                        <p className="font-display text-[17px] font-semibold leading-snug text-[#1d1d1f] sm:text-[18px]">
+                          {edu.institution}
                         </p>
-                        <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.1em] text-[#0071e3]">
-                          {job.role}
+                        <p className="mt-1 text-[14px] leading-relaxed text-[#6e6e73]">
+                          {edu.credential}
                         </p>
                       </div>
                     </div>
-                    <p className="text-[13px] text-[#86868b] sm:text-right">
-                      {job.duration}
-                      <span className="mx-1.5 text-black/20">·</span>
-                      {job.location}
+                    <span className="shrink-0 self-start rounded-full bg-white px-3 py-1 text-[12px] font-semibold tracking-[0.02em] text-[#6e6e73] ring-1 ring-black/[0.06] sm:self-center">
+                      {edu.dates}
+                    </span>
+                  </li>
+                </AppleReveal>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      {/* 6. Roles to date (Experience) */}
+      <section className="bg-white py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
+          <AppleReveal>
+            <p className={innerEyebrow}>Experience</p>
+            <h2 className={cn("mt-3", innerHeadline)}>Roles to date</h2>
+          </AppleReveal>
+          <ul className="mt-12 space-y-5">
+            {profileExperience.map((job, i) => {
+              const accent = accentAt(i);
+              return (
+                <AppleReveal key={`${job.company}-${job.duration}`} delay={i * 0.06}>
+                  <li
+                    className={cn(
+                      innerCard,
+                      innerCardHover,
+                      "relative overflow-hidden p-6 sm:p-8",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r opacity-80",
+                        accent.bar,
+                      )}
+                      aria-hidden
+                    />
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div className="flex gap-4">
+                        <div
+                          className={cn(
+                            "flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl",
+                            accent.badge,
+                          )}
+                        >
+                          <Briefcase className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                        </div>
+                        <div>
+                          <p className="font-display text-[20px] font-semibold text-[#1d1d1f]">
+                            {job.company}
+                          </p>
+                          <p
+                            className={cn(
+                              "mt-1 text-[13px] font-semibold uppercase tracking-[0.1em]",
+                              accent.text,
+                            )}
+                          >
+                            {job.role}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-[13px] text-[#86868b] sm:text-right">
+                        {job.duration}
+                        <span className="mx-1.5 text-black/20">·</span>
+                        {job.location}
+                      </p>
+                    </div>
+                    <p className="mt-5 border-t border-black/[0.06] pt-5 text-[15px] leading-relaxed text-[#6e6e73]">
+                      {job.summary}
                     </p>
-                  </div>
-                  <p className="mt-5 border-t border-black/[0.06] pt-5 text-[15px] leading-relaxed text-[#6e6e73]">
-                    {job.summary}
-                  </p>
-                </li>
-              </AppleReveal>
-            ))}
+                  </li>
+                </AppleReveal>
+              );
+            })}
           </ul>
         </div>
       </section>
 
-      {/* 6. Skills by focus */}
-      <section className="bg-white py-16 sm:py-20 lg:py-24">
-        <div className={CONTAINER}>
+      {/* 7. Production stack (Tools) */}
+      <section className="bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
           <AppleReveal>
-            <p className={EYEBROW}>Skills</p>
-            <h2 className={cn("mt-3", HEADLINE)}>By focus</h2>
-          </AppleReveal>
-          <div className="mt-12 grid gap-5 sm:gap-6 sm:grid-cols-2">
-            {skillGroups.map((group, i) => (
-              <AppleReveal key={group.title} delay={i * 0.06} className="h-full">
-                <div className={cn(cardBase, cardHover, "flex h-full flex-col p-7")}>
-                  <h3 className="font-display text-[19px] font-semibold text-[#1d1d1f]">
-                    {group.title}
-                  </h3>
-                  <p className="mt-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
-                    {group.subtitle}
-                  </p>
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {group.skills.map((skill) => (
-                      <li
-                        key={skill}
-                        className="inline-flex items-center gap-2 rounded-full border border-black/[0.06] bg-[#f5f5f7] px-3.5 py-2 text-[14px] font-medium text-[#1d1d1f]"
-                      >
-                        <SkillIcon skill={skill} className="h-4 w-4 shrink-0 text-[#0071e3]" />
-                        {skill}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </AppleReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Tools */}
-      <section className="bg-[#f5f5f7] py-16 sm:py-20 lg:py-24">
-        <div className={CONTAINER}>
-          <AppleReveal>
-            <p className={EYEBROW}>Tools</p>
-            <h2 className={cn("mt-3", HEADLINE)}>Production stack</h2>
-            <p className={cn("mt-4 max-w-2xl text-pretty", BODY)}>
+            <p className={innerEyebrow}>Tools</p>
+            <h2 className={cn("mt-3", innerHeadline)}>Production stack</h2>
+            <p className={cn("mt-4 max-w-2xl text-pretty", innerBody)}>
               Engines, DCC, and collaboration tools used across level design, 3D art, and studio
               workflow.
             </p>
           </AppleReveal>
           <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-6">
-            {profileTools.map((tool, i) => (
-              <AppleReveal key={tool} delay={Math.min((i % 6) * 0.04, 0.2)} className="h-full">
-                <li
-                  className={cn(
-                    cardBase,
-                    cardHover,
-                    "flex h-full flex-col items-center justify-center gap-2.5 px-3 py-6 text-center",
-                  )}
-                >
-                  <ToolIcon tool={tool} className="h-7 w-7 text-[#1d1d1f]" />
-                  <span className="text-[12.5px] font-semibold leading-tight text-[#6e6e73]">
-                    {tool}
-                  </span>
-                </li>
-              </AppleReveal>
-            ))}
+            {profileTools.map((tool, i) => {
+              const color = toolColor(tool);
+              return (
+                <AppleReveal key={tool} delay={Math.min((i % 6) * 0.04, 0.2)} className="h-full">
+                  <li
+                    className={cn(
+                      innerCard,
+                      innerCardHover,
+                      "flex h-full flex-col items-center justify-center gap-3 px-3 py-6 text-center",
+                    )}
+                  >
+                    <span
+                      className="flex h-11 w-11 items-center justify-center rounded-2xl"
+                      style={{ backgroundColor: tint(color), color }}
+                      aria-hidden
+                    >
+                      <ToolIcon tool={tool} className="h-6 w-6" />
+                    </span>
+                    <span className="text-[12.5px] font-semibold leading-tight text-[#6e6e73]">
+                      {tool}
+                    </span>
+                  </li>
+                </AppleReveal>
+              );
+            })}
           </ul>
         </div>
       </section>

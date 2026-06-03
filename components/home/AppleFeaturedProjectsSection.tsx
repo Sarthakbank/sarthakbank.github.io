@@ -37,45 +37,6 @@ const PROJECTS: readonly FeaturedProject[] = [
     gradient:
       "linear-gradient(135deg, #667eea 0%, #5856d6 45%, #af52de 80%, #ff2d55 100%)",
   },
-  {
-    id: "slot-03",
-    kind: "comingSoon",
-    chip: "In development",
-    chipColor: "#ff9500",
-    title: "Project Slot 03",
-    label: "Coming Soon",
-    description:
-      "Environmental storytelling through light, cover, and vertical flow — documentation follows the next milestone.",
-    cta: "Coming Soon",
-    gradient:
-      "linear-gradient(135deg, #ff9500 0%, #ff6b35 40%, #ff2d55 70%, #5856d6 100%)",
-  },
-  {
-    id: "slot-04",
-    kind: "comingSoon",
-    chip: "In development",
-    chipColor: "#34c759",
-    title: "Project Slot 04",
-    label: "Coming Soon",
-    description:
-      "A vertical combat arena exploring sightlines, elevation, and momentum-driven traversal.",
-    cta: "Coming Soon",
-    gradient:
-      "linear-gradient(135deg, #43e97b 0%, #38f9d7 45%, #0071e3 100%)",
-  },
-  {
-    id: "slot-05",
-    kind: "comingSoon",
-    chip: "In development",
-    chipColor: "#30cfd0",
-    title: "Project Slot 05",
-    label: "Coming Soon",
-    description:
-      "A moody narrative level built around pacing, tension, and quiet moments of discovery.",
-    cta: "Coming Soon",
-    gradient:
-      "linear-gradient(135deg, #30cfd0 0%, #5b86e5 45%, #330867 100%)",
-  },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -83,9 +44,9 @@ const ease = [0.22, 1, 0.36, 1] as const;
 /** Centered container — ~80% of a wide viewport, capped, so the system reads as one unit. */
 const CONTAINER_CLASS = "mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10";
 
-/** Cards fill most of the centered rail so the next card peeks only slightly. */
+/** Cards fill ~80–85% of the centered rail so the next card peeks elegantly. */
 const CARD_CLASS =
-  "w-[86%] shrink-0 snap-start sm:w-[80%] lg:w-[76%]";
+  "w-[86%] shrink-0 snap-start sm:w-[82%] lg:w-[80%]";
 
 export function AppleFeaturedProjectsSection() {
   const reduce = useReducedMotion();

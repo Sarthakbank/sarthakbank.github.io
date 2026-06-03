@@ -17,6 +17,14 @@ export const profileSummary =
 
 export const profileExperience: ExperienceItem[] = [
   {
+    company: "Zimension",
+    role: "3D Game Designer",
+    duration: "January 2024 – March 2024",
+    location: "India",
+    summary:
+      "Worked as a 3D Game Designer, contributing to game design and 3D asset creation across interactive projects while supporting gameplay and level design intent.",
+  },
+  {
     company: "Metastarter",
     role: "3D Modeler",
     duration: "January 2022 – June 2022",
