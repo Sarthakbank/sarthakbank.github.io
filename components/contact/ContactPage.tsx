@@ -21,13 +21,12 @@ import {
   innerEyebrow,
   innerHeadline,
 } from "@/lib/appleInnerTokens";
-import { appleBtnGhost, appleBtnPrimary, appleBtnSecondary } from "@/lib/appleHomeTokens";
 import { cn } from "@/lib/cn";
 
 /**
- * iOS/macOS-style app-icon tile colors per contact type. Rendered with inline
- * gradients so the tiles are always visible (independent of Tailwind JIT).
- * `text` is a white-safe variant for small chips/labels.
+ * Brand colors per contact type — used for app-icon tiles, top bars, buttons.
+ * Inline styles keep tiles/buttons visible independent of Tailwind JIT.
+ * `text` is a white-safe variant for chips, labels, and outline buttons.
  */
 type BrandKey =
   | "email"
@@ -40,7 +39,7 @@ type BrandKey =
   | "whatsapp";
 
 const BRAND: Record<BrandKey, { from: string; to: string; glow: string; text: string }> = {
-  email: { from: "#007AFF", to: "#0A84FF", glow: "#007AFF", text: "#0071e3" },
+  email: { from: "#EA4335", to: "#FF7A59", glow: "#EA4335", text: "#d3372b" },
   linkedin: { from: "#0A66C2", to: "#004182", glow: "#0A66C2", text: "#0a66c2" },
   artstation: { from: "#13AFF0", to: "#087EA4", glow: "#13AFF0", text: "#0a84c2" },
   youtube: { from: "#FF0033", to: "#FF5A3D", glow: "#FF0033", text: "#d70015" },
@@ -50,41 +49,78 @@ const BRAND: Record<BrandKey, { from: string; to: string; glow: string; text: st
   whatsapp: { from: "#25D366", to: "#128C7E", glow: "#25D366", text: "#0f7a5a" },
 };
 
+/** Multicolor Gmail-style envelope — distinct from any flat blue treatment. */
+function GmailIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 48 48" className={className} role="img" aria-hidden focusable="false">
+      <path fill="#4caf50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z" />
+      <path fill="#1e88e5" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z" />
+      <polygon
+        fill="#e53935"
+        points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"
+      />
+      <path
+        fill="#c62828"
+        d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.228,8,7.298,8h0C4.924,8,3,9.924,3,12.298z"
+      />
+      <path
+        fill="#fbc02d"
+        d="M45,12.298V16.2l-10,7.5V11.2l3.124-2.341C38.868,8.301,39.772,8,40.702,8h0C43.076,8,45,9.924,45,12.298z"
+      />
+    </svg>
+  );
+}
+
 type CardAction = {
   label: string;
   href: string;
-  variant: "primary" | "secondary" | "ghost";
+  /** filled = brand gradient pill; outline = white pill with brand icon/text. */
+  variant: "filled" | "outline";
   external?: boolean;
+  /** Defaults to the card's brand; override for mixed-brand cards (e.g. WhatsApp). */
+  brand?: BrandKey;
   icon?: React.ReactNode;
 };
-
-const btnClass = {
-  primary: appleBtnPrimary,
-  secondary: appleBtnSecondary,
-  ghost: appleBtnGhost,
-} as const;
 
 /** Premium white card base — rounded 30px, layered Apple-style shadow. */
 const CONTACT_CARD =
   "rounded-[30px] border border-black/[0.05] bg-white shadow-[0_1px_4px_rgba(0,0,0,0.04),0_10px_34px_rgba(0,0,0,0.07)]";
 
-/** App-icon style tile — strong brand gradient, white icon, subtle gloss + shadow. */
+const PILL =
+  "group/btn inline-flex items-center justify-center rounded-full px-5 py-2.5 text-[15px] font-semibold transition-all duration-300 ease-out";
+
+/** App-icon style tile — strong brand gradient (or white "light" for Gmail). */
 function AppIconTile({
   brand,
   size = "lg",
+  variant = "gradient",
   children,
 }: {
   brand: BrandKey;
   size?: "lg" | "sm";
+  variant?: "gradient" | "light";
   children: React.ReactNode;
 }) {
   const b = BRAND[brand];
+  const sizeClass = size === "lg" ? "h-16 w-16" : "h-14 w-14";
+  const base =
+    "flex shrink-0 items-center justify-center rounded-[18px] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105";
+
+  if (variant === "light") {
+    return (
+      <div
+        className={cn(base, sizeClass, "border border-black/[0.06] bg-white")}
+        style={{ boxShadow: `0 10px 22px -8px ${b.glow}59, inset 0 1px 0 rgba(255,255,255,0.7)` }}
+        aria-hidden
+      >
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div
-      className={cn(
-        "flex shrink-0 items-center justify-center rounded-[18px] text-white transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105",
-        size === "lg" ? "h-16 w-16" : "h-14 w-14",
-      )}
+      className={cn(base, sizeClass, "text-white")}
       style={{
         backgroundImage: `linear-gradient(135deg, ${b.from}, ${b.to})`,
         boxShadow: `0 10px 22px -6px ${b.glow}73, inset 0 1px 0 rgba(255,255,255,0.20)`,
@@ -96,14 +132,40 @@ function AppIconTile({
   );
 }
 
-function ActionButton({ action, className }: { action: CardAction; className?: string }) {
+function BrandButton({
+  action,
+  cardBrand,
+  className,
+}: {
+  action: CardAction;
+  cardBrand: BrandKey;
+  className?: string;
+}) {
+  const brand = action.brand ?? cardBrand;
+  const b = BRAND[brand];
+  const filled = action.variant === "filled";
   const Arrow = action.external ? ArrowUpRight : ArrowRight;
+
   return (
     <Link
       href={action.href}
-      className={cn(btnClass[action.variant], "group/btn", className)}
       target={action.external ? "_blank" : undefined}
       rel={action.external ? "noopener noreferrer" : undefined}
+      className={cn(
+        PILL,
+        filled
+          ? "text-white hover:-translate-y-0.5"
+          : "border bg-white hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(0,0,0,0.08)]",
+        className,
+      )}
+      style={
+        filled
+          ? {
+              backgroundImage: `linear-gradient(135deg, ${b.from}, ${b.to})`,
+              boxShadow: `0 9px 22px -7px ${b.glow}8c`,
+            }
+          : { color: b.text, borderColor: `${b.from}40` }
+      }
     >
       {action.icon ? <span className="mr-2 inline-flex">{action.icon}</span> : null}
       {action.label}
@@ -123,6 +185,7 @@ function ActionButton({ action, className }: { action: CardAction; className?: s
 function ActionCard({
   brand,
   icon,
+  tileVariant = "gradient",
   title,
   tag,
   description,
@@ -132,6 +195,7 @@ function ActionCard({
 }: {
   brand: BrandKey;
   icon: React.ReactNode;
+  tileVariant?: "gradient" | "light";
   title: string;
   tag?: string;
   description: string;
@@ -149,7 +213,6 @@ function ActionCard({
         compact ? "p-6" : "p-7 sm:p-8",
       )}
     >
-      {/* Thin brand top accent bar */}
       <div
         className="absolute inset-x-0 top-0 h-[3px]"
         style={{ backgroundImage: `linear-gradient(90deg, ${b.from}, ${b.to})` }}
@@ -157,7 +220,7 @@ function ActionCard({
       />
 
       <div className="flex items-center gap-4">
-        <AppIconTile brand={brand} size={compact ? "sm" : "lg"}>
+        <AppIconTile brand={brand} size={compact ? "sm" : "lg"} variant={tileVariant}>
           {icon}
         </AppIconTile>
         <div className="min-w-0">
@@ -186,9 +249,10 @@ function ActionCard({
 
       <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
         {actions.map((action) => (
-          <ActionButton
+          <BrandButton
             key={action.label}
             action={action}
+            cardBrand={brand}
             className="w-full justify-center sm:w-auto"
           />
         ))}
@@ -207,11 +271,11 @@ export function ContactPage() {
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -top-24 right-[-10%] h-[420px] w-[420px] rounded-full bg-[#0071e3]/[0.10] blur-[120px]"
+          className="pointer-events-none absolute -top-24 right-[-10%] h-[420px] w-[420px] rounded-full bg-[#ff7a59]/[0.10] blur-[120px]"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute top-10 left-[-12%] h-[360px] w-[360px] rounded-full bg-[#af52de]/[0.08] blur-[120px]"
+          className="pointer-events-none absolute top-10 left-[-12%] h-[360px] w-[360px] rounded-full bg-[#5856d6]/[0.08] blur-[120px]"
           aria-hidden
         />
 
@@ -228,23 +292,34 @@ export function ContactPage() {
               {contactOpportunity.supporting}
             </p>
             <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              <Link href={contactChannels.email.href} className={appleBtnPrimary}>
-                <Mail className="mr-2 h-4 w-4" aria-hidden />
-                Email
-              </Link>
-              <Link
-                href={contactChannels.linkedIn.href}
-                className={appleBtnSecondary}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaLinkedinIn className="mr-2 h-4 w-4" aria-hidden />
-                LinkedIn
-              </Link>
-              <Link href={contactPhones.uk.tel} className={appleBtnGhost}>
-                <Phone className="mr-2 h-4 w-4 text-[#16a34a]" aria-hidden />
-                Call
-              </Link>
+              <BrandButton
+                cardBrand="email"
+                action={{
+                  label: "Email",
+                  href: contactChannels.email.href,
+                  variant: "filled",
+                  icon: <Mail className="h-4 w-4" aria-hidden />,
+                }}
+              />
+              <BrandButton
+                cardBrand="linkedin"
+                action={{
+                  label: "LinkedIn",
+                  href: contactChannels.linkedIn.href,
+                  variant: "outline",
+                  external: true,
+                  icon: <FaLinkedinIn className="h-4 w-4" aria-hidden />,
+                }}
+              />
+              <BrandButton
+                cardBrand="phone"
+                action={{
+                  label: "Call",
+                  href: contactPhones.uk.tel,
+                  variant: "outline",
+                  icon: <Phone className="h-4 w-4" aria-hidden />,
+                }}
+              />
             </div>
           </AppleReveal>
         </div>
@@ -266,7 +341,8 @@ export function ContactPage() {
             <AppleReveal className="h-full">
               <ActionCard
                 brand="email"
-                icon={<Mail className="h-7 w-7" strokeWidth={1.9} aria-hidden />}
+                tileVariant="light"
+                icon={<GmailIcon className="h-9 w-9" />}
                 title="Email"
                 tag="Primary"
                 description={contactChannels.email.hint}
@@ -275,7 +351,7 @@ export function ContactPage() {
                   {
                     label: contactChannels.email.cta,
                     href: contactChannels.email.href,
-                    variant: "primary",
+                    variant: "filled",
                     icon: <Mail className="h-4 w-4" aria-hidden />,
                   },
                 ]}
@@ -292,7 +368,7 @@ export function ContactPage() {
                   {
                     label: contactChannels.linkedIn.cta,
                     href: contactChannels.linkedIn.href,
-                    variant: "secondary",
+                    variant: "filled",
                     external: true,
                     icon: <FaLinkedinIn className="h-4 w-4" aria-hidden />,
                   },
@@ -326,7 +402,7 @@ export function ContactPage() {
                   {
                     label: contactChannels.artstation.cta,
                     href: contactChannels.artstation.href,
-                    variant: "secondary",
+                    variant: "outline",
                     external: true,
                   },
                 ]}
@@ -343,7 +419,7 @@ export function ContactPage() {
                   {
                     label: contactChannels.youtube.cta,
                     href: contactChannels.youtube.href,
-                    variant: "secondary",
+                    variant: "outline",
                     external: true,
                   },
                 ]}
@@ -360,7 +436,7 @@ export function ContactPage() {
                   {
                     label: contactChannels.discord.cta,
                     href: contactChannels.discord.href,
-                    variant: "secondary",
+                    variant: "outline",
                     external: true,
                   },
                 ]}
@@ -377,7 +453,7 @@ export function ContactPage() {
                   {
                     label: contactChannels.github.cta,
                     href: contactChannels.github.href,
-                    variant: "secondary",
+                    variant: "outline",
                     external: true,
                   },
                 ]}
@@ -414,15 +490,16 @@ export function ContactPage() {
                       {
                         label: "Call",
                         href: phone.tel,
-                        variant: "primary",
-                        icon: <Phone className="h-4 w-4 text-[#34c759]" aria-hidden />,
+                        variant: "filled",
+                        icon: <Phone className="h-4 w-4" aria-hidden />,
                       },
                       {
                         label: "WhatsApp",
                         href: phone.whatsapp,
-                        variant: "secondary",
+                        variant: "outline",
                         external: true,
-                        icon: <FaWhatsapp className="h-4 w-4 text-[#25D366]" aria-hidden />,
+                        brand: "whatsapp",
+                        icon: <FaWhatsapp className="h-4 w-4" aria-hidden />,
                       },
                     ]}
                   />
