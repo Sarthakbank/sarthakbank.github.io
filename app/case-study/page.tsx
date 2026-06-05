@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { CaseStudyView } from "@/components/case-study/CaseStudyView";
+import { escapeProtocol } from "@/content/projects";
 
 export const metadata: Metadata = {
-  title: "Facility Breach — Level design case study",
+  title: "Escape Protocol — Level design case study",
   description:
-    "Portfolio case study for Facility Breach: stealth infiltration vertical slice — goals, beats, techniques, and process.",
+    "Escape Protocol: a single-player Unreal Engine 5.7 prison-break level — overview, inspiration, design goals, level design document, and technique highlights.",
 };
 
 export default function Page() {
-  return <CaseStudyView />;
+  return <CaseStudyView project={escapeProtocol} />;
 }

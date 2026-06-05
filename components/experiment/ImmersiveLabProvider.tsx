@@ -7,7 +7,6 @@ import {
   useMemo,
   type ReactNode,
 } from "react";
-import { CursorGlow } from "./CursorGlow";
 import { AmbientFilm } from "./AmbientFilm";
 
 const ImmersiveLabContext = createContext(false);
@@ -32,12 +31,7 @@ export function ImmersiveLabProvider({
   return (
     <ImmersiveLabContext.Provider value={value}>
       {children}
-      {enabled ? (
-        <>
-          <AmbientFilm />
-          <CursorGlow />
-        </>
-      ) : null}
+      {enabled ? <AmbientFilm /> : null}
     </ImmersiveLabContext.Provider>
   );
 }

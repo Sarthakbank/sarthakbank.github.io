@@ -17,7 +17,8 @@ function isStitchEditorialPath(pathname: string | null) {
     pathname === "/about" ||
     pathname === "/contact" ||
     pathname === "/case-study" ||
-    pathname?.startsWith("/case-study/")
+    pathname?.startsWith("/case-study/") ||
+    pathname?.startsWith("/projects/")
   );
 }
 
@@ -27,7 +28,8 @@ function isLightInnerPath(pathname: string | null) {
     pathname === "/contact" ||
     pathname === "/about" ||
     pathname === "/case-study" ||
-    pathname?.startsWith("/case-study/") === true
+    pathname?.startsWith("/case-study/") === true ||
+    pathname?.startsWith("/projects/") === true
   );
 }
 

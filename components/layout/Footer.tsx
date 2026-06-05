@@ -22,7 +22,8 @@ export function Footer() {
     pathname === "/contact" ||
     pathname === "/about" ||
     pathname === "/case-study" ||
-    pathname?.startsWith("/case-study/")
+    pathname?.startsWith("/case-study/") ||
+    pathname?.startsWith("/projects/")
   ) {
     return (
       <footer className="border-t border-black/[0.06] bg-white py-10 sm:py-12">

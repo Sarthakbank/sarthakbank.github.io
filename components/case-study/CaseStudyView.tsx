@@ -2,43 +2,60 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Check } from "lucide-react";
-import { FloatingSectionNav } from "./FloatingSectionNav";
-import { heroBlockoutStill } from "@/content/heroBlockoutManifest";
 import {
-  caseStudyBeats,
-  caseStudyDemoLabel,
-  caseStudyFactsLines,
-  caseStudyGoal,
-  caseStudyMeta,
-  caseStudyNav,
-  caseStudyOutcome,
-  caseStudyOverview,
-  caseStudyProcess,
-  caseStudyTechniques,
-} from "@/content/caseStudy";
-import { homeFeaturedMedia } from "@/content/homeMedia";
+  ArrowLeft,
+  Box,
+  Briefcase,
+  Compass,
+  Cpu,
+  FileText,
+  Gamepad2,
+  MousePointer2,
+  Play,
+  Sparkles,
+  Swords,
+  Workflow,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
+import { FloatingSectionNav } from "./FloatingSectionNav";
+import { MediaPlaceholder } from "./MediaPlaceholder";
+import { escapeProtocol } from "@/content/projects";
+import type { Project, ProjectMetaIcon } from "@/content/projects/types";
 import { contactChannels } from "@/content/contact";
 import { AppleInnerShell } from "@/components/shared/AppleInnerShell";
 import { AppleReveal } from "@/components/shared/AppleReveal";
 import { AppleCTASection } from "@/components/shared/AppleCTASection";
 import {
   innerAccents,
-  innerBody,
   innerCard,
   innerCardHover,
   innerContainer,
-  innerEyebrow,
-  innerHeadline,
   type InnerAccentKey,
 } from "@/lib/appleInnerTokens";
 import { cn } from "@/lib/cn";
 
-/** Accent rotation so sections read colorful like Home, not all-blue. */
+/* Inter typography (this page uses Inter — not the site display font). */
+const EYEBROW = "text-[12px] font-semibold uppercase tracking-[0.14em] text-[#6e6e73]";
+const HEADLINE =
+  "font-sans text-[clamp(1.875rem,2.6vw+1rem,2.875rem)] font-bold leading-[1.1] tracking-[-0.022em] text-[#1d1d1f]";
+const BODY = "text-[16px] leading-[1.6] text-[#6e6e73] md:text-[17px]";
+
 const accentCycle: InnerAccentKey[] = ["blue", "indigo", "orange", "green", "graphite"];
 const accentAt = (i: number) => innerAccents[accentCycle[i % accentCycle.length]];
 
-/** Thin gradient bar pinned to the top edge of a card. */
+const metaIcons: Record<ProjectMetaIcon, LucideIcon> = {
+  genre: Gamepad2,
+  type: Box,
+  engine: Cpu,
+  tools: Wrench,
+  iterations: Workflow,
+  playtests: MousePointer2,
+  role: Briefcase,
+};
+
+const goalIcons: LucideIcon[] = [Swords, Sparkles, Compass, Workflow, Box];
+
 function TopAccentBar({ accentKey }: { accentKey: InnerAccentKey }) {
   return (
     <div
@@ -51,12 +68,12 @@ function TopAccentBar({ accentKey }: { accentKey: InnerAccentKey }) {
   );
 }
 
-export function CaseStudyView() {
+export function CaseStudyView({ project = escapeProtocol }: { project?: Project }) {
   return (
-    <AppleInnerShell className="pb-[5.5rem] lg:pb-0">
-      <FloatingSectionNav items={caseStudyNav} editorial />
+    <AppleInnerShell className="font-sans pb-[5.5rem] lg:pb-0">
+      <FloatingSectionNav items={[...project.nav]} editorial />
 
-      {/* 1. Hero */}
+      {/* 1. Featured Project Hero */}
       <section
         id="hero"
         className="relative scroll-mt-24 overflow-hidden bg-[#f5f5f7] pt-[6.5rem] pb-16 sm:pt-28 sm:pb-20 lg:pt-32 lg:pb-24"
@@ -75,189 +92,182 @@ export function CaseStudyView() {
         />
         <div className={cn(innerContainer, "relative")}>
           <AppleReveal>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-[14px] font-medium text-[#0071e3] transition hover:text-[#0077ed]"
-              >
-                <ArrowLeft className="h-4 w-4" aria-hidden />
-                Home
-              </Link>
-              <span className="rounded-full bg-[#1d1d1f]/[0.06] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6e6e73]">
-                {caseStudyDemoLabel}
-              </span>
-            </div>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 text-[14px] font-medium text-[#0071e3] transition hover:text-[#0077ed]"
+            >
+              <ArrowLeft className="h-4 w-4" aria-hidden />
+              Home
+            </Link>
 
-            <p className={cn(innerEyebrow, "mt-8")}>Featured project</p>
-            <h1 className="mt-3 font-display text-[clamp(2.5rem,5.5vw+0.5rem,4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-[#1d1d1f]">
-              {caseStudyMeta.title}
+            <p className={cn(EYEBROW, "mt-8")}>{project.eyebrow}</p>
+            <h1 className="mt-3 font-sans text-[clamp(2.5rem,5.5vw+0.5rem,4rem)] font-bold leading-[1.02] tracking-[-0.035em] text-[#1d1d1f]">
+              {project.title}
             </h1>
-            <span className="mt-4 inline-flex rounded-full bg-[#0071e3]/10 px-3.5 py-1.5 text-[13px] font-semibold text-[#0071e3] ring-1 ring-[#0071e3]/15">
-              {caseStudyMeta.subtitle}
-            </span>
-            <p className="mt-6 max-w-2xl text-pretty text-[18px] leading-[1.55] text-[#6e6e73] sm:text-[20px]">
-              {caseStudyMeta.summary}
-            </p>
+          </AppleReveal>
 
-            <dl className="mt-8 flex flex-wrap gap-2.5">
-              {caseStudyFactsLines.map((row, i) => {
+          {/* Hero visual — YouTube thumbnail / placeholder */}
+          <AppleReveal delay={0.1}>
+            <div className="group relative mt-10 overflow-hidden rounded-[32px] border border-black/[0.05] bg-white shadow-[0_8px_40px_rgba(0,0,0,0.10)]">
+              {project.heroImage ? (
+                <div className="relative aspect-[16/9] w-full">
+                  <Image
+                    src={project.heroImage}
+                    alt={project.heroImageAlt ?? project.title}
+                    fill
+                    priority
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                    sizes="(max-width: 1100px) 100vw, 1100px"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" aria-hidden />
+                  <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#1d1d1f] shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
+                    <Play className="h-6 w-6 translate-x-0.5" aria-hidden />
+                  </span>
+                  {project.videoComingSoonLabel && (
+                    <span className="absolute bottom-4 left-4 rounded-full bg-black/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm">
+                      {project.videoComingSoonLabel}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <MediaPlaceholder
+                  kind="video"
+                  label="YouTube thumbnail coming soon"
+                  className="aspect-[16/9]"
+                />
+              )}
+            </div>
+          </AppleReveal>
+
+          {/* Metadata pills with small icons */}
+          <AppleReveal delay={0.16}>
+            <dl className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {project.meta.map((item, i) => {
                 const accent = accentAt(i);
+                const Icon = metaIcons[item.icon];
                 return (
                   <div
-                    key={row.label}
-                    className="group inline-flex items-center gap-2 rounded-full border border-black/[0.06] bg-white px-3.5 py-2 shadow-[0_1px_4px_rgba(0,0,0,0.04)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]"
+                    key={item.label}
+                    className="flex items-center gap-3 rounded-2xl border border-black/[0.06] bg-white px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
                   >
                     <span
-                      className={cn("h-1.5 w-1.5 rounded-full", accent.text.replace("text-", "bg-"))}
+                      className={cn(
+                        "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
+                        accent.badge,
+                      )}
                       aria-hidden
-                    />
-                    <dt className="text-[12px] font-semibold uppercase tracking-[0.08em] text-[#86868b]">
-                      {row.label}
-                    </dt>
-                    <dd className="text-[13px] font-medium text-[#1d1d1f]">{row.value}</dd>
+                    >
+                      <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                    </span>
+                    <div className="min-w-0">
+                      <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
+                        {item.label}
+                      </dt>
+                      <dd className="truncate text-[14px] font-semibold text-[#1d1d1f]">
+                        {item.value}
+                      </dd>
+                    </div>
                   </div>
                 );
               })}
             </dl>
           </AppleReveal>
-
-          <AppleReveal delay={0.1}>
-            <div className="group relative mt-12 overflow-hidden rounded-[32px] border border-black/[0.05] bg-white shadow-[0_8px_40px_rgba(0,0,0,0.10)] transition-shadow duration-500 hover:shadow-[0_16px_56px_rgba(0,0,0,0.14)]">
-              <div className="relative aspect-[16/9] w-full">
-                <Image
-                  src={homeFeaturedMedia.hero}
-                  alt={`${caseStudyMeta.title} — environment reference`}
-                  fill
-                  priority
-                  className="object-cover object-[center_42%] transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  sizes="(max-width: 1100px) 100vw, 1040px"
-                />
-                <span className="absolute left-4 top-4 rounded-full bg-black/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm">
-                  Environment reference
-                </span>
-              </div>
-            </div>
-          </AppleReveal>
         </div>
       </section>
 
-      {/* 2. Goal */}
-      <section id="goal" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
+      {/* 2. Project Overview */}
+      <section id="overview" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
-            <p className={innerEyebrow}>Goal</p>
-            <h2 className={cn("mt-3", innerHeadline)}>Design intent</h2>
-            <p className={cn("mt-5 max-w-3xl text-pretty", innerBody)}>{caseStudyGoal.intent}</p>
+            <p className={EYEBROW}>Overview</p>
+            <h2 className={cn("mt-3", HEADLINE)}>Project overview</h2>
           </AppleReveal>
-
-          <div className="mt-12 grid gap-5 sm:gap-6 lg:grid-cols-2">
-            <AppleReveal className="h-full">
-              <div className={cn(innerCard, innerCardHover, "relative h-full overflow-hidden p-7 sm:p-8")}>
-                <TopAccentBar accentKey="blue" />
-                <p className={cn("text-[12px] font-semibold uppercase tracking-[0.1em]", innerAccents.blue.text)}>
-                  Player experience target
+          <div className="mt-8 grid gap-6 lg:grid-cols-[1.3fr_0.7fr] lg:gap-10">
+            <AppleReveal className="space-y-5">
+              {project.overview.paragraphs.map((p) => (
+                <p key={p} className={cn("text-pretty", BODY)}>
+                  {p}
                 </p>
-                <p className={cn("mt-4 text-pretty", innerBody)}>{caseStudyGoal.experienceTarget}</p>
-              </div>
+              ))}
             </AppleReveal>
-            <AppleReveal delay={0.06} className="h-full">
-              <div className={cn(innerCard, innerCardHover, "relative h-full overflow-hidden p-7 sm:p-8")}>
+            <AppleReveal delay={0.06}>
+              <div className={cn(innerCard, "relative h-full overflow-hidden p-7 sm:p-8")}>
                 <TopAccentBar accentKey="indigo" />
-                <p className={cn("text-[12px] font-semibold uppercase tracking-[0.1em]", innerAccents.indigo.text)}>
-                  Design goals
+                <p className={cn(EYEBROW, "text-[#5856d6]")}>Credits &amp; original work</p>
+                <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#6e6e73]">
+                  {project.overview.credit}
                 </p>
-                <ul className="mt-4 space-y-3">
-                  {caseStudyGoal.designGoals.map((goal, i) => (
-                    <li key={goal} className="flex gap-3 text-[15px] leading-relaxed text-[#6e6e73]">
-                      <span
-                        className={cn(
-                          "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[12px] font-semibold",
-                          innerAccents.indigo.badge,
-                        )}
-                        aria-hidden
-                      >
-                        {i + 1}
-                      </span>
-                      {goal}
-                    </li>
-                  ))}
-                </ul>
               </div>
             </AppleReveal>
           </div>
         </div>
       </section>
 
-      {/* 3. Level overview */}
-      <section id="overview" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+      {/* 3. Inspiration & References */}
+      <section id="inspiration" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
-            <p className={innerEyebrow}>Level overview</p>
-            <h2 className={cn("mt-3", innerHeadline)}>Setting &amp; flow</h2>
+            <p className={EYEBROW}>Inspiration &amp; references</p>
+            <h2 className={cn("mt-3", HEADLINE)}>What shaped the level</h2>
           </AppleReveal>
 
-          <div className="mt-12 grid gap-5 sm:gap-6 md:grid-cols-3">
-            {(
-              [
-                { label: "Setting", body: caseStudyOverview.setting },
-                { label: "Player objective", body: caseStudyOverview.playerObjective },
-                { label: "Spatial flow", body: caseStudyOverview.spatialFlow },
-              ] as const
-            ).map((block, i) => {
-              const accent = accentAt(i);
+          <div className="mt-12 space-y-10">
+            {project.inspiration.map((group, gi) => {
+              const accent = accentAt(gi);
               return (
-                <AppleReveal key={block.label} delay={i * 0.06} className="h-full">
-                  <div
-                    className={cn(
-                      innerCard,
-                      innerCardHover,
-                      "relative flex h-full flex-col overflow-hidden p-7",
-                    )}
-                  >
-                    <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
-                    <p className={cn("text-[12px] font-semibold uppercase tracking-[0.1em]", accent.text)}>
-                      {block.label}
-                    </p>
-                    <p className="mt-4 flex-1 text-pretty text-[15px] leading-relaxed text-[#6e6e73]">
-                      {block.body}
-                    </p>
+                <AppleReveal key={group.category} delay={gi * 0.06}>
+                  <div>
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.1em]",
+                        accent.badge,
+                      )}
+                    >
+                      {group.category}
+                    </span>
+                    <div className="mt-5 grid gap-5 sm:gap-6 md:grid-cols-2">
+                      {group.items.map((item) => (
+                        <div
+                          key={item.title}
+                          className={cn(
+                            innerCard,
+                            innerCardHover,
+                            "relative flex h-full flex-col overflow-hidden p-7",
+                          )}
+                        >
+                          <TopAccentBar accentKey={accentCycle[gi % accentCycle.length]} />
+                          <h3 className="font-sans text-[18px] font-bold tracking-tight text-[#1d1d1f]">
+                            {item.title}
+                          </h3>
+                          <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
+                            {item.body}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </AppleReveal>
               );
             })}
           </div>
-
-          <AppleReveal delay={0.1}>
-            <div className="group mt-8 overflow-hidden rounded-[28px] border border-black/[0.05] bg-white shadow-[0_4px_28px_rgba(0,0,0,0.07)] transition-shadow duration-500 hover:shadow-[0_12px_44px_rgba(0,0,0,0.11)]">
-              <div className="relative aspect-[21/9] w-full">
-                <Image
-                  src={homeFeaturedMedia.corridorDetail}
-                  alt="Service corridor — spatial flow reference"
-                  fill
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                  sizes="(max-width: 1100px) 100vw, 1040px"
-                />
-                <span className="absolute bottom-3 left-4 rounded-full bg-black/50 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
-                  Placeholder · corridor rhythm reference
-                </span>
-              </div>
-            </div>
-          </AppleReveal>
         </div>
       </section>
 
-      {/* 4. Technique highlights */}
-      <section id="techniques" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
+      {/* 4. Design Goals */}
+      <section id="goals" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
-            <p className={innerEyebrow}>Technique highlights</p>
-            <h2 className={cn("mt-3", innerHeadline)}>Level design craft</h2>
+            <p className={EYEBROW}>Design goals</p>
+            <h2 className={cn("mt-3", HEADLINE)}>Five goals that shaped every decision</h2>
+            <p className={cn("mt-5 max-w-3xl text-pretty", BODY)}>{project.designGoalsIntro}</p>
           </AppleReveal>
-          <div className="mt-12 grid gap-5 sm:gap-6 md:grid-cols-3">
-            {caseStudyTechniques.map((t, i) => {
+
+          <div className="mt-12 grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {project.designGoals.map((goal, i) => {
               const accent = accentAt(i);
+              const Icon = goalIcons[i % goalIcons.length];
               return (
-                <AppleReveal key={t.title} delay={i * 0.06} className="h-full">
+                <AppleReveal key={goal.title} delay={Math.min(i * 0.06, 0.24)} className="h-full">
                   <div
                     className={cn(
                       innerCard,
@@ -268,17 +278,19 @@ export function CaseStudyView() {
                     <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
                     <span
                       className={cn(
-                        "mb-5 inline-flex h-10 w-10 items-center justify-center rounded-2xl text-[15px] font-semibold transition-transform duration-300 group-hover:scale-105",
+                        "mb-5 inline-flex h-11 w-11 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-105",
                         accent.badge,
                       )}
                       aria-hidden
                     >
-                      {String(i + 1).padStart(2, "0")}
+                      <Icon className="h-5 w-5" strokeWidth={1.75} />
                     </span>
-                    <h3 className="font-display text-[19px] font-semibold tracking-tight text-[#1d1d1f]">
-                      {t.title}
+                    <h3 className="font-sans text-[18px] font-bold leading-snug tracking-tight text-[#1d1d1f]">
+                      {goal.title}
                     </h3>
-                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">{t.body}</p>
+                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
+                      {goal.body}
+                    </p>
                   </div>
                 </AppleReveal>
               );
@@ -287,177 +299,122 @@ export function CaseStudyView() {
         </div>
       </section>
 
-      {/* 5. Walkthrough / beats */}
-      <section id="beats" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+      {/* 5. Level Design Document */}
+      <section id="document" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
-            <p className={innerEyebrow}>Walkthrough</p>
-            <h2 className={cn("mt-3", innerHeadline)}>Mission beats</h2>
-            <p className={cn("mt-4 max-w-2xl text-pretty", innerBody)}>
-              Five authored beats showing objective, player action, and design purpose — imagery is
-              portfolio reference until in-engine captures replace placeholders.
-            </p>
-          </AppleReveal>
-
-          <ol className="mt-12 space-y-6">
-            {caseStudyBeats.map((beat, i) => {
-              const accent = accentAt(i);
-              return (
-                <AppleReveal key={beat.id} delay={Math.min(i * 0.04, 0.16)}>
-                  <li
-                    className={cn(
-                      innerCard,
-                      innerCardHover,
-                      "group relative overflow-hidden",
-                      "lg:flex lg:items-stretch",
-                      i % 2 === 1 && "lg:flex-row-reverse",
-                    )}
-                  >
-                    <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
-                    <div className="relative min-h-[220px] overflow-hidden lg:min-h-0 lg:w-[44%] lg:shrink-0">
-                      <Image
-                        src={beat.image}
-                        alt={`${beat.title} — ${beat.imageNote}`}
-                        fill
-                        className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                        sizes="(max-width: 1024px) 100vw, 460px"
-                      />
-                      <span className="absolute left-3 top-3 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white backdrop-blur-sm">
-                        Beat {String(i + 1).padStart(2, "0")}
+            <div className={cn(innerCard, "relative overflow-hidden p-8 sm:p-10 lg:p-12")}>
+              <TopAccentBar accentKey="blue" />
+              <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12">
+                <div className="flex flex-col items-start">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0071e3]/10 text-[#0071e3]">
+                    <FileText className="h-7 w-7" strokeWidth={1.6} aria-hidden />
+                  </span>
+                  <p className={cn(EYEBROW, "mt-6")}>Level design document</p>
+                  <h2 className={cn("mt-3", HEADLINE)}>Level Design Document</h2>
+                  <div className="mt-7">
+                    {project.ldd.pdfUrl ? (
+                      <a
+                        href={project.ldd.pdfUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full bg-[#0071e3] px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-[#0077ed]"
+                      >
+                        <FileText className="h-4 w-4" aria-hidden />
+                        Download PDF
+                      </a>
+                    ) : (
+                      <span
+                        className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-[#e8e8ed] px-6 py-3 text-[15px] font-semibold text-[#86868b]"
+                        aria-disabled
+                      >
+                        <FileText className="h-4 w-4" aria-hidden />
+                        PDF coming soon
                       </span>
-                    </div>
-                    <div className="flex flex-1 flex-col p-6 sm:p-8">
-                      <h3 className="font-display text-[21px] font-semibold tracking-tight text-[#1d1d1f]">
-                        {beat.title}
-                      </h3>
-                      <p className="mt-1 text-[12px] font-medium text-[#86868b]">{beat.imageNote}</p>
-                      <dl className="mt-6 space-y-4">
-                        <div>
-                          <dt className={innerEyebrow}>Objective</dt>
-                          <dd className="mt-1.5 text-[15px] leading-relaxed text-[#6e6e73]">
-                            {beat.objective}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt className={innerEyebrow}>Player action</dt>
-                          <dd className="mt-1.5 text-[15px] leading-relaxed text-[#6e6e73]">
-                            {beat.playerAction}
-                          </dd>
-                        </div>
-                        <div>
-                          <dt className={cn(innerEyebrow, accent.text)}>Design purpose</dt>
-                          <dd className="mt-1.5 text-[15px] leading-relaxed text-[#1d1d1f]">
-                            {beat.designPurpose}
-                          </dd>
-                        </div>
-                      </dl>
-                    </div>
-                  </li>
-                </AppleReveal>
-              );
-            })}
-          </ol>
-        </div>
-      </section>
-
-      {/* 6. Process */}
-      <section id="process" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
-        <div className={innerContainer}>
-          <AppleReveal>
-            <p className={innerEyebrow}>Process</p>
-            <h2 className={cn("mt-3", innerHeadline)}>From research to polish</h2>
-          </AppleReveal>
-
-          <ol className="mt-12 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {caseStudyProcess.map((step, i) => {
-              const accent = accentAt(i);
-              return (
-                <AppleReveal key={step.title} delay={Math.min(i * 0.05, 0.2)} className="h-full">
-                  <li
-                    className={cn(
-                      innerCard,
-                      innerCardHover,
-                      "relative flex h-full flex-col overflow-hidden p-5 sm:p-6",
                     )}
-                  >
-                    <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
-                    <span
-                      className={cn(
-                        "inline-flex h-8 w-8 items-center justify-center rounded-xl text-[13px] font-semibold",
-                        accent.badge,
-                      )}
-                      aria-hidden
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="mt-3 font-display text-[16px] font-semibold text-[#1d1d1f]">
-                      {step.title}
-                    </p>
-                    <p className="mt-2 flex-1 text-[14px] leading-relaxed text-[#6e6e73]">
-                      {step.body}
-                    </p>
-                  </li>
-                </AppleReveal>
-              );
-            })}
-          </ol>
-
-          <AppleReveal delay={0.08}>
-            <div className={cn(innerCard, "relative mt-10 overflow-hidden p-4 sm:p-5")}>
-              <TopAccentBar accentKey="graphite" />
-              <div className="flex items-center justify-between gap-3 border-b border-black/[0.06] pb-3">
-                <span className="text-[12px] font-semibold uppercase tracking-[0.12em] text-[#6e6e73]">
-                  Blockout pass
-                </span>
-                <span className="rounded-full bg-[#0071e3]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#0071e3]">
-                  Greybox
-                </span>
-              </div>
-              <div className="relative mt-3 flex min-h-[240px] items-center justify-center rounded-2xl bg-[#f5f5f7] sm:min-h-[340px]">
-                <div className="relative h-[min(60vh,420px)] w-full">
-                  <Image
-                    src={heroBlockoutStill}
-                    alt={`${caseStudyMeta.title} greybox blockout — work in progress`}
-                    fill
-                    className="object-contain p-4"
-                    sizes="(max-width: 1100px) 100vw, 1040px"
-                  />
+                  </div>
                 </div>
+                <p className="text-pretty text-[16px] leading-[1.65] text-[#6e6e73] md:text-[17px]">
+                  {project.ldd.body}
+                </p>
               </div>
-              <p className="mt-3 text-[12px] text-[#86868b]">
-                Portfolio blockout still · replaces placeholder beats when in-engine captures are
-                ready
-              </p>
             </div>
           </AppleReveal>
         </div>
       </section>
 
-      {/* 7. Outcome */}
-      <section id="outcome" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+      {/* 6. Technique Highlights */}
+      <section id="techniques" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
-            <p className={innerEyebrow}>Outcome</p>
-            <h2 className={cn("mt-3", innerHeadline)}>What this demonstrates</h2>
-            <p className={cn("mt-5 max-w-3xl text-pretty", innerBody)}>{caseStudyOutcome.summary}</p>
+            <p className={EYEBROW}>Technique highlights</p>
+            <h2 className={cn("mt-3", HEADLINE)}>How the level guides the player</h2>
           </AppleReveal>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2">
-            {caseStudyOutcome.demonstrates.map((item, i) => {
+
+          <div className="mt-12 space-y-6 sm:space-y-8">
+            {project.techniques.map((tech, i) => {
               const accent = accentAt(i);
+              const flip = i % 2 === 1;
               return (
-                <AppleReveal key={item} delay={Math.min(i * 0.05, 0.2)}>
-                  <div className={cn(innerCard, innerCardHover, "flex items-start gap-3 p-4 sm:p-5")}>
-                    <span
-                      className={cn(
-                        "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full",
-                        accent.badge,
+                <AppleReveal key={tech.title} delay={Math.min(i * 0.04, 0.16)}>
+                  <article
+                    className={cn(
+                      innerCard,
+                      innerCardHover,
+                      "relative overflow-hidden",
+                      "lg:flex lg:items-stretch",
+                      flip && "lg:flex-row-reverse",
+                    )}
+                  >
+                    <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
+                    {/* Media slot */}
+                    <div className="p-5 sm:p-6 lg:w-[42%] lg:shrink-0">
+                      {tech.media ? (
+                        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[20px]">
+                          <Image
+                            src={tech.media}
+                            alt={tech.title}
+                            fill
+                            className="object-cover object-center"
+                            sizes="(max-width: 1024px) 90vw, 460px"
+                          />
+                        </div>
+                      ) : (
+                        <MediaPlaceholder
+                          kind="gif"
+                          label={tech.mediaPlaceholder ?? "GIF coming soon"}
+                          className="aspect-[16/10]"
+                        />
                       )}
-                      aria-hidden
-                    >
-                      <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-                    </span>
-                    <span className="text-[15px] leading-relaxed text-[#1d1d1f]">{item}</span>
-                  </div>
+                    </div>
+
+                    {/* Text */}
+                    <div className="flex flex-1 flex-col p-6 pt-1 sm:p-8 sm:pt-2 lg:pt-8">
+                      <h3 className="font-sans text-[21px] font-bold tracking-tight text-[#1d1d1f]">
+                        {tech.title}
+                      </h3>
+                      <dl className="mt-5 space-y-4">
+                        <div>
+                          <dt className={cn(EYEBROW, accent.text)}>My method</dt>
+                          <dd className="mt-1.5 text-[15px] leading-relaxed text-[#6e6e73]">
+                            {tech.method}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className={EYEBROW}>How I executed it</dt>
+                          <dd className="mt-1.5 text-[15px] leading-relaxed text-[#6e6e73]">
+                            {tech.execution}
+                          </dd>
+                        </div>
+                        <div>
+                          <dt className={EYEBROW}>Level example</dt>
+                          <dd className="mt-1.5 text-[15px] leading-relaxed text-[#1d1d1f]">
+                            {tech.example}
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </article>
                 </AppleReveal>
               );
             })}
@@ -465,13 +422,13 @@ export function CaseStudyView() {
         </div>
       </section>
 
-      {/* 8. CTA */}
+      {/* 7. CTA */}
       <AppleCTASection
-        eyebrow="Next step"
-        title="Like the thinking? Let's talk level design."
-        body="Reach out for level design conversations, or browse the rest of the portfolio."
+        eyebrow={project.cta.eyebrow}
+        title={project.cta.title}
+        body={project.cta.body}
         buttons={[
-          { label: "Get in touch", href: "/contact", variant: "primary" },
+          { label: "Contact", href: "/contact", variant: "primary" },
           { label: "Email directly", href: contactChannels.email.href, variant: "secondary" },
           { label: "Back home", href: "/", variant: "ghost" },
         ]}

@@ -47,7 +47,7 @@ import {
 } from "@/lib/appleInnerTokens";
 import { cn } from "@/lib/cn";
 
-const PORTRAIT_SRC = "/media/profile/sarthak-potrait.png";
+const PORTRAIT_SRC = "/media/profile/sarthak-potrait.jpeg";
 
 /** Accent rotation for the timeline/experience badges. */
 const accentCycle: InnerAccentKey[] = ["blue", "indigo", "orange", "green", "graphite"];
