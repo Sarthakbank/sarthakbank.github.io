@@ -153,7 +153,7 @@ export function AboutPage() {
                 </p>
               </div>
 
-              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] border border-black/[0.06] bg-[#0b1020] shadow-[0_10px_44px_rgba(0,0,0,0.18)] lg:mx-0 lg:max-w-md">
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] bg-[#0b1020] shadow-[0_10px_44px_rgba(0,0,0,0.18)] lg:mx-0 lg:max-w-md">
                 <div className="relative aspect-[3/4] w-full">
                   <Image
                     src={PORTRAIT_SRC}
