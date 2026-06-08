@@ -84,7 +84,7 @@ type CardAction = {
 
 /** Premium white card base — rounded 30px, layered Apple-style shadow. */
 const CONTACT_CARD =
-  "rounded-[30px] border border-black/[0.05] bg-white shadow-[0_1px_4px_rgba(0,0,0,0.04),0_10px_34px_rgba(0,0,0,0.07)]";
+  "rounded-[30px] border border-black/[0.05] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),0_12px_32px_rgba(0,0,0,0.09)]";
 
 const PILL =
   "group/btn inline-flex items-center justify-center rounded-full px-5 py-2.5 text-[15px] font-semibold transition-all duration-300 ease-out";

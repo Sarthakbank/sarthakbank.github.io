@@ -3,6 +3,7 @@
 import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import {
+  BadgeCheck,
   Box,
   Briefcase,
   Code2,
@@ -24,7 +25,7 @@ import {
 } from "lucide-react";
 import { SiJira } from "react-icons/si";
 import { ToolIcon } from "@/components/icons/ToolIcon";
-import { aboutHero, aboutIntro, aboutPhilosophy } from "@/content/about";
+import { aboutCurrently, aboutHero, aboutIntro, aboutPhilosophy } from "@/content/about";
 import {
   profileEducation,
   profileExperience,
@@ -50,7 +51,7 @@ import { cn } from "@/lib/cn";
 const PORTRAIT_SRC = "/media/profile/sarthak-potrait.jpeg";
 
 /** Accent rotation for the timeline/experience badges. */
-const accentCycle: InnerAccentKey[] = ["blue", "indigo", "orange", "green", "graphite"];
+const accentCycle: InnerAccentKey[] = ["blue", "indigo", "graphite", "green", "graphite"];
 const accentAt = (i: number) => innerAccents[accentCycle[i % accentCycle.length]];
 
 /** Bright gradient treatment for the design-philosophy cards (title, top bar, soft glow). */
@@ -116,6 +117,14 @@ const toolColor = (tool: string) => toolColors[tool] ?? "#0071e3";
 /** Soft tint background derived from an accent hex (~10% alpha). */
 const tint = (hex: string) => `${hex}1a`;
 
+/** Recruiter quick-facts — icon + accent per field (values live in content/about). */
+const currentlyMeta: Record<string, { Icon: IconComponent; accent: InnerAccentKey }> = {
+  role: { Icon: Compass, accent: "blue" },
+  availability: { Icon: BadgeCheck, accent: "green" },
+  experience: { Icon: Briefcase, accent: "graphite" },
+  tools: { Icon: Layers, accent: "indigo" },
+};
+
 export function AboutPage() {
   return (
     <AppleInnerShell>
@@ -153,7 +162,7 @@ export function AboutPage() {
                 </p>
               </div>
 
-              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] bg-[#0b1020] shadow-[0_10px_44px_rgba(0,0,0,0.18)] lg:mx-0 lg:max-w-md">
+              <div className="relative mx-auto w-full max-w-sm overflow-hidden rounded-[28px] shadow-[0_10px_44px_rgba(0,0,0,0.18)] lg:mx-0 lg:max-w-lg">
                 <div className="relative aspect-[3/4] w-full">
                   <Image
                     src={PORTRAIT_SRC}
@@ -165,6 +174,43 @@ export function AboutPage() {
                   />
                 </div>
               </div>
+            </div>
+          </AppleReveal>
+
+          {/* Currently — recruiter quick-facts */}
+          <AppleReveal delay={0.1}>
+            <div className={cn(innerCard, "relative mt-10 overflow-hidden p-6 sm:mt-12 sm:p-7")}>
+              <div
+                className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#0071e3] to-[#5ac8fa] opacity-80"
+                aria-hidden
+              />
+              <p className={innerEyebrow}>{aboutCurrently.eyebrow}</p>
+              <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 sm:gap-x-4">
+                {aboutCurrently.items.map(({ key, label, value }) => {
+                  const { Icon, accent } = currentlyMeta[key];
+                  return (
+                    <div key={key} className="flex items-start gap-3">
+                      <span
+                        className={cn(
+                          "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
+                          innerAccents[accent].badge,
+                        )}
+                        aria-hidden
+                      >
+                        <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                      </span>
+                      <div className="min-w-0">
+                        <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
+                          {label}
+                        </dt>
+                        <dd className="mt-0.5 text-[14px] font-semibold leading-snug text-[#1d1d1f] sm:text-[15px]">
+                          {value}
+                        </dd>
+                      </div>
+                    </div>
+                  );
+                })}
+              </dl>
             </div>
           </AppleReveal>
         </div>

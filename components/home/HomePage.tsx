@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { AppleDesignPrinciplesSection } from "@/components/home/AppleDesignPrinciplesSection";
 import { AppleFeaturedProjectsSection } from "@/components/home/AppleFeaturedProjectsSection";
@@ -34,10 +34,31 @@ const fadeUp = {
   transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
 };
 
+/* ── Staggered reveal — parent orchestrates, children fade up in sequence ── */
+const cardGridContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
+};
+
+const buttonRowContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.05, delayChildren: 0.04 } },
+};
+
+const revealItem = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
 /* ── No PreviewCard — About + Case Study cards are inlined below ── */
 
 export function HomePage() {
   const year = new Date().getFullYear();
+  const reduce = useReducedMotion();
 
   return (
     <div
@@ -70,19 +91,22 @@ export function HomePage() {
         style={{ background: "#f5f5f7" }}
       >
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10 xl:px-12">
-          <div className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-5">
+          <motion.div
+            className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-5"
+            variants={cardGridContainer}
+            initial={reduce ? "show" : "hidden"}
+            whileInView="show"
+            viewport={{ once: true, margin: "-32px" }}
+          >
             {/* ── About card (dark) ──────────────────────── */}
-            <motion.div {...fadeUp} className="flex">
+            <motion.div variants={revealItem} className="flex">
               <Link
                 href={homeAboutPreview.href}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-[36px] transition-all duration-300 ease-out hover:-translate-y-[2px]"
+                className="group flex h-full w-full flex-col overflow-hidden rounded-[36px] shadow-[0_2px_8px_rgba(0,0,0,0.08),0_12px_40px_rgba(0,0,0,0.16)] transition-all duration-300 ease-out hover:-translate-y-[2px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12),0_20px_56px_rgba(0,0,0,0.22)]"
                 style={{
                   background: "#1d1d1f",
                   padding: "44px 40px 40px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.16)",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.12), 0 20px 56px rgba(0,0,0,0.22)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08), 0 12px 40px rgba(0,0,0,0.16)"; }}
               >
                 <h3
                   className="font-display leading-[1.1] tracking-[-0.025em] text-white"
@@ -107,16 +131,13 @@ export function HomePage() {
             </motion.div>
 
             {/* ── Case Study card (white) ─────────────────── */}
-            <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.06 }} className="flex">
+            <motion.div variants={revealItem} className="flex">
               <Link
                 href={homeCaseStudyCard.href}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-[36px] border border-black/[0.04] bg-white transition-all duration-300 ease-out hover:-translate-y-[2px]"
+                className="group flex h-full w-full flex-col overflow-hidden rounded-[36px] border border-black/[0.04] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04),0_12px_40px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out hover:-translate-y-[2px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.06),0_20px_56px_rgba(0,0,0,0.12)]"
                 style={{
                   padding: "44px 40px 40px",
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08)",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 6px 16px rgba(0,0,0,0.06), 0 20px 56px rgba(0,0,0,0.12)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08)"; }}
               >
                 <h3
                   className="font-display leading-[1.1] tracking-[-0.025em] text-[#1d1d1f]"
@@ -139,7 +160,7 @@ export function HomePage() {
                 </span>
               </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -161,8 +182,11 @@ export function HomePage() {
             {homeConnectSection.title}
           </motion.h2>
           <motion.div
-            {...fadeUp}
             className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
+            variants={buttonRowContainer}
+            initial={reduce ? "show" : "hidden"}
+            whileInView="show"
+            viewport={{ once: true, margin: "-32px" }}
           >
             {homeConnectSection.buttons.map((btn) => {
               const className =
@@ -173,16 +197,17 @@ export function HomePage() {
                     : appleBtnGhost;
               const external = "external" in btn && btn.external;
               return (
-                <Link
-                  key={btn.label}
-                  href={btn.href}
-                  className={className}
-                  {...(external
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                >
-                  {btn.label}
-                </Link>
+                <motion.div key={btn.label} variants={revealItem} className="flex">
+                  <Link
+                    href={btn.href}
+                    className={className}
+                    {...(external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {btn.label}
+                  </Link>
+                </motion.div>
               );
             })}
           </motion.div>

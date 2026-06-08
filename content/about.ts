@@ -25,6 +25,17 @@ export const aboutIntro = {
   },
 } as const;
 
+/** Recruiter quick-facts shown in the "Currently" card below the About hero. */
+export const aboutCurrently = {
+  eyebrow: "Currently",
+  items: [
+    { key: "role", label: "Role", value: aboutHero.primaryRole },
+    { key: "availability", label: "Availability", value: "Open to Level Design Roles" },
+    { key: "experience", label: "Experience", value: "2+ Years" },
+    { key: "tools", label: "Primary tools", value: "UE5 · Maya · Blender" },
+  ],
+} as const;
+
 export const aboutPhilosophy = [
   {
     title: "Readable Flow",

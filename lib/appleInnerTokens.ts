@@ -18,11 +18,11 @@ export const innerBody = "text-[16px] leading-[1.6] text-[#6e6e73] md:text-[17px
 
 /** Premium white card with layered Apple-style shadow (matches Home depth). */
 export const innerCard =
-  "rounded-[28px] border border-black/[0.05] bg-white shadow-[0_1px_4px_rgba(0,0,0,0.04),0_8px_30px_rgba(0,0,0,0.06)]";
+  "rounded-[28px] border border-black/[0.05] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.05),0_12px_32px_rgba(0,0,0,0.09)]";
 
 /** Hover lift + deeper layered shadow. */
 export const innerCardHover =
-  "transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.05),0_16px_44px_rgba(0,0,0,0.10)]";
+  "transition-all duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06),0_20px_48px_rgba(0,0,0,0.13)]";
 
 export type InnerAccentKey =
   | "blue"

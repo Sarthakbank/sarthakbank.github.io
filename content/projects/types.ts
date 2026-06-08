@@ -25,6 +25,9 @@ export type ProjectNavItem = { id: string; label: string };
 export type ProjectInspirationItem = {
   title: string;
   body: string;
+  /** Optional landscape (16:9) reference image, rendered above the title. Text-only when absent. */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type ProjectInspirationGroup = {
@@ -35,6 +38,9 @@ export type ProjectInspirationGroup = {
 export type ProjectDesignGoal = {
   title: string;
   body: string;
+  /** Optional in-engine screenshot (16:10), rendered above the card content. */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type ProjectTechnique = {
@@ -45,6 +51,10 @@ export type ProjectTechnique = {
   /** Optional real media (image/gif). When null, a premium placeholder renders. */
   media?: string | null;
   mediaPlaceholder?: string;
+  /** Looping muted gameplay clip (mp4) + optional webm + poster still. */
+  video?: string;
+  videoWebm?: string;
+  poster?: string;
 };
 
 export type Project = {

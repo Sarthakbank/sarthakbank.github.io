@@ -2,26 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowLeft,
-  Box,
-  Briefcase,
-  Compass,
-  Cpu,
-  FileText,
-  Gamepad2,
-  MousePointer2,
-  Play,
-  Sparkles,
-  Swords,
-  Workflow,
-  Wrench,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowLeft, FileText, Play } from "lucide-react";
 import { FloatingSectionNav } from "./FloatingSectionNav";
 import { MediaPlaceholder } from "./MediaPlaceholder";
+import { MetadataDock } from "./MetadataDock";
+import { InspirationLane } from "./InspirationLane";
+import { DesignGoalShowcase } from "./DesignGoalShowcase";
+import { TechniqueVideo } from "./TechniqueVideo";
 import { escapeProtocol } from "@/content/projects";
-import type { Project, ProjectMetaIcon } from "@/content/projects/types";
+import type { Project } from "@/content/projects/types";
 import { contactChannels } from "@/content/contact";
 import { AppleInnerShell } from "@/components/shared/AppleInnerShell";
 import { AppleReveal } from "@/components/shared/AppleReveal";
@@ -41,37 +30,13 @@ const HEADLINE =
   "font-sans text-[clamp(1.875rem,2.6vw+1rem,2.875rem)] font-bold leading-[1.1] tracking-[-0.022em] text-[#1d1d1f]";
 const BODY = "text-[16px] leading-[1.6] text-[#6e6e73] md:text-[17px]";
 
-const accentCycle: InnerAccentKey[] = ["blue", "indigo", "orange", "green", "graphite"];
+const accentCycle: InnerAccentKey[] = ["blue", "indigo", "graphite", "green", "graphite"];
 const accentAt = (i: number) => innerAccents[accentCycle[i % accentCycle.length]];
-
-const metaIcons: Record<ProjectMetaIcon, LucideIcon> = {
-  genre: Gamepad2,
-  type: Box,
-  engine: Cpu,
-  tools: Wrench,
-  iterations: Workflow,
-  playtests: MousePointer2,
-  role: Briefcase,
-};
-
-const goalIcons: LucideIcon[] = [Swords, Sparkles, Compass, Workflow, Box];
-
-function TopAccentBar({ accentKey }: { accentKey: InnerAccentKey }) {
-  return (
-    <div
-      className={cn(
-        "absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r opacity-80",
-        innerAccents[accentKey].bar,
-      )}
-      aria-hidden
-    />
-  );
-}
 
 export function CaseStudyView({ project = escapeProtocol }: { project?: Project }) {
   return (
     <AppleInnerShell className="font-sans pb-[5.5rem] lg:pb-0">
-      <FloatingSectionNav items={[...project.nav]} editorial />
+      <FloatingSectionNav items={[...project.nav]} />
 
       {/* 1. Featured Project Hero */}
       <section
@@ -119,15 +84,23 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
                     className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     sizes="(max-width: 1100px) 100vw, 1100px"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" aria-hidden />
-                  <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-[#1d1d1f] shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
-                    <Play className="h-6 w-6 translate-x-0.5" aria-hidden />
-                  </span>
-                  {project.videoComingSoonLabel && (
-                    <span className="absolute bottom-4 left-4 rounded-full bg-black/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-white backdrop-blur-sm">
-                      {project.videoComingSoonLabel}
-                    </span>
-                  )}
+                  {project.youtubeUrl ? (
+                    <a
+                      href={project.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0 flex items-center justify-center"
+                      aria-label={`Play ${project.title} gameplay video`}
+                    >
+                      <span
+                        className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"
+                        aria-hidden
+                      />
+                      <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-[#1d1d1f] shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-transform duration-300 group-hover:scale-105">
+                        <Play className="h-6 w-6 translate-x-0.5" aria-hidden />
+                      </span>
+                    </a>
+                  ) : null}
                 </div>
               ) : (
                 <MediaPlaceholder
@@ -141,36 +114,9 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
 
           {/* Metadata pills with small icons */}
           <AppleReveal delay={0.16}>
-            <dl className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-              {project.meta.map((item, i) => {
-                const accent = accentAt(i);
-                const Icon = metaIcons[item.icon];
-                return (
-                  <div
-                    key={item.label}
-                    className="flex items-center gap-3 rounded-2xl border border-black/[0.06] bg-white px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
-                  >
-                    <span
-                      className={cn(
-                        "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
-                        accent.badge,
-                      )}
-                      aria-hidden
-                    >
-                      <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
-                    </span>
-                    <div className="min-w-0">
-                      <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
-                        {item.label}
-                      </dt>
-                      <dd className="truncate text-[14px] font-semibold text-[#1d1d1f]">
-                        {item.value}
-                      </dd>
-                    </div>
-                  </div>
-                );
-              })}
-            </dl>
+            <div className="mt-8">
+              <MetadataDock items={project.meta} />
+            </div>
           </AppleReveal>
         </div>
       </section>
@@ -191,8 +137,7 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
               ))}
             </AppleReveal>
             <AppleReveal delay={0.06}>
-              <div className={cn(innerCard, "relative h-full overflow-hidden p-7 sm:p-8")}>
-                <TopAccentBar accentKey="indigo" />
+              <div className={cn(innerCard, "h-full p-7 sm:p-8")}>
                 <p className={cn(EYEBROW, "text-[#5856d6]")}>Credits &amp; original work</p>
                 <p className="mt-4 text-pretty text-[15px] leading-relaxed text-[#6e6e73]">
                   {project.overview.credit}
@@ -211,44 +156,16 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
             <h2 className={cn("mt-3", HEADLINE)}>What shaped the level</h2>
           </AppleReveal>
 
-          <div className="mt-12 space-y-10">
-            {project.inspiration.map((group, gi) => {
-              const accent = accentAt(gi);
-              return (
-                <AppleReveal key={group.category} delay={gi * 0.06}>
-                  <div>
-                    <span
-                      className={cn(
-                        "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.1em]",
-                        accent.badge,
-                      )}
-                    >
-                      {group.category}
-                    </span>
-                    <div className="mt-5 grid gap-5 sm:gap-6 md:grid-cols-2">
-                      {group.items.map((item) => (
-                        <div
-                          key={item.title}
-                          className={cn(
-                            innerCard,
-                            innerCardHover,
-                            "relative flex h-full flex-col overflow-hidden p-7",
-                          )}
-                        >
-                          <TopAccentBar accentKey={accentCycle[gi % accentCycle.length]} />
-                          <h3 className="font-sans text-[18px] font-bold tracking-tight text-[#1d1d1f]">
-                            {item.title}
-                          </h3>
-                          <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
-                            {item.body}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </AppleReveal>
-              );
-            })}
+          <div className="mt-8 space-y-8">
+            {project.inspiration.map((group, gi) => (
+              <AppleReveal key={group.category} delay={gi * 0.06}>
+                <InspirationLane
+                  category={group.category}
+                  items={group.items}
+                  accentBadge={accentAt(gi).badge}
+                />
+              </AppleReveal>
+            ))}
           </div>
         </div>
       </section>
@@ -262,39 +179,10 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
             <p className={cn("mt-5 max-w-3xl text-pretty", BODY)}>{project.designGoalsIntro}</p>
           </AppleReveal>
 
-          <div className="mt-12 grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {project.designGoals.map((goal, i) => {
-              const accent = accentAt(i);
-              const Icon = goalIcons[i % goalIcons.length];
-              return (
-                <AppleReveal key={goal.title} delay={Math.min(i * 0.06, 0.24)} className="h-full">
-                  <div
-                    className={cn(
-                      innerCard,
-                      innerCardHover,
-                      "group relative flex h-full flex-col overflow-hidden p-7",
-                    )}
-                  >
-                    <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
-                    <span
-                      className={cn(
-                        "mb-5 inline-flex h-11 w-11 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-105",
-                        accent.badge,
-                      )}
-                      aria-hidden
-                    >
-                      <Icon className="h-5 w-5" strokeWidth={1.75} />
-                    </span>
-                    <h3 className="font-sans text-[18px] font-bold leading-snug tracking-tight text-[#1d1d1f]">
-                      {goal.title}
-                    </h3>
-                    <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73]">
-                      {goal.body}
-                    </p>
-                  </div>
-                </AppleReveal>
-              );
-            })}
+          <div className="mt-8">
+            <AppleReveal>
+              <DesignGoalShowcase goals={project.designGoals} />
+            </AppleReveal>
           </div>
         </div>
       </section>
@@ -303,8 +191,7 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
       <section id="document" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
-            <div className={cn(innerCard, "relative overflow-hidden p-8 sm:p-10 lg:p-12")}>
-              <TopAccentBar accentKey="blue" />
+            <div className={cn(innerCard, "p-8 sm:p-10 lg:p-12")}>
               <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-12">
                 <div className="flex flex-col items-start">
                   <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0071e3]/10 text-[#0071e3]">
@@ -351,7 +238,7 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
             <h2 className={cn("mt-3", HEADLINE)}>How the level guides the player</h2>
           </AppleReveal>
 
-          <div className="mt-12 space-y-6 sm:space-y-8">
+          <div className="mt-10 space-y-6 sm:space-y-8">
             {project.techniques.map((tech, i) => {
               const accent = accentAt(i);
               const flip = i % 2 === 1;
@@ -361,29 +248,37 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
                     className={cn(
                       innerCard,
                       innerCardHover,
-                      "relative overflow-hidden",
+                      "group relative overflow-hidden",
                       "lg:flex lg:items-stretch",
                       flip && "lg:flex-row-reverse",
                     )}
                   >
-                    <TopAccentBar accentKey={accentCycle[i % accentCycle.length]} />
                     {/* Media slot */}
-                    <div className="p-5 sm:p-6 lg:w-[42%] lg:shrink-0">
-                      {tech.media ? (
-                        <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[20px]">
+                    <div className="p-5 sm:p-6 lg:w-[50%] lg:shrink-0">
+                      {tech.video ? (
+                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px]">
+                          <TechniqueVideo
+                            src={tech.video}
+                            webm={tech.videoWebm}
+                            poster={tech.poster}
+                            title={tech.title}
+                          />
+                        </div>
+                      ) : tech.media ? (
+                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px]">
                           <Image
                             src={tech.media}
                             alt={tech.title}
                             fill
-                            className="object-cover object-center"
-                            sizes="(max-width: 1024px) 90vw, 460px"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                            sizes="(max-width: 1024px) 90vw, 560px"
                           />
                         </div>
                       ) : (
                         <MediaPlaceholder
                           kind="gif"
                           label={tech.mediaPlaceholder ?? "GIF coming soon"}
-                          className="aspect-[16/10]"
+                          className="aspect-[16/9]"
                         />
                       )}
                     </div>

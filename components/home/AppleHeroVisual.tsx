@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 // Switch this between hero-blockout-clean.png, hero-blockout.png, hb2.png for visual testing.
 // hero-blockout-clean.png has REAL transparency (no checkerboard, no white box).
@@ -17,9 +18,18 @@ export const HERO_SURFACE = "#f8f8f7";
  */
 export function AppleHeroVisual() {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  // Very subtle float — the blockout drifts up to 20px as the hero scrolls away,
+  // lifting off its ambient shadow for a quiet sense of depth.
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, -20]);
 
   return (
     <motion.div
+      ref={ref}
       initial={reduce ? false : { opacity: 0, y: 22 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
@@ -35,14 +45,16 @@ export function AppleHeroVisual() {
         className="pointer-events-none absolute bottom-[18%] left-1/2 z-0 h-[8%] w-[min(40%,300px)] -translate-x-1/2 rounded-[50%] bg-black/[0.05] blur-[30px] lg:left-[52%]"
       />
 
-      <Image
-        src={HERO_IMAGE}
-        alt="Abstract 3D level design blockout"
-        fill
-        priority
-        className="relative z-10 object-contain object-center scale-[1.08] lg:scale-[1.14] lg:object-[60%_center]"
-        sizes="(max-width: 1023px) 480px, 60vw"
-      />
+      <motion.div className="absolute inset-0 z-10" style={{ y: reduce ? 0 : imageY }}>
+        <Image
+          src={HERO_IMAGE}
+          alt="Abstract 3D level design blockout"
+          fill
+          priority
+          className="object-contain object-center scale-[1.08] lg:scale-[1.14] lg:object-[60%_center]"
+          sizes="(max-width: 1023px) 480px, 60vw"
+        />
+      </motion.div>
     </motion.div>
   );
 }
