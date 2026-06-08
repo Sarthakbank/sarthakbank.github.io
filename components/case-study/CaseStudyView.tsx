@@ -4,17 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, FileText, Play } from "lucide-react";
 import { FloatingSectionNav } from "./FloatingSectionNav";
-import { MediaPlaceholder } from "./MediaPlaceholder";
 import { MetadataDock } from "./MetadataDock";
-import { InspirationLane } from "./InspirationLane";
+import { InspirationCarousel } from "./InspirationCarousel";
 import { DesignGoalShowcase } from "./DesignGoalShowcase";
-import { TechniqueVideo } from "./TechniqueVideo";
+import { Walkthrough } from "./Walkthrough";
+import { MediaVideo } from "@/components/media/MediaVideo";
+import { ApplePlaceholder } from "@/components/media/ApplePlaceholder";
+import { YouTubeFacade } from "@/components/media/YouTubeFacade";
 import { escapeProtocol } from "@/content/projects";
 import type { Project } from "@/content/projects/types";
 import { contactChannels } from "@/content/contact";
 import { AppleInnerShell } from "@/components/shared/AppleInnerShell";
 import { AppleReveal } from "@/components/shared/AppleReveal";
 import { AppleCTASection } from "@/components/shared/AppleCTASection";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import {
   innerAccents,
   innerCard,
@@ -24,10 +27,10 @@ import {
 } from "@/lib/appleInnerTokens";
 import { cn } from "@/lib/cn";
 
-/* Inter typography (this page uses Inter — not the site display font). */
+/* Headings use the site display font (Hanken Grotesk); body/eyebrows stay on Inter. */
 const EYEBROW = "text-[12px] font-semibold uppercase tracking-[0.14em] text-[#6e6e73]";
 const HEADLINE =
-  "font-sans text-[clamp(1.875rem,2.6vw+1rem,2.875rem)] font-bold leading-[1.1] tracking-[-0.022em] text-[#1d1d1f]";
+  "font-display text-[clamp(1.875rem,2.6vw+1rem,2.875rem)] font-semibold leading-[1.1] tracking-[-0.025em] text-[#1d1d1f]";
 const BODY = "text-[16px] leading-[1.6] text-[#6e6e73] md:text-[17px]";
 
 const accentCycle: InnerAccentKey[] = ["blue", "indigo", "graphite", "green", "graphite"];
@@ -65,16 +68,29 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
               Home
             </Link>
 
-            <p className={cn(EYEBROW, "mt-8")}>{project.eyebrow}</p>
-            <h1 className="mt-3 font-sans text-[clamp(2.5rem,5.5vw+0.5rem,4rem)] font-bold leading-[1.02] tracking-[-0.035em] text-[#1d1d1f]">
-              {project.title}
-            </h1>
+            <SectionHeading
+              as="h1"
+              variant="hero"
+              lead={project.eyebrow}
+              title={project.title}
+              gradient="blue-purple"
+              className="mt-8"
+            />
           </AppleReveal>
 
           {/* Hero visual — YouTube thumbnail / placeholder */}
           <AppleReveal delay={0.1}>
             <div className="group relative mt-10 overflow-hidden rounded-[32px] border border-black/[0.05] bg-white shadow-[0_8px_40px_rgba(0,0,0,0.10)]">
-              {project.heroImage ? (
+              {project.trailerYouTubeId ? (
+                <div className="relative aspect-[16/9] w-full">
+                  <YouTubeFacade
+                    id={project.trailerYouTubeId}
+                    poster={project.heroImage ?? ""}
+                    title={`${project.title} — gameplay trailer`}
+                    start={3}
+                  />
+                </div>
+              ) : project.heroImage ? (
                 <div className="relative aspect-[16/9] w-full">
                   <Image
                     src={project.heroImage}
@@ -103,11 +119,9 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
                   ) : null}
                 </div>
               ) : (
-                <MediaPlaceholder
-                  kind="video"
-                  label="YouTube thumbnail coming soon"
-                  className="aspect-[16/9]"
-                />
+                <div className="relative aspect-[16/9] w-full">
+                  <ApplePlaceholder kind="video" title="YouTube thumbnail coming soon" />
+                </div>
               )}
             </div>
           </AppleReveal>
@@ -156,17 +170,9 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
             <h2 className={cn("mt-3", HEADLINE)}>What shaped the level</h2>
           </AppleReveal>
 
-          <div className="mt-8 space-y-8">
-            {project.inspiration.map((group, gi) => (
-              <AppleReveal key={group.category} delay={gi * 0.06}>
-                <InspirationLane
-                  category={group.category}
-                  items={group.items}
-                  accentBadge={accentAt(gi).badge}
-                />
-              </AppleReveal>
-            ))}
-          </div>
+          <AppleReveal className="mt-8">
+            <InspirationCarousel groups={project.inspiration} />
+          </AppleReveal>
         </div>
       </section>
 
@@ -257,7 +263,7 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
                     <div className="p-5 sm:p-6 lg:w-[50%] lg:shrink-0">
                       {tech.video ? (
                         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px]">
-                          <TechniqueVideo
+                          <MediaVideo
                             src={tech.video}
                             webm={tech.videoWebm}
                             poster={tech.poster}
@@ -275,17 +281,15 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
                           />
                         </div>
                       ) : (
-                        <MediaPlaceholder
-                          kind="gif"
-                          label={tech.mediaPlaceholder ?? "GIF coming soon"}
-                          className="aspect-[16/9]"
-                        />
+                        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[20px]">
+                          <ApplePlaceholder kind="gif" title={tech.mediaPlaceholder ?? "GIF coming soon"} />
+                        </div>
                       )}
                     </div>
 
                     {/* Text */}
                     <div className="flex flex-1 flex-col p-6 pt-1 sm:p-8 sm:pt-2 lg:pt-8">
-                      <h3 className="font-sans text-[21px] font-bold tracking-tight text-[#1d1d1f]">
+                      <h3 className="font-display text-[21px] font-bold tracking-tight text-[#1d1d1f]">
                         {tech.title}
                       </h3>
                       <dl className="mt-5 space-y-4">
@@ -317,7 +321,19 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
         </div>
       </section>
 
-      {/* 7. CTA */}
+      {/* 7. Walkthrough */}
+      {project.walkthrough ? (
+        <section
+          id="walkthrough"
+          className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28"
+        >
+          <div className={innerContainer}>
+            <Walkthrough data={project.walkthrough} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* 8. CTA */}
       <AppleCTASection
         eyebrow={project.cta.eyebrow}
         title={project.cta.title}

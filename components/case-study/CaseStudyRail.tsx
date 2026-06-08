@@ -14,33 +14,40 @@ import { cn } from "@/lib/cn";
 
 /**
  * Horizontal snap rail with peek + dot indicators + prev/next controls.
- * Same interaction grammar as the Home Featured Projects rail; styled with the
- * existing Apple tokens. Reduced-motion → instant (non-smooth) scroll.
+ * Same interaction grammar as the Home Featured Projects rail.
+ * Optional autoplay (opt-in via autoPlayMs) pauses on hover / drag / touch /
+ * wheel / keyboard focus / off-screen, and instantly jumps on wrap-around.
  */
 export function CaseStudyRail({
   ariaLabel,
   cardClass,
+  autoPlayMs,
   children,
 }: {
   ariaLabel: string;
-  /** Per-card width/snap class (controls how many peek into view). */
   cardClass?: string;
+  /** When set (e.g. 4500), the rail auto-advances; omit for manual rails. */
+  autoPlayMs?: number;
   children: ReactNode;
 }) {
   const reduce = useReducedMotion();
+  const rootRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const items = Children.toArray(children);
   const count = items.length;
 
   const scrollToIndex = useCallback(
-    (index: number) => {
+    (index: number, instant = false) => {
       const rail = railRef.current;
       if (!rail) return;
       const child = rail.children[index] as HTMLElement | undefined;
       if (!child) return;
       const padL = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
-      rail.scrollTo({ left: child.offsetLeft - padL, behavior: reduce ? "auto" : "smooth" });
+      rail.scrollTo({
+        left: child.offsetLeft - padL,
+        behavior: reduce || instant ? "auto" : "smooth",
+      });
       setActiveIndex(index);
     },
     [reduce],
@@ -55,6 +62,7 @@ export function CaseStudyRail({
     [activeIndex, count, scrollToIndex],
   );
 
+  // Track which card is centered (drives dots).
   useEffect(() => {
     const rail = railRef.current;
     if (!rail) return;
@@ -79,8 +87,76 @@ export function CaseStudyRail({
     return () => rail.removeEventListener("scroll", onScroll);
   }, []);
 
+  // ── Autoplay ──────────────────────────────────────────────
+  const autoplayOn = !!autoPlayMs && !reduce && count > 1;
+  const activeRef = useRef(0);
+  const hover = useRef(false);
+  const focused = useRef(false);
+  const offscreen = useRef(false);
+  const cooling = useRef(false);
+  const coolTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    activeRef.current = activeIndex;
+  }, [activeIndex]);
+
+  const bumpInteraction = useCallback(() => {
+    cooling.current = true;
+    if (coolTimer.current) clearTimeout(coolTimer.current);
+    coolTimer.current = setTimeout(() => {
+      cooling.current = false;
+    }, 4000);
+  }, []);
+
+  useEffect(() => () => {
+    if (coolTimer.current) clearTimeout(coolTimer.current);
+  }, []);
+
+  // Pause when the rail is off-screen.
+  useEffect(() => {
+    if (!autoplayOn) return;
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        offscreen.current = !entry.isIntersecting;
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [autoplayOn]);
+
+  useEffect(() => {
+    if (!autoplayOn) return;
+    const id = setInterval(() => {
+      if (hover.current || focused.current || offscreen.current || cooling.current) return;
+      const next = (activeRef.current + 1) % count;
+      scrollToIndex(next, next === 0); // instant jump on wrap (no long sweep)
+    }, autoPlayMs);
+    return () => clearInterval(id);
+  }, [autoplayOn, autoPlayMs, count, scrollToIndex]);
+
   return (
-    <div className="relative">
+    <div
+      ref={rootRef}
+      className="relative"
+      onMouseEnter={() => {
+        hover.current = true;
+      }}
+      onMouseLeave={() => {
+        hover.current = false;
+      }}
+      onPointerDown={autoplayOn ? bumpInteraction : undefined}
+      onTouchStart={autoplayOn ? bumpInteraction : undefined}
+      onWheel={autoplayOn ? bumpInteraction : undefined}
+      onFocusCapture={() => {
+        focused.current = true;
+      }}
+      onBlurCapture={() => {
+        focused.current = false;
+      }}
+    >
       <div
         ref={railRef}
         className={cn(

@@ -57,6 +57,29 @@ export type ProjectTechnique = {
   poster?: string;
 };
 
+export type ProjectWalkthroughBeat = {
+  /** e.g. "Beat 1 — Orientation" */
+  title: string;
+  /** Key gameplay summary line, e.g. "Tower 2 Interior · No Combat · Low Intensity" */
+  summary: string;
+  /** Beat description (front of the flip card). */
+  body: string;
+  /** YouTube id shown on the back of the flip card. */
+  youtubeId: string;
+};
+
+export type ProjectWalkthrough = {
+  intro: string;
+  pacing: { image: string; imageAlt: string; caption?: string };
+  levelMap: {
+    image: string;
+    imageAlt: string;
+    caption?: string;
+    legend?: readonly { label: string; color: string }[];
+  };
+  beats: readonly ProjectWalkthroughBeat[];
+};
+
 export type Project = {
   slug: string;
   eyebrow: string;
@@ -65,6 +88,8 @@ export type Project = {
   heroImage?: string | null;
   heroImageAlt?: string;
   youtubeUrl?: string | null;
+  /** When set, the hero renders an inline lazy YouTube trailer (poster = heroImage). */
+  trailerYouTubeId?: string | null;
   videoComingSoonLabel?: string;
   meta: readonly ProjectMetaItem[];
   nav: readonly ProjectNavItem[];
@@ -81,6 +106,7 @@ export type Project = {
     pdfUrl: string | null;
   };
   techniques: readonly ProjectTechnique[];
+  walkthrough?: ProjectWalkthrough;
   cta: {
     eyebrow: string;
     title: string;

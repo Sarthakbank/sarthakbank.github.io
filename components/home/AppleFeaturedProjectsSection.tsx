@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { homeFeaturedPreview } from "@/content/home";
 import { homeFeaturedMedia } from "@/content/homeMedia";
 import { cn } from "@/lib/cn";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import {
   AppleFeaturedProjectCard,
   type FeaturedProject,
@@ -118,9 +119,14 @@ export function AppleFeaturedProjectsSection() {
           viewport={{ once: true, margin: "-10% 0px" }}
           transition={{ duration: 0.55, ease }}
         >
-          <h2 className="font-display text-[clamp(2rem,3.2vw+0.5rem,3.5rem)] font-semibold leading-[1.06] tracking-[-0.035em] text-[#1d1d1f]">
-            Featured Projects
-          </h2>
+          <SectionHeading
+            as="h2"
+            variant="section"
+            inline
+            lead="Featured"
+            title="Projects"
+            gradient="blue-cyan"
+          />
           <p className="mt-5 max-w-2xl text-pretty text-[17px] leading-[1.6] text-[#6e6e73] sm:text-[19px]">
             Take a closer look at selected level design work.
           </p>

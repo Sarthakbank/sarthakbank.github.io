@@ -1,6 +1,6 @@
 /**
  * Reference / mood / placeholder demo videos — not Black Tidemark footage.
- * Posters: `public/media/demo/video-posters/`. Embeds load on user action (see `YouTubeEmbed`).
+ * Posters: `public/media/demo/video-posters/`. Embeds load on user action via a lazy facade.
  */
 
 export const demoVideoCategory = {

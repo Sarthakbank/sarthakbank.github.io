@@ -213,12 +213,6 @@ function ActionCard({
         compact ? "p-6" : "p-7 sm:p-8",
       )}
     >
-      <div
-        className="absolute inset-x-0 top-0 h-[3px]"
-        style={{ backgroundImage: `linear-gradient(90deg, ${b.from}, ${b.to})` }}
-        aria-hidden
-      />
-
       <div className="flex items-center gap-4">
         <AppIconTile brand={brand} size={compact ? "sm" : "lg"} variant={tileVariant}>
           {icon}

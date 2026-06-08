@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { AppleHeroVisual, HERO_SURFACE } from "@/components/home/AppleHeroVisual";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { homeHero } from "@/content/home";
 import {
   appleBtnGhost,
@@ -42,12 +43,13 @@ export function AppleHomeHero() {
           transition={{ duration: 0.55, ease }}
           className="relative z-10 mx-auto w-full max-w-[520px] text-center lg:mx-0 lg:max-w-none lg:py-2 lg:text-left"
         >
-          <h1 className="font-display text-[clamp(2.5rem,5.5vw+0.5rem,4rem)] font-semibold leading-[1.04] tracking-[-0.035em] text-[#1d1d1f]">
-            {homeHero.name}
-          </h1>
-          <p className="mt-3 text-[17px] font-medium text-[#6e6e73] sm:text-[18px]">
-            {homeHero.role}
-          </p>
+          <SectionHeading
+            as="h1"
+            variant="hero"
+            lead={homeHero.role}
+            title={homeHero.name}
+            gradient="blue-purple"
+          />
           <div
             className="mx-auto mt-4 h-px w-12 bg-black/15 lg:mx-0"
             aria-hidden

@@ -40,7 +40,7 @@ function GoalCard({ goal, index }: { goal: ProjectDesignGoal; index: number }) {
         >
           <Icon className="h-5 w-5" strokeWidth={1.75} />
         </span>
-        <h3 className="font-sans text-[20px] font-bold leading-snug tracking-tight text-[#1d1d1f] sm:text-[22px]">
+        <h3 className="font-display text-[20px] font-bold leading-snug tracking-tight text-[#1d1d1f] sm:text-[22px]">
           {goal.title}
         </h3>
         <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#6e6e73] sm:text-[16px]">

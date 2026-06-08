@@ -13,6 +13,7 @@ export const escapeProtocol: Project = {
   heroImage: "/media/escape-protocol-thumbnail.png",
   heroImageAlt: "Escape Protocol — gameplay thumbnail",
   youtubeUrl: null,
+  trailerYouTubeId: "Mqm-6DOhrQM",
   videoComingSoonLabel: "Gameplay video coming soon",
 
   meta: [
@@ -32,6 +33,7 @@ export const escapeProtocol: Project = {
     { id: "goals", label: "Goals" },
     { id: "document", label: "Document" },
     { id: "techniques", label: "Techniques" },
+    { id: "walkthrough", label: "Walkthrough" },
   ],
 
   overview: {
@@ -85,6 +87,8 @@ export const escapeProtocol: Project = {
         {
           title: "Heat",
           body: "Influenced the tactical weight of combat encounters, where positioning and patience matter as much as firepower.",
+          image: "/media/projects/escape-protocol/inspiration/heat.webp",
+          imageAlt: "Heat — tactical weight and patience in combat encounters",
         },
       ],
     },
@@ -203,6 +207,67 @@ export const escapeProtocol: Project = {
       mediaPlaceholder: "GIF coming soon",
     },
   ],
+
+  walkthrough: {
+    intro:
+      "Escape Protocol is built across six escalating beats — from quiet orientation to a dual-path climax. The pacing graph maps the intensity curve, the top-down map shows the routes, and each beat below flips to its gameplay clip.",
+    pacing: {
+      image: "/media/projects/escape-protocol/walkthrough/pacing-graph.webp",
+      imageAlt:
+        "Escape Protocol pacing graph — intensity rising across Beats 1–6 to the climax",
+      caption:
+        "Every beat was designed with a deliberate intensity curve — starting slow to onboard the player, then escalating toward extraction.",
+    },
+    levelMap: {
+      image: "/media/projects/escape-protocol/walkthrough/level-map.webp",
+      imageAlt:
+        "Top-down level map — dual stealth and combat routes through the prison courtyard",
+      caption:
+        "Two ground-level routes through the courtyard in Beat 6 — stealth and combat — converge on the same extraction.",
+      legend: [
+        { label: "Stealth route", color: "#ff3b30" },
+        { label: "Combat route", color: "#34c759" },
+      ],
+    },
+    beats: [
+      {
+        title: "Beat 1 — Orientation",
+        summary: "Tower 2 Interior · No Combat · Low Intensity",
+        body: "The level opens in flickering red emergency light. The player is given the first instruction of the entire level — follow the red light for the emergency exit. From this point forward the red light becomes the player's silent guide through the prison.",
+        youtubeId: "EOQm8XCy0LY",
+      },
+      {
+        title: "Beat 2 — First Contact",
+        summary: "Tower 2 Upper Floors · Stealth + Combat Introduction · Low → Medium",
+        body: "The player opens a door into a storage area and picks up a weapon — the first narrative beat, and the first time they are told to stay quiet. Exiting storage they meet a harmless first enemy, then a cache of ammo, firearms, and practice dummies. Two path options appear before the first real fight — armed enemies guarding the upper floor. After clearing them, a blocked route forces a way upward through ledge climbing, and the beat ends.",
+        youtubeId: "dm6qDA5rYKE",
+      },
+      {
+        title: "Beat 3 — Into the Dark",
+        summary: "Cell Block · Exploration + Risk / Reward · Medium",
+        body: "Two landing choices greet the player — one rewards a silenced weapon, the other gives progression only; the player must explore to learn what each offers. Ladder climbing is introduced, then the red light disappears and the player feels lost. New pathways through the cell block eventually reveal red-light traces again. The beat ends with the player back on track — but having experienced real disorientation for the first time.",
+        youtubeId: "2YpZIRlXeVM",
+      },
+      {
+        title: "Beat 4 — The World Opens",
+        summary: "Tower 3 Office Floors · Escalating Combat + Discovery · Medium → High",
+        body: "A risky slide down a slanted platform opens Beat 4 with immediate momentum, and the full scale of the environment is revealed and labelled. Paths split — a continuation route from Beat 3, one reward-only path with an AK-47, and a dark room that demands navigation without light and rewards a sniper rifle. High tension followed by high reward — the beat ends with the player well-armed and moving.",
+        youtubeId: "gia6K16zXik",
+      },
+      {
+        title: "Beat 5 — Point of No Return",
+        summary: "Descent to Ground Level · Narrative Turn · High",
+        body: "Red light returns, restoring the player's confidence. A large slant drops them to ground level — the first time they have been on the street. Security monitors show escape platforms ahead, a visual reward for curious players. A fax document reveals the extraction point for the first time: Tower 1 Helipad, last scheduled extraction, proceed without delay. An interactable object reveals a vent escape route.",
+        youtubeId: "eiXL4G3tg1g",
+      },
+      {
+        title: "Beat 6 — Extraction",
+        summary: "Ground Level · Tower 4 · Tower 1 · Final Combat + Dual Path · Climax",
+        body: "A patrolling armed enemy greets the player at the exit — the most dangerous surprise encounter of the level. Two routes to extraction exist: the stealth path moves quietly from Tower 4 toward Tower 1, while the combat path clears ground level aggressively and climbs the opposite bridge. Both converge at the Tower 4 exterior climbing trail to the rooftop, where Tower 1 comes into view. A final climb delivers the player to the helipad. Extraction complete.",
+        youtubeId: "bYWvDzrU2oo",
+      },
+    ],
+  },
 
   cta: {
     eyebrow: "Next step",

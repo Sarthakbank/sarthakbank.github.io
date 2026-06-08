@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '/homeHero =/,/};/p' content/home.ts)",
+      "Bash(sed -n '/aboutHero =/,/};/p' content/about.ts)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/about/)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(awk '{print $5}')",
+      "Bash(python3 -c ' *)",
+      "Bash(pkill -f \"Google Chrome\")",
+      "Bash(pkill -f \"serve out\")",
+      "Bash(rm -rf /tmp/cdp-*)",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/home_v.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.36\\),int\\(w*0.62\\),int\\(h*0.80\\)\\)\\).save\\('/tmp/home_v_crop.png'\\); print\\('ok',im.size\\)\")",
+      "Bash(pkill -f \"Google Chrome\" 2>/dev/null; pkill -f \"serve out\" 2>/dev/null; rm -rf /tmp/cdp-* /tmp/cs_*.png /tmp/home_v*.png /tmp/featured_crop*.png /tmp/home*.png /tmp/about*.png /tmp/cs3.png /tmp/casestudy.png /tmp/homefull.png 2>/dev/null; echo \"cleaned\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dock_meta.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.30\\),w,int\\(h*0.44\\)\\)\\).save\\('/tmp/dock_meta_crop.png'\\); print\\('ok',im.size\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dock_meta.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.42\\),w,int\\(h*0.52\\)\\)\\).save\\('/tmp/dock_meta_crop2.png'\\); print\\('ok'\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dock_meta.png'\\); print\\(im.size\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dock_meta.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.55\\),int\\(w*0.82\\),int\\(h*0.74\\)\\)\\).save\\('/tmp/dock_meta_crop3.png'\\); print\\('ok'\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dock_meta.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.86\\),w,h\\)\\).save\\('/tmp/dock_meta_crop4.png'\\); print\\('ok'\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dm2.png'\\); w,h=im.size; print\\(im.size\\); im.crop\\(\\(0,int\\(h*0.28\\),w,int\\(h*0.40\\)\\)\\).save\\('/tmp/dm2_crop.png'\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dm2.png'\\); w,h=im.size; print\\(im.size\\); im.crop\\(\\(0,int\\(h*0.27\\),w,int\\(h*0.40\\)\\)\\).save\\('/tmp/dm2_crop.png'\\); print\\('ok'\\)\")",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/dm3.png'\\); w,h=im.size; print\\(im.size\\); im.crop\\(\\(0,int\\(h*0.27\\),w,int\\(h*0.40\\)\\)\\).save\\('/tmp/dm3_crop.png'\\); print\\('ok'\\)\")",
+      "Bash(node -e \"try{require.resolve\\('puppeteer-core'\\);console.log\\('puppeteer-core yes'\\)}catch\\(e\\){console.log\\('no puppeteer-core'\\)}\")",
+      "Bash(node -e \"try{require.resolve\\('playwright'\\);console.log\\('playwright yes'\\)}catch\\(e\\){console.log\\('no playwright'\\)}\")",
+      "Bash(node -e \"console.log\\('WS global:', typeof WebSocket\\)\")",
+      "Bash(pkill -f \"Google Chrome\" 2>/dev/null; pkill -f \"serve out\" 2>/dev/null *)",
+      "Bash(sed -n '18,46p' components/case-study/DesignGoalShowcase.tsx)",
+      "Bash(sed -n '/ProjectTechnique/,/};/p' content/projects/types.ts)",
+      "Bash(cd /Users/yashbankar/Portfolio-Sarthak *)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(pdftotext -layout \"Group 33.pdf\" -)",
+      "Bash(sed -n '/export function AppleDock/,/}\\) {/p' components/shared/AppleDock.tsx)",
+      "Bash(sed -n '/nav:/,/],/p' content/projects/escapeProtocol.ts)",
+      "Bash(sed -n '/export type Project/,/^};/p' content/projects/types.ts)",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/v3_currently_dock.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.62\\),w,int\\(h*0.95\\)\\)\\).save\\('/tmp/v3_crop.png'\\); print\\('ok',im.size\\)\")"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}

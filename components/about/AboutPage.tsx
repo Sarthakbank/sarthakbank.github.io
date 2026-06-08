@@ -36,6 +36,10 @@ import { contactChannels } from "@/content/contact";
 import { AppleInnerShell } from "@/components/shared/AppleInnerShell";
 import { AppleReveal } from "@/components/shared/AppleReveal";
 import { AppleCTASection } from "@/components/shared/AppleCTASection";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import { AppleDock } from "@/components/shared/AppleDock";
+import { MediaGallery } from "@/components/media/MediaGallery";
+import { aboutMedia } from "@/content/aboutMedia";
 import {
   innerAccents,
   innerBody,
@@ -146,13 +150,14 @@ export function AboutPage() {
           <AppleReveal>
             <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-14">
               <div className="min-w-0">
-                <p className={innerEyebrow}>About</p>
-                <h1 className="mt-4 font-display text-[clamp(2.5rem,5.5vw+0.5rem,4rem)] font-semibold leading-[1.02] tracking-[-0.04em] text-[#1d1d1f]">
-                  {profileIdentity.name}
-                </h1>
-                <p className="mt-3 text-[18px] font-semibold text-[#0071e3] sm:text-[20px]">
-                  {aboutHero.primaryRole}
-                </p>
+                <SectionHeading
+                  as="h1"
+                  variant="hero"
+                  eyebrow="About"
+                  lead={aboutHero.primaryRole}
+                  title={profileIdentity.name}
+                  gradient="blue-purple"
+                />
                 <p className="mt-6 max-w-xl text-pretty text-[17px] leading-[1.6] text-[#6e6e73] sm:text-[18px]">
                   {aboutHero.statement}
                 </p>
@@ -179,38 +184,69 @@ export function AboutPage() {
 
           {/* Currently — recruiter quick-facts */}
           <AppleReveal delay={0.1}>
-            <div className={cn(innerCard, "relative mt-10 overflow-hidden p-6 sm:mt-12 sm:p-7")}>
-              <div
-                className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#0071e3] to-[#5ac8fa] opacity-80"
-                aria-hidden
-              />
+            <div className={cn(innerCard, "mt-8 overflow-hidden p-6 text-center sm:p-7")}>
               <p className={innerEyebrow}>{aboutCurrently.eyebrow}</p>
-              <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 sm:gap-x-4">
-                {aboutCurrently.items.map(({ key, label, value }) => {
-                  const { Icon, accent } = currentlyMeta[key];
-                  return (
-                    <div key={key} className="flex items-start gap-3">
+              {/* Quick-facts as the same Apple dock used in the Featured Project
+                  metadata, with labels visible (value shown on hover/focus).
+                  Scale mode keeps the dock a fixed shape — hover magnifies icons
+                  only, never resizes the container. Touch / reduced-motion falls
+                  back to the original grid. */}
+              <div className="mt-5 flex justify-center">
+                <AppleDock
+                  items={aboutCurrently.items}
+                  getKey={(it) => it.key}
+                  getLabel={(it) => it.label}
+                  getValue={(it) => it.value}
+                  renderIcon={(it) => {
+                    const { Icon, accent } = currentlyMeta[it.key];
+                    return (
                       <span
                         className={cn(
-                          "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
+                          "flex h-full w-full items-center justify-center rounded-2xl",
                           innerAccents[accent].badge,
                         )}
-                        aria-hidden
                       >
-                        <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                        <Icon className="h-[42%] w-[42%]" strokeWidth={1.75} aria-hidden />
                       </span>
-                      <div className="min-w-0">
-                        <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
-                          {label}
-                        </dt>
-                        <dd className="mt-0.5 text-[14px] font-semibold leading-snug text-[#1d1d1f] sm:text-[15px]">
-                          {value}
-                        </dd>
-                      </div>
-                    </div>
-                  );
-                })}
-              </dl>
+                    );
+                  }}
+                  mode="scale"
+                  showLabels
+                  geometry={{ base: 46, peak: 70, range: 130 }}
+                  cellClassName="w-20"
+                  ariaLabel={aboutCurrently.eyebrow}
+                  className="h-[120px] justify-center gap-3 pb-2"
+                  labelClassName="text-[10px] uppercase tracking-[0.1em] text-[#86868b]"
+                  fallback={
+                    <dl className="grid w-full grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 sm:gap-x-4">
+                      {aboutCurrently.items.map(({ key, label, value }) => {
+                        const { Icon, accent } = currentlyMeta[key];
+                        return (
+                          <div key={key} className="flex items-start gap-3">
+                            <span
+                              className={cn(
+                                "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
+                                innerAccents[accent].badge,
+                              )}
+                              aria-hidden
+                            >
+                              <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                            </span>
+                            <div className="min-w-0">
+                              <dt className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#86868b]">
+                                {label}
+                              </dt>
+                              <dd className="mt-0.5 text-[14px] font-semibold leading-snug text-[#1d1d1f] sm:text-[15px]">
+                                {value}
+                              </dd>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </dl>
+                  }
+                />
+              </div>
             </div>
           </AppleReveal>
         </div>
@@ -277,11 +313,6 @@ export function AboutPage() {
                       "group relative flex h-full flex-col overflow-hidden p-7 sm:p-8",
                     )}
                   >
-                    {/* Thin top gradient accent bar */}
-                    <div
-                      className={cn("absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r", style.bar)}
-                      aria-hidden
-                    />
                     {/* Soft colored glow wash inside the card */}
                     <div
                       className={cn(
@@ -327,11 +358,11 @@ export function AboutPage() {
                   className={cn(
                     innerCard,
                     innerCardHover,
-                    "flex h-full flex-col items-center gap-4 p-6 text-center sm:p-7",
+                    "group flex h-full flex-col items-center gap-4 p-6 text-center sm:p-7",
                   )}
                 >
                   <span
-                    className="flex h-12 w-12 items-center justify-center rounded-2xl"
+                    className="flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-300 ease-out group-hover:scale-110"
                     style={{ backgroundColor: tint(color), color }}
                     aria-hidden
                   >
@@ -414,13 +445,6 @@ export function AboutPage() {
                       "relative overflow-hidden p-6 sm:p-8",
                     )}
                   >
-                    <div
-                      className={cn(
-                        "absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r opacity-80",
-                        accent.bar,
-                      )}
-                      aria-hidden
-                    />
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                       <div className="flex gap-4">
                         <div
@@ -462,7 +486,14 @@ export function AboutPage() {
         </div>
       </section>
 
-      {/* 7. Production stack (Tools) */}
+      {/* 7. Media — work in motion */}
+      <section className="bg-white py-20 sm:py-24 lg:py-28">
+        <div className={innerContainer}>
+          <MediaGallery group={aboutMedia} gradient="blue-cyan" />
+        </div>
+      </section>
+
+      {/* 8. Production stack (Tools) */}
       <section className="bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
         <div className={innerContainer}>
           <AppleReveal>
@@ -473,33 +504,73 @@ export function AboutPage() {
               workflow.
             </p>
           </AppleReveal>
-          <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-6">
-            {profileTools.map((tool, i) => {
-              const color = toolColor(tool);
-              return (
-                <AppleReveal key={tool} delay={Math.min((i % 6) * 0.04, 0.2)} className="h-full">
-                  <li
-                    className={cn(
-                      innerCard,
-                      innerCardHover,
-                      "flex h-full flex-col items-center justify-center gap-3 px-3 py-6 text-center",
+          {(() => {
+            // Existing card grid — used directly on mobile/tablet and as the
+            // dock's reduced-motion / touch fallback (labels always visible, no scroll).
+            const toolsGrid = (
+              <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-6">
+                {profileTools.map((tool, i) => {
+                  const color = toolColor(tool);
+                  return (
+                    <AppleReveal key={tool} delay={Math.min((i % 6) * 0.04, 0.2)} className="h-full">
+                      <li
+                        className={cn(
+                          innerCard,
+                          innerCardHover,
+                          "flex h-full flex-col items-center justify-center gap-3 px-3 py-6 text-center",
+                        )}
+                      >
+                        <span
+                          className="flex h-11 w-11 items-center justify-center rounded-2xl"
+                          style={{ backgroundColor: tint(color), color }}
+                          aria-hidden
+                        >
+                          <ToolIcon tool={tool} className="h-6 w-6" />
+                        </span>
+                        <span className="text-[12.5px] font-semibold leading-tight text-[#6e6e73]">
+                          {tool}
+                        </span>
+                      </li>
+                    </AppleReveal>
+                  );
+                })}
+              </ul>
+            );
+
+            return (
+              <>
+                {/* Mobile / tablet — keep the grid (labels visible, no horizontal scroll). */}
+                <div className="mt-10 lg:hidden">{toolsGrid}</div>
+
+                {/* Desktop — Apple dock: white glass, colored icons, labels under icons,
+                    proximity magnification, tooltip on hover/focus. Falls back to the grid
+                    for reduced-motion / touch. */}
+                <div className="mt-12 hidden lg:flex lg:justify-center">
+                  <AppleDock
+                    items={profileTools}
+                    getKey={(tool) => tool}
+                    getLabel={(tool) => tool}
+                    renderIcon={(tool) => (
+                      <span
+                        className="flex h-full w-full items-center justify-center rounded-[18px] bg-white ring-1 ring-black/[0.05] shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
+                        style={{ color: toolColor(tool) }}
+                      >
+                        <ToolIcon tool={tool} className="h-[46%] w-[46%]" />
+                      </span>
                     )}
-                  >
-                    <span
-                      className="flex h-11 w-11 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: tint(color), color }}
-                      aria-hidden
-                    >
-                      <ToolIcon tool={tool} className="h-6 w-6" />
-                    </span>
-                    <span className="text-[12.5px] font-semibold leading-tight text-[#6e6e73]">
-                      {tool}
-                    </span>
-                  </li>
-                </AppleReveal>
-              );
-            })}
-          </ul>
+                    mode="scale"
+                    showLabels
+                    geometry={{ base: 46, peak: 84, range: 140 }}
+                    cellClassName="w-[4.75rem]"
+                    labelClassName="text-[#6e6e73]"
+                    ariaLabel="Production stack"
+                    className="gap-2 rounded-[32px] border border-black/[0.05] bg-white/55 px-5 pb-4 pt-3 ring-1 ring-inset ring-white/55 backdrop-blur-2xl backdrop-saturate-150 shadow-[0_12px_48px_rgba(0,0,0,0.14)]"
+                    fallback={<div className="w-full">{toolsGrid}</div>}
+                  />
+                </div>
+              </>
+            );
+          })()}
         </div>
       </section>
 
