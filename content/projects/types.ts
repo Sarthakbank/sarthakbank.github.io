@@ -4,6 +4,8 @@
  * `/projects/[slug]` (future) — add a project by adding a data file + registry entry.
  */
 
+import type { MediaItem } from "@/content/media/types";
+
 /** Icon keys map to lucide icons inside the view (keeps content free of JSX). */
 export type ProjectMetaIcon =
   | "genre"
@@ -80,6 +82,44 @@ export type ProjectWalkthrough = {
   beats: readonly ProjectWalkthroughBeat[];
 };
 
+/** One iteration in a process beat — the Problem → Iteration → Solution → Outcome flow. */
+export type ProjectProcessIteration = {
+  problem: string;
+  iteration?: string;
+  solution: string;
+  outcome?: string;
+};
+
+export type ProjectProcessBeat = {
+  /** e.g. "Beat 1 — Movement Onboarding" */
+  title: string;
+  /** One-line summary of what this beat tackled. */
+  summary: string;
+  iterations: readonly ProjectProcessIteration[];
+  /** Optional, GIF-ready media slot (image now, GIF/video later — no redesign). */
+  media?: MediaItem;
+};
+
+export type ProjectProcess = {
+  intro: string;
+  beats: readonly ProjectProcessBeat[];
+};
+
+export type ProjectTechnicalChallenges = {
+  intro: string;
+  challenges: readonly { title: string; body: string }[];
+  /** The design-decision resolution callout. */
+  resolution: string;
+};
+
+export type ProjectReflection = {
+  /** "Reflection" column paragraphs. */
+  reflection: readonly string[];
+  /** "What I Would Do Differently" column paragraphs. */
+  differently: readonly string[];
+  closingQuote?: string;
+};
+
 export type Project = {
   slug: string;
   eyebrow: string;
@@ -109,6 +149,9 @@ export type Project = {
   };
   techniques: readonly ProjectTechnique[];
   walkthrough?: ProjectWalkthrough;
+  process?: ProjectProcess;
+  technicalChallenges?: ProjectTechnicalChallenges;
+  reflection?: ProjectReflection;
   cta: {
     eyebrow: string;
     title: string;

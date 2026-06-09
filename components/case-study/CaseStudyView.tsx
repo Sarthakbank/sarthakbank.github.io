@@ -8,6 +8,9 @@ import { MetadataDock } from "./MetadataDock";
 import { InspirationCarousel } from "./InspirationCarousel";
 import { DesignGoalShowcase } from "./DesignGoalShowcase";
 import { Walkthrough } from "./Walkthrough";
+import { ProcessBreakdown } from "./ProcessBreakdown";
+import { TechnicalChallenges } from "./TechnicalChallenges";
+import { CaseStudyReflection } from "./CaseStudyReflection";
 import { MediaVideo } from "@/components/media/MediaVideo";
 import { ApplePlaceholder } from "@/components/media/ApplePlaceholder";
 import { YouTubeFacade } from "@/components/media/YouTubeFacade";
@@ -334,7 +337,34 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
         </section>
       ) : null}
 
-      {/* 8. CTA */}
+      {/* 8. Process Breakdown — playtest & iterations */}
+      {project.process ? (
+        <section id="process" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
+          <div className={innerContainer}>
+            <ProcessBreakdown data={project.process} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* 9. Technical Challenges */}
+      {project.technicalChallenges ? (
+        <section id="challenges" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+          <div className={innerContainer}>
+            <TechnicalChallenges data={project.technicalChallenges} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* 10. Reflection / What I'd do differently */}
+      {project.reflection ? (
+        <section id="reflection" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
+          <div className={innerContainer}>
+            <CaseStudyReflection data={project.reflection} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* 11. CTA */}
       <AppleCTASection
         eyebrow={project.cta.eyebrow}
         title={project.cta.title}

@@ -48,7 +48,20 @@
       "Bash(sed -n '1,40p' components/shared/AppleInnerShell.tsx)",
       "Bash(awk '{print $5,$9}')",
       "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/v_gallery.png'\\); w,h=im.size; c=im.crop\\(\\(0,int\\(h*0.18\\),w,int\\(h*0.92\\)\\)\\); c.thumbnail\\(\\(1200,1200\\)\\); c.save\\('/tmp/v_gallery_s.png'\\); print\\('cropped'\\)\")",
-      "Bash(grep -vE '\\\\.pdf|HighresScreenshot|Heat-image|/$|\\\\.claude|out/')"
+      "Bash(grep -vE '\\\\.pdf|HighresScreenshot|Heat-image|/$|\\\\.claude|out/')",
+      "Bash(git count-objects *)",
+      "Bash(xargs -0 -I{} sh -c 'test -f \"{}\" && echo \"$\\(du -m \"{}\" | cut -f1\\)M {}\"')",
+      "Bash(awk '$1+0 >= 2')",
+      "Bash(git ls-remote *)",
+      "Bash(git rev-list *)",
+      "Bash(git cat-file *)",
+      "Bash(awk '/^blob/ && $2+0 > 2000000 {printf \"%6.1fMB  %s\\\\n\", $2/1048576, substr\\($0, index\\($0,$3\\)\\)}')",
+      "Bash(xargs -0 -I{} sh -c 'test -f \"{}\" && echo \"$\\(du -m \"{}\"|cut -f1\\)M {}\"')",
+      "Bash(awk '$1+0>=2')",
+      "Bash(grep -vE '^[[:space:]]*$')",
+      "Bash(pdftotext -layout \"Group 33.pdf\" /tmp/g33.txt)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(pdftotext -layout \"new docs/Group 33.pdf\" /tmp/g33.txt)"
     ],
     "additionalDirectories": [
       "/tmp"

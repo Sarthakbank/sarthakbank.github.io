@@ -6,6 +6,9 @@
 
 import type { Project } from "./types";
 
+/** Gallery (in-engine greybox captures) base path. */
+const G = "/media/projects/escape-protocol/gallery";
+
 export const escapeProtocol: Project = {
   slug: "escape-protocol",
   eyebrow: "Featured Project",
@@ -34,6 +37,9 @@ export const escapeProtocol: Project = {
     { id: "document", label: "Document" },
     { id: "techniques", label: "Techniques" },
     { id: "walkthrough", label: "Walkthrough" },
+    { id: "process", label: "Process" },
+    { id: "challenges", label: "Challenges" },
+    { id: "reflection", label: "Reflection" },
   ],
 
   overview: {
@@ -268,6 +274,205 @@ export const escapeProtocol: Project = {
         youtubeId: "bYWvDzrU2oo",
       },
     ],
+  },
+
+  process: {
+    intro:
+      "Escape Protocol was developed across 6+ iterations, each driven by playtesting feedback and personal observation. The process followed a consistent loop — build, test, identify problems, solve, repeat.",
+    beats: [
+      {
+        title: "Beat 1 — Movement Onboarding",
+        summary: "Teaching movement without UI — turning a failure point into the tutorial.",
+        media: {
+          kind: "image",
+          src: `${G}/shot-08.webp`,
+          alt: "Greybox traversal space with a slope and emergency light",
+          ratio: "16/9",
+        },
+        iterations: [
+          {
+            problem:
+              "Early playtests showed players frequently falling into gaps after standard walk-jumps.",
+            iteration:
+              "I redesigned the platform to teach movement progressively — introducing a short jump before a long jump, adding a runway for momentum, and placing an on-screen prompt before the larger gap.",
+            solution:
+              "Players still fell into the pit. Rather than removing the challenge I turned it into a teaching moment — adding ledge-grab surfaces inside the pit so players discovered the mechanic naturally.",
+            outcome: "From that point forward no further ledge indicators were needed.",
+          },
+        ],
+      },
+      {
+        title: "Beat 2 — Narrative Timing + Enemy Layout",
+        summary: "Sequencing story and combat so players understand before they're tested.",
+        media: {
+          kind: "image",
+          src: `${G}/shot-04.webp`,
+          alt: "Greybox encounter space with a figure and cover objects",
+          ratio: "16/9",
+        },
+        iterations: [
+          {
+            problem:
+              "The narrative letter originally appeared after the first enemy encounter, disrupting the story flow.",
+            solution:
+              "After testing I moved it before the encounter so players understood the situation before facing danger.",
+          },
+          {
+            problem: "The first enemy was originally patrolling, but the space was too tight for new players.",
+            solution:
+              "I replaced him with a stationary guard and used narrative text to introduce stealth takedowns.",
+          },
+          {
+            problem: "Two patrolling gunmen on the same floor overwhelmed players.",
+            solution:
+              "I introduced vertical separation, placing them on an upper floor with an ammunition room below.",
+          },
+          {
+            problem:
+              "A rifle pickup made the encounter too easy, and the hidden silenced pistol was being missed due to ledge placement.",
+            solution:
+              "I removed the rifle, limiting the player to a pistol, and redesigned the area to force exploration so players discovered the silenced pistol naturally.",
+          },
+        ],
+      },
+      {
+        title: "Beat 3 — Rifle Placement + Visual Cues",
+        summary: "Placing the rifle for narrative logic, then making it discoverable.",
+        media: {
+          kind: "image",
+          src: `${G}/shot-05.webp`,
+          alt: "Dark room with a single lit object and an exit",
+          ratio: "16/9",
+        },
+        iterations: [
+          {
+            problem: "The rifle was originally placed immediately after Beat 2, breaking narrative urgency.",
+            iteration:
+              "I moved it later — after all traversal in Tower 2 was complete — and hid it in a chest near the bridge to Tower 3.",
+            solution:
+              "Playtesters missed it due to darkness, so I added a red-light cue to draw attention while still rewarding exploration.",
+            outcome:
+              "This strengthened narrative logic — the player receives a long-range weapon right before entering open ground, where it becomes essential.",
+          },
+          {
+            problem:
+              "One tester could not find the silenced pistol because there was no ledge guiding them to that floor — the reward was being completely missed.",
+            solution: "I added the ledge and redesigned the approach.",
+            outcome: "The item became discoverable without being handed to the player.",
+          },
+        ],
+      },
+      {
+        title: "Beat 4 — Arena Reveal + Sequence Control",
+        summary: "Stopping the skip and previewing the arena before the fight.",
+        media: {
+          kind: "image",
+          src: `${G}/shot-03.webp`,
+          alt: "Multi-level greybox interior arena",
+          ratio: "16/9",
+        },
+        iterations: [
+          {
+            problem:
+              "Players discovered they could jump directly from the broken bridge into the final combat arena, skipping an entire beat and entering unprepared.",
+            solution:
+              "I added blocking volumes to prevent this, and to preserve the intended preview moment I added a triggered sequence showing the arena layout, enemy positions and scale before the player entered.",
+          },
+          {
+            problem: "The sniper rifle on this floor was initially too hidden.",
+            solution:
+              "I added a subtle red-light cue — consistent with the lighting language established in Beat 1 — encouraging players to use their torch to find it.",
+          },
+        ],
+      },
+      {
+        title: "Beat 5 — Control Room + Traversal",
+        summary: "Breaking repetition and clarifying direction in the control room.",
+        media: {
+          kind: "image",
+          src: `${G}/shot-06.webp`,
+          alt: "Control room with monitors and orange lighting",
+          ratio: "16/9",
+        },
+        iterations: [
+          {
+            problem: "The ledge-climbing section was too similar to Beat 2 and felt repetitive.",
+            solution:
+              "I added a central column blocking the vent from view, forcing players to explore the control room before finding the route.",
+          },
+          {
+            problem: "Players were confused about where to go after entering the arena.",
+            solution: "I added CCTV monitors showing clear pathways ahead.",
+          },
+          {
+            problem: "The narrative letter format was repeated from Beat 2.",
+            solution:
+              "I replaced it with a fax document — a different format, with stronger urgency and a clearer objective.",
+          },
+          {
+            problem: "Players attempted to backtrack through the vent, causing fall damage.",
+            solution:
+              "I added a monologue preventing backtracking and reduced the vent size to make it one-directional.",
+          },
+        ],
+      },
+      {
+        title: "Final Beat — Enemy Tuning + Spatial Clarity",
+        summary: "Tuning enemies to be fair and labelling towers for orientation.",
+        media: {
+          kind: "image",
+          src: `${G}/shot-01.webp`,
+          alt: "Exterior courtyard with labelled towers",
+          ratio: "16/9",
+        },
+        iterations: [
+          {
+            problem:
+              "Enemies were too difficult — players retried multiple times due to excessive damage and health. They were using the same weapon stats as the player, making them disproportionately powerful.",
+            solution:
+              "I reassigned their weapons to separate data slots and used the AGLS data table to reduce enemy damage and adjust health values.",
+            outcome: "The final encounter became fair, challenging and satisfying.",
+          },
+          {
+            problem:
+              "Players outside could not identify which tower had the helipad — the fax stated Tower 1, but all towers looked identical from ground level.",
+            solution:
+              "I added large exterior tower labels — Tower 1 through Tower 4 — visible from ground level and across the open yard.",
+            outcome: "Immediately players oriented themselves correctly and the final push felt purposeful.",
+          },
+        ],
+      },
+    ],
+  },
+
+  technicalChallenges: {
+    intro: "Two significant technical problems were encountered during development.",
+    challenges: [
+      {
+        title: "Lighting across indoor and outdoor spaces",
+        body: "Balancing the atmospheric red emergency lighting indoors against the natural daylight of the exterior environment required continuous iteration to maintain visual consistency and player readability across both contexts.",
+      },
+      {
+        title: "Working with AGLS",
+        body: "AGLS — the Advanced Game Locomotion System — had limited documentation and was complex; key features required significant time to understand and implement correctly. One major gap was the absence of a health-pickup system, which the system architecture made prohibitively time-consuming to add.",
+      },
+    ],
+    resolution:
+      "Rather than spending development time solving a complex technical problem, I made a design decision: I restructured the level progression so that even a player with low combat skill would rarely lose health. Enemy encounters were reduced in number, combat sequences were simplified, and the focus was placed firmly on level design, traversal, and pacing. This constraint ultimately strengthened the design — forcing clarity and intention in every encounter rather than relying on combat volume.",
+  },
+
+  reflection: {
+    reflection: [
+      "Across playtesting, the level kept proving itself in small moments. In Beat 1, players found the hidden passage on their own — the closed stairs and the flashlight nearby were enough to guide them without a single prompt.",
+      "After Beat 1, players naturally looked for an alternative route when the bridge was blocked, exactly as the design intended. By Beat 5, most testers climbed through the ledge sequence without hesitation — a sequence I had deliberately made more complex than anything before it, requiring camera movement and grabbing simultaneously. They figured it out because the earlier beats had already built that instinct in them.",
+      "That progression — players carrying skills forward without realising it — was the clearest sign the level was working as a whole.",
+    ],
+    differently: [
+      "Given more time, the first priority would be a proper health and inventory system. The absence of health pickups in AGLS forced a design workaround — structuring encounters so players rarely died rather than giving them tools to survive a harder fight. A full system would have opened the door to more competitive survival scenarios and richer resource management.",
+      "More time would also mean larger spaces. With that constraint removed, exploration sections could expand significantly — giving the narrative more room and rewarding thorough players with richer environmental storytelling.",
+    ],
+    closingQuote:
+      "PrisonBreak_LD is the foundation of something bigger. The core systems work — the next step is building on this prototype with the production features it needs to become a complete experience.",
   },
 
   cta: {
