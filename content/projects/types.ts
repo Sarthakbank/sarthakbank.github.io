@@ -105,6 +105,16 @@ export type ProjectProcess = {
   beats: readonly ProjectProcessBeat[];
 };
 
+export type ProjectFullGameplay = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  /** YouTube id for the full-playthrough video. */
+  youtubeId: string;
+  /** Local poster image shown before the lazy embed loads. */
+  poster: string;
+};
+
 export type ProjectTechnicalChallenges = {
   intro: string;
   challenges: readonly { title: string; body: string }[];
@@ -150,6 +160,7 @@ export type Project = {
   techniques: readonly ProjectTechnique[];
   walkthrough?: ProjectWalkthrough;
   process?: ProjectProcess;
+  fullGameplay?: ProjectFullGameplay;
   technicalChallenges?: ProjectTechnicalChallenges;
   reflection?: ProjectReflection;
   cta: {

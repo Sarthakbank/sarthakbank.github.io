@@ -13,8 +13,8 @@ export const escapeProtocol: Project = {
   slug: "escape-protocol",
   eyebrow: "Featured Project",
   title: "Escape Protocol",
-  heroImage: "/media/escape-protocol-thumbnail.png",
-  heroImageAlt: "Escape Protocol — gameplay thumbnail",
+  heroImage: "/media/projects/escape-protocol/hero-trailer.webp",
+  heroImageAlt: "Escape Protocol — the officer in the besieged four-tower facility",
   youtubeUrl: null,
   trailerYouTubeId: "Mqm-6DOhrQM",
   videoComingSoonLabel: "Gameplay video coming soon",
@@ -38,6 +38,7 @@ export const escapeProtocol: Project = {
     { id: "techniques", label: "Techniques" },
     { id: "walkthrough", label: "Walkthrough" },
     { id: "process", label: "Process" },
+    { id: "gameplay", label: "Gameplay" },
     { id: "challenges", label: "Challenges" },
     { id: "reflection", label: "Reflection" },
   ],
@@ -445,6 +446,15 @@ export const escapeProtocol: Project = {
     ],
   },
 
+  fullGameplay: {
+    eyebrow: "Full playthrough",
+    title: "Full Gameplay Walkthrough",
+    description:
+      "Watch the complete Escape Protocol experience from start to finish, including traversal, combat encounters, environmental storytelling, and the final extraction sequence.",
+    youtubeId: "L7Uo6yBY-b0",
+    poster: "/media/projects/escape-protocol/full-gameplay-poster.webp",
+  },
+
   technicalChallenges: {
     intro: "Two significant technical problems were encountered during development.",
     challenges: [
@@ -472,7 +482,7 @@ export const escapeProtocol: Project = {
       "More time would also mean larger spaces. With that constraint removed, exploration sections could expand significantly — giving the narrative more room and rewarding thorough players with richer environmental storytelling.",
     ],
     closingQuote:
-      "PrisonBreak_LD is the foundation of something bigger. The core systems work — the next step is building on this prototype with the production features it needs to become a complete experience.",
+      "Escape Protocol is the foundation of something bigger. The core systems work — the next step is building on this prototype with the production features it needs to become a complete experience.",
   },
 
   cta: {

@@ -61,7 +61,9 @@
       "Bash(grep -vE '^[[:space:]]*$')",
       "Bash(pdftotext -layout \"Group 33.pdf\" /tmp/g33.txt)",
       "Bash(echo \"exit=$?\")",
-      "Bash(pdftotext -layout \"new docs/Group 33.pdf\" /tmp/g33.txt)"
+      "Bash(pdftotext -layout \"new docs/Group 33.pdf\" /tmp/g33.txt)",
+      "Bash(sips -Z 1000 \"new docs/296d2832-52af-42f4-baf4-f5048566e01f.png\" --out /tmp/new1.png)",
+      "Bash(sips -Z 1000 \"new docs/HighresScreenshot00000.png\" --out /tmp/hs00.png)"
     ],
     "additionalDirectories": [
       "/tmp"

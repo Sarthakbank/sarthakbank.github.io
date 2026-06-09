@@ -9,6 +9,7 @@ import { InspirationCarousel } from "./InspirationCarousel";
 import { DesignGoalShowcase } from "./DesignGoalShowcase";
 import { Walkthrough } from "./Walkthrough";
 import { ProcessBreakdown } from "./ProcessBreakdown";
+import { FullGameplay } from "./FullGameplay";
 import { TechnicalChallenges } from "./TechnicalChallenges";
 import { CaseStudyReflection } from "./CaseStudyReflection";
 import { MediaVideo } from "@/components/media/MediaVideo";
@@ -346,18 +347,27 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
         </section>
       ) : null}
 
-      {/* 9. Technical Challenges */}
+      {/* 9. Full Gameplay Walkthrough */}
+      {project.fullGameplay ? (
+        <section id="gameplay" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+          <div className={innerContainer}>
+            <FullGameplay data={project.fullGameplay} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* 10. Technical Challenges */}
       {project.technicalChallenges ? (
-        <section id="challenges" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
+        <section id="challenges" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
           <div className={innerContainer}>
             <TechnicalChallenges data={project.technicalChallenges} />
           </div>
         </section>
       ) : null}
 
-      {/* 10. Reflection / What I'd do differently */}
+      {/* 11. Reflection / What I'd do differently */}
       {project.reflection ? (
-        <section id="reflection" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
+        <section id="reflection" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
           <div className={innerContainer}>
             <CaseStudyReflection data={project.reflection} />
           </div>
