@@ -31,3 +31,18 @@ yarn-error.log*
 # raw / staging media (never ship — processed assets live in public/media/projects/)
 /public/media/new folder x/
 /public/media/**/raw/
+
+# ── Source & reference material — never commit ──────────────────
+# Derived/used assets live in /public; these are local source only.
+/new docs/
+/docs/
+/reference/
+
+# Local PDFs & raw source images at repo root (not used by the site)
+/*.pdf
+/HighresScreenshot*.png
+/image.png
+/Heat-image.jpeg
+
+# Stray binaries accidentally dropped into CI dir
+.github/workflows/*.pdf
