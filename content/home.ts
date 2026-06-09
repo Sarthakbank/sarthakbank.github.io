@@ -171,8 +171,8 @@ export const homeConnectSection = {
   buttons: [
     { href: "/contact", label: "Contact Me", variant: "primary" as const },
     {
-      href: "mailto:sarthakbankar647@gmail.com?subject=Resume%20request",
-      label: "Download Resume",
+      href: "/resume",
+      label: "View Résumé",
       variant: "secondary" as const,
     },
     {

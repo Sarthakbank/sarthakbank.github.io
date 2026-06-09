@@ -205,26 +205,27 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
                   </span>
                   <p className={cn(EYEBROW, "mt-6")}>Level design document</p>
                   <h2 className={cn("mt-3", HEADLINE)}>Level Design Document</h2>
-                  <div className="mt-7">
+                  <div className="mt-7 flex flex-wrap gap-3">
+                    {project.ldd.documentUrl ? (
+                      <Link
+                        href={project.ldd.documentUrl}
+                        className="inline-flex items-center gap-2 rounded-full bg-[#0071e3] px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-[#0077ed]"
+                      >
+                        <FileText className="h-4 w-4" aria-hidden />
+                        Read the document
+                      </Link>
+                    ) : null}
                     {project.ldd.pdfUrl ? (
                       <a
                         href={project.ldd.pdfUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full bg-[#0071e3] px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-[#0077ed]"
+                        className="inline-flex items-center gap-2 rounded-full border border-black/[0.12] bg-white px-6 py-3 text-[15px] font-semibold text-[#1d1d1f] transition hover:border-black/20 hover:bg-[#f5f5f7]"
                       >
                         <FileText className="h-4 w-4" aria-hidden />
                         Download PDF
                       </a>
-                    ) : (
-                      <span
-                        className="inline-flex cursor-not-allowed items-center gap-2 rounded-full bg-[#e8e8ed] px-6 py-3 text-[15px] font-semibold text-[#86868b]"
-                        aria-disabled
-                      >
-                        <FileText className="h-4 w-4" aria-hidden />
-                        PDF coming soon
-                      </span>
-                    )}
+                    ) : null}
                   </div>
                 </div>
                 <p className="text-pretty text-[16px] leading-[1.65] text-[#6e6e73] md:text-[17px]">

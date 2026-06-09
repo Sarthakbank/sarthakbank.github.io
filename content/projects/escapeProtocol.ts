@@ -131,8 +131,9 @@ export const escapeProtocol: Project = {
   ],
 
   ldd: {
-    body: "This Level Design Document outlines the full design process behind my Prison Break level, including goals, blockouts, beats, encounters, and iteration. It highlights how I structure gameplay flow, communicate intent, and refine spaces through testing. The PDF provides maps, diagrams, and the complete breakdown of the final experience.",
-    pdfUrl: null,
+    body: "This Level Design Document outlines the full design process behind Escape Protocol, including goals, blockouts, beats, encounters, and iteration. It highlights how I structure gameplay flow, communicate intent, and refine spaces through testing. Read the structured version online, or download the full PDF with maps and diagrams.",
+    pdfUrl: "/escape-protocol-level-design-document.pdf",
+    documentUrl: "/level-design-document",
   },
 
   techniques: [

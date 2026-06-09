@@ -33,7 +33,22 @@
       "Bash(sed -n '/export function AppleDock/,/}\\) {/p' components/shared/AppleDock.tsx)",
       "Bash(sed -n '/nav:/,/],/p' content/projects/escapeProtocol.ts)",
       "Bash(sed -n '/export type Project/,/^};/p' content/projects/types.ts)",
-      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/v3_currently_dock.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.62\\),w,int\\(h*0.95\\)\\)\\).save\\('/tmp/v3_crop.png'\\); print\\('ok',im.size\\)\")"
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/v3_currently_dock.png'\\); w,h=im.size; im.crop\\(\\(0,int\\(h*0.62\\),w,int\\(h*0.95\\)\\)\\).save\\('/tmp/v3_crop.png'\\); print\\('ok',im.size\\)\")",
+      "Bash(pdfinfo \"new docs/Sarthak_Bankar_Resume.pdf\")",
+      "Bash(pdfinfo \"new docs/Level Design Document.pdf\")",
+      "Bash(pdftotext -layout \"new docs/Level Design Document.pdf\" -)",
+      "Bash(pdfimages -list \"new docs/Level Design Document.pdf\")",
+      "Bash(sips -Z 900 \"new docs/HighresScreenshot00000.png\" --out /tmp/ss0.png)",
+      "Bash(grep -nE \"^\\\\s*[0-9]{1,2}\\\\.\\\\s+[A-Z]\")",
+      "Bash(cd /Users/yashbankar/Portfolio-Sarthak; pkill -f \"Google Chrome\" 2>/dev/null; pkill -f \"serve out\" 2>/dev/null *)",
+      "Bash(read p *)",
+      "Bash([ -f \"public$p\" ])",
+      "Bash(grep -oE '\\\\$\\\\{EP\\\\}/[a-z0-9./-]+' content/projects/escapeProtocol.ts)",
+      "Bash(sed -n '30,75p' app/layout.tsx)",
+      "Bash(sed -n '1,40p' components/shared/AppleInnerShell.tsx)",
+      "Bash(awk '{print $5,$9}')",
+      "Bash(python3 -c \"from PIL import Image; im=Image.open\\('/tmp/v_gallery.png'\\); w,h=im.size; c=im.crop\\(\\(0,int\\(h*0.18\\),w,int\\(h*0.92\\)\\)\\); c.thumbnail\\(\\(1200,1200\\)\\); c.save\\('/tmp/v_gallery_s.png'\\); print\\('cropped'\\)\")",
+      "Bash(grep -vE '\\\\.pdf|HighresScreenshot|Heat-image|/$|\\\\.claude|out/')"
     ],
     "additionalDirectories": [
       "/tmp"

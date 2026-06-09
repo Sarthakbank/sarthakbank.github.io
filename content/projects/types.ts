@@ -104,6 +104,8 @@ export type Project = {
     body: string;
     /** When null, the download CTA renders as a disabled "PDF coming soon" button. */
     pdfUrl: string | null;
+    /** Route to the structured HTML version of the document. */
+    documentUrl?: string | null;
   };
   techniques: readonly ProjectTechnique[];
   walkthrough?: ProjectWalkthrough;

@@ -187,3 +187,27 @@ html[data-immersive-lab="on"] .immersive-light-sweep {
     background-position: 0% 50%;
   }
 }
+
+/* ── Print: documents (Resume, Level Design Document) ───────────── */
+@media print {
+  header,
+  footer,
+  [data-print-hide] {
+    display: none !important;
+  }
+  .print-doc {
+    background: #fff !important;
+    color: #111 !important;
+    padding: 0 !important;
+  }
+  .print-doc * {
+    color: inherit;
+    box-shadow: none !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+  @page {
+    margin: 16mm;
+  }
+}

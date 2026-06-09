@@ -45,9 +45,12 @@ const ease = [0.22, 1, 0.36, 1] as const;
 /** Centered container — ~80% of a wide viewport, capped, so the system reads as one unit. */
 const CONTAINER_CLASS = "mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10";
 
-/** Cards fill ~80–85% of the centered rail so the next card peeks elegantly. */
+/** Cards fill ~80–85% of the centered rail so the next card peeks elegantly.
+ *  snap-center (with proximity on the rail) keeps the last oversized card
+ *  reachable — center snap points stay within scroll range, so a swipe never
+ *  bounces back the way mandatory + snap-start did. */
 const CARD_CLASS =
-  "w-[86%] shrink-0 snap-start sm:w-[82%] lg:w-[80%]";
+  "w-[86%] shrink-0 snap-center sm:w-[82%] lg:w-[80%]";
 
 export function AppleFeaturedProjectsSection() {
   const reduce = useReducedMotion();
@@ -61,9 +64,11 @@ export function AppleFeaturedProjectsSection() {
       if (!rail) return;
       const child = rail.children[index] as HTMLElement | undefined;
       if (!child) return;
-      const padL = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
+      // Center the card in the scrollport; the browser clamps to [0, maxScroll]
+      // so the last (oversized) card is always reachable.
+      const target = child.offsetLeft + child.clientWidth / 2 - rail.clientWidth / 2;
       rail.scrollTo({
-        left: child.offsetLeft - padL,
+        left: target,
         behavior: reduce ? "auto" : "smooth",
       });
       setActiveIndex(index);
@@ -86,12 +91,13 @@ export function AppleFeaturedProjectsSection() {
     const onScroll = () => {
       const children = Array.from(rail.children) as HTMLElement[];
       if (!children.length) return;
-      const padL = parseFloat(getComputedStyle(rail).paddingLeft) || 0;
-      const scrollPos = rail.scrollLeft + padL;
+      // Active = card whose center is nearest the scrollport center (matches snap-center).
+      const viewportCenter = rail.scrollLeft + rail.clientWidth / 2;
       let closest = 0;
       let minDist = Infinity;
       children.forEach((el, i) => {
-        const dist = Math.abs(el.offsetLeft - scrollPos);
+        const center = el.offsetLeft + el.clientWidth / 2;
+        const dist = Math.abs(center - viewportCenter);
         if (dist < minDist) {
           minDist = dist;
           closest = i;
@@ -145,7 +151,7 @@ export function AppleFeaturedProjectsSection() {
           ref={railRef}
           className={cn(
             CONTAINER_CLASS,
-            "flex snap-x snap-mandatory gap-5 overflow-x-auto pt-4 pb-14 sm:gap-6 lg:gap-8",
+            "flex snap-x snap-proximity gap-5 overflow-x-auto pt-4 pb-14 sm:gap-6 lg:gap-8",
             "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
           )}
           style={{ WebkitOverflowScrolling: "touch" }}

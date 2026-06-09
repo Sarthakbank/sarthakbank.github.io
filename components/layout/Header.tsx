@@ -28,6 +28,8 @@ function isLightInnerPath(pathname: string | null) {
     pathname === "/contact" ||
     pathname === "/about" ||
     pathname === "/case-study" ||
+    pathname === "/resume" ||
+    pathname === "/level-design-document" ||
     pathname?.startsWith("/case-study/") === true ||
     pathname?.startsWith("/projects/") === true
   );
