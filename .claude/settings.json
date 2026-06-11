@@ -63,7 +63,14 @@
       "Bash(echo \"exit=$?\")",
       "Bash(pdftotext -layout \"new docs/Group 33.pdf\" /tmp/g33.txt)",
       "Bash(sips -Z 1000 \"new docs/296d2832-52af-42f4-baf4-f5048566e01f.png\" --out /tmp/new1.png)",
-      "Bash(sips -Z 1000 \"new docs/HighresScreenshot00000.png\" --out /tmp/hs00.png)"
+      "Bash(sips -Z 1000 \"new docs/HighresScreenshot00000.png\" --out /tmp/hs00.png)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(xargs ls -l)",
+      "Bash(sort -k5 -n -r)",
+      "Bash(awk '{printf \"%6.1f MB  %s\\\\n\", $5/1048576, $9}')",
+      "Bash(awk 'NR>1{print $5, $9}')"
     ],
     "additionalDirectories": [
       "/tmp"

@@ -115,6 +115,33 @@ export type ProjectFullGameplay = {
   poster: string;
 };
 
+/** One spec card in the Playable Build release area. */
+export type ProjectBuildCard = {
+  icon: "format" | "size" | "platform" | "version";
+  label: string;
+  value: string;
+};
+
+export type ProjectPlayableBuild = {
+  eyebrow: string;
+  /** Gradient lead phrase of the heading. */
+  lead: string;
+  /** Black continuation of the heading. */
+  title: string;
+  description: string;
+  downloadLabel: string;
+  /**
+   * External download URL (Google Drive). The packaged build is ~616 MB — far
+   * above GitHub's 100 MB/file limit — so it is hosted off-repo, not in /public.
+   */
+  downloadUrl: string;
+  /** Secondary, lower-emphasis action (e.g. "View Build Files"). */
+  secondaryLabel: string;
+  secondaryUrl: string;
+  /** Spec cards (format / size / platform / version) shown below the CTA. */
+  cards: readonly ProjectBuildCard[];
+};
+
 export type ProjectTechnicalChallenges = {
   intro: string;
   challenges: readonly { title: string; body: string }[];
@@ -161,6 +188,7 @@ export type Project = {
   walkthrough?: ProjectWalkthrough;
   process?: ProjectProcess;
   fullGameplay?: ProjectFullGameplay;
+  playableBuild?: ProjectPlayableBuild;
   technicalChallenges?: ProjectTechnicalChallenges;
   reflection?: ProjectReflection;
   cta: {

@@ -10,6 +10,7 @@ import { DesignGoalShowcase } from "./DesignGoalShowcase";
 import { Walkthrough } from "./Walkthrough";
 import { ProcessBreakdown } from "./ProcessBreakdown";
 import { FullGameplay } from "./FullGameplay";
+import { PlayableBuild } from "./PlayableBuild";
 import { TechnicalChallenges } from "./TechnicalChallenges";
 import { CaseStudyReflection } from "./CaseStudyReflection";
 import { MediaVideo } from "@/components/media/MediaVideo";
@@ -352,6 +353,15 @@ export function CaseStudyView({ project = escapeProtocol }: { project?: Project 
         <section id="gameplay" className="scroll-mt-24 bg-[#f5f5f7] py-20 sm:py-24 lg:py-28">
           <div className={innerContainer}>
             <FullGameplay data={project.fullGameplay} />
+          </div>
+        </section>
+      ) : null}
+
+      {/* 9.5 Playable Build — experience it yourself */}
+      {project.playableBuild ? (
+        <section id="playable-build" className="scroll-mt-24 bg-white py-20 sm:py-24 lg:py-28">
+          <div className={innerContainer}>
+            <PlayableBuild data={project.playableBuild} />
           </div>
         </section>
       ) : null}

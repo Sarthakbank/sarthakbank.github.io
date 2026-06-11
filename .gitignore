@@ -46,3 +46,6 @@ yarn-error.log*
 
 # Stray binaries accidentally dropped into CI dir
 .github/workflows/*.pdf
+
+# Large playable build (~616 MB) — hosted on Google Drive, never committed (exceeds GitHub 100 MB limit)
+/public/media/projects/escape-protocol/downloads/

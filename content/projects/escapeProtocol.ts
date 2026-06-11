@@ -39,6 +39,7 @@ export const escapeProtocol: Project = {
     { id: "walkthrough", label: "Walkthrough" },
     { id: "process", label: "Process" },
     { id: "gameplay", label: "Gameplay" },
+    { id: "playable-build", label: "Playable Build" },
     { id: "challenges", label: "Challenges" },
     { id: "reflection", label: "Reflection" },
   ],
@@ -453,6 +454,27 @@ export const escapeProtocol: Project = {
       "Watch the complete Escape Protocol experience from start to finish, including traversal, combat encounters, environmental storytelling, and the final extraction sequence.",
     youtubeId: "L7Uo6yBY-b0",
     poster: "/media/projects/escape-protocol/full-gameplay-poster.webp",
+  },
+
+  playableBuild: {
+    eyebrow: "Playable Build",
+    lead: "Download and Play",
+    title: "Escape Protocol",
+    description:
+      "Experience the level firsthand inside Unreal Engine. Explore the environment, follow the intended routes, and play through the complete Escape Protocol prototype exactly as designed.",
+    downloadLabel: "Download Playable Build",
+    // Hosted on Google Drive — the ~616 MB packaged build exceeds GitHub's 100 MB file limit.
+    downloadUrl:
+      "https://drive.google.com/drive/folders/1kAfP9fd0TrHUttTd7puLZIIU7F5r6zrJ?usp=sharing",
+    secondaryLabel: "View Build Files",
+    secondaryUrl:
+      "https://drive.google.com/drive/folders/1kAfP9fd0TrHUttTd7puLZIIU7F5r6zrJ?usp=sharing",
+    cards: [
+      { icon: "format", label: "Download", value: "ZIP Archive" },
+      { icon: "size", label: "Build Size", value: "≈ 616 MB" },
+      { icon: "platform", label: "Platform", value: "Windows" },
+      { icon: "version", label: "Version", value: "Prototype Build" },
+    ],
   },
 
   technicalChallenges: {
