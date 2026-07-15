@@ -17,6 +17,14 @@ export const profileSummary =
 
 export const profileExperience: ExperienceItem[] = [
   {
+    company: "Self-Employed",
+    role: "Freelance Game Designer",
+    duration: "April 2024 – Present",
+    location: "Remote",
+    summary:
+      "Develops Blueprint logic systems in Unreal Engine 5 for independent client projects across game mechanics and environment interactivity. Builds and delivers game-ready environments to client briefs across multiple small-scale projects, working remotely across time zones and collaborating with designers and developers to meet requirements and deadlines. Prior freelance clients include Learning Yogi (Singapore-based edtech platform) — delivered 3D models and game-ready environments in Blender, Maya, and Unreal Engine to brief and on schedule.",
+  },
+  {
     company: "Zimension",
     role: "3D Game Designer",
     duration: "January 2024 – March 2024",
@@ -31,14 +39,6 @@ export const profileExperience: ExperienceItem[] = [
     location: "India",
     summary:
       "Worked as a 3D Modeller, responsible for creating detailed and optimized 3D models for games and digital projects. Used tools such as Blender and Maya to develop assets while maintaining proper topology, textures, and performance standards. Collaborated with designers and artists to ensure assets matched the project’s visual style and technical requirements.",
-  },
-  {
-    company: "Learning Yogi",
-    role: "Freelance 3D Artist",
-    duration: "February 2022 – March 2022",
-    location: "India",
-    summary:
-      "Worked as a Freelance 3D Artist, creating high-quality 3D models, environments, and game-ready assets using Blender, Maya, and Unreal Engine. Collaborated with clients to understand project requirements, delivered optimized assets on time, and maintained visual quality aligned with creative goals.",
   },
 ];
 
