@@ -33,6 +33,18 @@ export const resume = {
 
   experience: [
     {
+      role: "Freelance Game Designer",
+      company: "Self-Employed",
+      period: "Apr 2024 – Present",
+      location: "Remote",
+      bullets: [
+        "Developed Blueprint logic systems in Unreal Engine 5 for independent client projects across game mechanics and environment interactivity.",
+        "Built and delivered game-ready environments to client briefs across multiple small-scale projects, working remotely across time zones.",
+        "Collaborated with designers and developers to meet project requirements and deadlines on time.",
+        "Prior freelance clients include Learning Yogi (Singapore-based edtech platform) — delivered 3D models and game-ready environments in Blender, Maya, and Unreal Engine to brief and on schedule.",
+      ],
+    },
+    {
       role: "3D Game Designer",
       company: "Zimension",
       period: "Jan 2024 – Mar 2024",
@@ -52,15 +64,6 @@ export const resume = {
         "Produced optimised 3D models for games and digital products in Blender and Maya, meeting polygon budgets and texture-resolution targets.",
         "Handled UV unwrapping, texturing, and LOD preparation to ensure assets were pipeline-ready without additional rework.",
         "Worked to art-direction briefs, adapting models to match the project's established visual style across multiple asset types.",
-      ],
-    },
-    {
-      role: "Freelance 3D Artist",
-      company: "Learning Yogi",
-      period: "Feb – Mar 2022",
-      location: "India",
-      bullets: [
-        "Delivered game-ready 3D models and environments in Blender, Maya, and Unreal Engine to client briefs, on time and to specification.",
       ],
     },
   ],
